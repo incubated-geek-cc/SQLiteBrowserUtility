@@ -1,0 +1,61 @@
+html,
+body {
+    padding:0;
+    margin:0;
+    overflow:hidden;
+}
+body {
+    width:100vw;
+    height:100vh;
+    font-family: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Arial,sans-serif;
+    font-size: 1rem;
+}
+#upload {
+    display:none;
+}
+#infoPanel,
+#mainTabsWrapper {
+    height:calc(100vh - 2px);
+}
+#browse {
+    height:calc(100vh - 70px);
+}
+div#tableRecords.table-responsive {
+    height:calc(100vh - 170px);
+    overflow-y:scroll;
+}
+#infoPanel {
+    overflow-y:auto;
+}
+.datatable {
+    width:100%;
+    text-align: left;
+}
+.table td, 
+.table th {
+    padding: 0.25rem;
+    border-top: 1px solid #dee2e6;
+}
+hr {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+hr.invisible-divider {
+    border-top: 1px solid transparent;
+}
+a.page-link,
+a.dropdown-item {
+    cursor:pointer;
+    display: inline-flex;
+}
+#currentPageNo {
+    height: calc(31px - 0.5rem - 2px);
+}
+.dropdown-item:focus, 
+.dropdown-item:hover {
+    background-color: #f0f5fb;
+}
+.page-item.disabled .page-link,
+.page-link {
+    border-color:transparent;
+}
