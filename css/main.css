@@ -24,6 +24,11 @@ div#tableRecords.table-responsive {
     height:calc(100vh - 170px);
     overflow-y:scroll;
 }
+
+div#tableQueryRecords.table-responsive {
+    height:calc(100vh - 170px - 35vh);
+    overflow-y:scroll;
+}
 #infoPanel {
     overflow-y:auto;
 }
@@ -48,7 +53,8 @@ a.dropdown-item {
     cursor:pointer;
     display: inline-flex;
 }
-#currentPageNo {
+#currentPageNo,
+#currentQueryPageNo {
     height: calc(31px - 0.5rem - 2px);
 }
 .dropdown-item:focus, 
@@ -58,4 +64,64 @@ a.dropdown-item {
 .page-item.disabled .page-link,
 .page-link {
     border-color:transparent;
+}
+
+#tableQueryDetails,
+#tableDetails {
+    padding: 0.2rem 0;
+}
+
+#codeEditor, #lineCounter {
+    font-family: monospace;
+    margin: 0;
+    padding: 10px 0;
+    height: 35vh;
+    border-radius: 0;
+    resize: none;
+    font-size: small;
+    tab-size: 2;
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+    line-height: 1.45;
+    outline: none;
+    border-width: 0;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+#codeEditor {
+    padding-left: calc(2.25rem + 5px);
+    width:100%;
+    /* Determine appearance of code editor */
+    background-color:#272822;
+    border-color:#272822;
+    color:#ffffff;
+    white-space:pre-wrap;
+}
+#lineCounter {
+    display: flex;
+    border-color: transparent;
+    overflow-y: hidden;
+    text-align: right;
+    box-shadow: none;
+    color: #707070;
+    background-color: #d8d8d8;
+    position: absolute;
+    width: 2.25rem;
+    /* Determine appearance of line counter */
+    background-color:#3E3D32;
+    border-color:#3E3D32;
+    color:#928869;
+}
+#lineCounter:focus-visible,
+#codeEditor:focus-visible {
+    outline:none;
+}
+
+#tablePagination,
+#tableQueryPagination,
+#errorDisplay {
+    font-family: Segoe ui emoji;
 }

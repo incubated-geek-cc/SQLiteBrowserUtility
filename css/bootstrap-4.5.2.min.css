@@ -4186,7 +4186,8 @@ input[type=button].btn-block,input[type=reset].btn-block,input[type=submit].btn-
 
 .nav-link {
   display: block;
-  padding: .5rem 1rem;
+  /*padding: .5rem 1rem;*/
+  padding: 0.35rem 0.5rem;
 }
 
 .nav-link:focus,.nav-link:hover {
