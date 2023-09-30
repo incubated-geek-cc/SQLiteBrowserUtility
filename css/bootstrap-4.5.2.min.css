@@ -4186,8 +4186,7 @@ input[type=button].btn-block,input[type=reset].btn-block,input[type=submit].btn-
 
 .nav-link {
   display: block;
-  /*padding: .5rem 1rem;*/
-  padding: 0.35rem 0.5rem;
+  padding: .5rem 1rem;
 }
 
 .nav-link:focus,.nav-link:hover {
@@ -10199,6 +10198,10 @@ a.bg-dark:focus,a.bg-dark:hover,button.bg-dark:focus,button.bg-dark:hover {
   font-weight: 400!important;
 }
 
+.font-weight-500 {
+ font-weight: 500!important;
+}
+
 .font-weight-bold {
   font-weight: 700!important;
 }
@@ -10406,4 +10409,95 @@ a.text-dark:focus,a.text-dark:hover {
     color: inherit;
     border-color: #dee2e6;
   }
+}
+.bg-primary-25 {
+  background-color: rgb(0 123 255 / 25%);
+  border: 1.5px solid rgb(0 123 255 / 25%);
+  color: rgb(0 123 255 / 1);
+  font-weight: bold;
+}
+
+.bg-success-25 {
+  background-color: rgb(40 167 69 / 25%);
+  border: 1.5px solid rgb(40 167 69 / 25%);
+  color: rgb(40 167 69 / 1);
+  font-weight: bold;
+}
+
+.bg-secondary-25 {
+  background-color: rgb(108 117 125 / 25%);
+  border: 1.5px solid rgb(108 117 125 / 25%);
+  color: rgb(108 117 125 / 1);
+  font-weight: bold;
+}
+
+.bg-info-25 {
+  background-color: rgb(23 162 184 / 25%);
+  border: 1.5px solid rgb(23 162 184 / 25%);
+  color: rgb(23 162 184 / 1);
+  font-weight: bold;
+}
+
+.bg-dark-25 {
+  background-color: rgb(52 58 64 / 25%);
+  border: 1.5px solid rgb(52 58 64 / 25%);
+  color: rgb(52 58 64 / 1);
+  font-weight: bold;
+}
+
+.bg-warning-25 {
+  background-color: rgb(255 193 7 / 25%);
+  border: 1.5px solid rgb(255 193 7 / 25%);
+  color: rgb(255 193 7 / 1);
+  font-weight: bold;
+}
+
+.bg-danger-25 {
+  background-color: rgb(220 53 69 / 25%);
+  border: 1.5px solid rgb(220 53 69 / 25%);
+  color: rgb(220 53 69 / 1);
+  font-weight: bold;
+}
+
+.bg-light-25 {
+  background-color: rgb(248 249 250 / 25%);
+  border: 1.5px solid rgb(248 249 250 / 25%);
+  color: rgb(248 249 250 / 1);
+  font-weight: bold;
+}
+
+.bg-orange-25 {
+  background-color: rgb(253 126 20 / 25%);
+  border: 1.5px solid rgb(253 126 20 / 25%);
+  color: rgb(253 126 20 / 1);
+  font-weight: bold;
+}
+
+.bg-teal-25 {
+  background-color: rgb(32 201 151 / 25%);
+  border: 1.5px solid rgb(32 201 151 / 25%);
+  color: rgb(32 201 151 / 1);
+  font-weight: bold;
+}
+
+
+.checkbox-lg .form-check-input {
+  top: 0.65rem;
+  scale: 1.25;
+  margin-right: 0.5rem;
+}
+
+.checkbox-lg .form-check-label {
+  margin-top: 0.325rem;
+  padding-top: 0.325rem;
+  padding-bottom: 0.325rem;
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+.checkbox-lg .form-check-label:hover {
+  cursor: pointer;
+  background: #f8f9fa;
+}
+.page-link:hover{
+  cursor:pointer;
 }

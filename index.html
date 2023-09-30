@@ -3,836 +3,109 @@
 	<head>
 	    <meta name='google' content='notranslate' />
         <meta charset='UTF-8'>
-	    <meta name='description' content='In-Browser SQLite Database Demo'>
+	    <meta name='description' content='In-Browser SQLite Database' />
+	    <meta name="author" content="Charmaine Chui" />
 	    <meta name='keywords' content='SQL,SQLite,Browser Plugin,Database'>
 	    <meta name='viewport' content='width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' />
 	    <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />  
 	    <meta http-equiv='Content-Language' content='en' />
-	    <link rel='shortcut icon' href='img/favicon.ico'>
-	    <meta name='msapplication-TileColor' content='#ffffff' />
-	    <meta name='theme-color' content='#ffffff' />
-	    <meta name='apple-mobile-web-app-status-bar-style' content='black-translucent' />
-	    <meta name='apple-mobile-web-app-capable' content='yes' />
-	    <meta name='mobile-web-app-capable' content='yes' />
-	    <meta name='HandheldFriendly' content='True' />
-	    <meta name='MobileOptimized' content='320' />  
-	    <meta http-equiv='Content-Security-Policy' content='upgrade-insecure-requests' /> 
-		<script src='js/sql-browser.min.js'></script>
-		<link href='css/bootstrap-4.5.2.min.css' rel='stylesheet' type='text/css' />
-		<link href='css/offcanvas.css' rel='stylesheet' type='text/css' />
-		<link href='css/main.css' rel='stylesheet' type='text/css' />
-		<title>SQLite Browser Utility | No Server Setup Required</title>
+	    <link rel="icon" href="img/favicon-16x16.ico" type="image/x-icon" sizes="16x16">
+	    <link rel="icon" href="img/favicon-32x32.ico" type="image/x-icon" sizes="32x32">
+	    <link rel="icon" href="img/favicon-48x48.ico" type="image/x-icon" sizes="48x48">
+		<script type='text/javascript' src='js/sql-browser.min.js'></script>
+		<link rel='stylesheet' type='text/css' href='css/bootstrap-4.5.2.min.css' />
+		<link rel='stylesheet' type='text/css' href='css/offcanvas.css' />
+		<link rel='stylesheet' type='text/css' href='css/main.css' />
+		<title>SQLite Browser Tool | No Server Setup Required</title>
 	</head>
-	<noscript>You need to enable JavaScript to run this app.</noscript>
 	<body>
-		<div class='container-fluid'>
-			<div class='row'>
-				<div class='col-sm-4 pr-0'>
-					<div id='infoPanel' class="card rounded-0 border-left-0">
-						<table class='table table-condensed small'>
-								<tr>
-									<td colspan='2'>
-										<img id='site-logo' src='img/site-logo.png' height=31 /> <span class='float-right'>▷▷▷ <button id='upload-btn' type='button' class='btn btn-sm btn-light text-secondary border-secondary rounded-0'><small>📂 Select SQLite File…</small><input id='upload' type='file' /></button></span>
-										<hr class='invisible-divider'>
-										<p class="h6">💡 <small>Original work by Kripken <cite title="sql.js/sql.js: A javascript library to run SQLite on the web."><a href="https://github.com/sql-js/sql.js" target="_blank">sql.js</a></cite> which is <a href="LICENSE.txt" target="_blank">MIT licensed</a>.</small></p>
-										<p class="h6">ℹ <small>SQLite is a <abbr title="Relational Database Management System">RDBMS</abbr> with no dependencies and zero configurations; able to operate offline in-browser without a database engine.<br><mark>🚫 No server setup required to run this utility.</mark></small></p>
-										<hr class='invisible-divider'>
-										<span class='text-muted'>© Copyright <span id='copyrightYearDisplay'></span> by <a href='https://geek-cc.medium.com/' target='_blank'>The Ribbon Girl</a> ξ(🎀˶❛◡❛)</span>
+	<noscript>You need to enable JavaScript to run this app.</noscript>
+	<nav class="navbar navbar-expand-sm bg-light navbar-light fixed-top">
+	  <a class="navbar-brand p-0"><img id='site-logo' src='img/site-logo.png' /></a>
+	  <!-- <button class="navbar-toggler symbol text-center border-custom-one bg-light text-custom-one pt-1 pb-1 pl-2 pr-2" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">☰</button> -->
 
-										<hr class='invisible-divider'>
-										<div class="w-25 d-inline-block"><b>File Name:</b></div><div id='fileNameDisplay' class="w-75 d-inline-block">---</div>
-										<div class="w-25 d-inline-block"><b>File Size:</b></div><div id='fileSizeDisplay' class="w-75 d-inline-block">---</div>
-										
-										<hr class='invisible-divider'>
-										<div class="w-25 d-inline-block"><b>▦ Table(s):</b></div><div id='noOfTablesDisplay' class="w-75 d-inline-block">---</div>
-										<hr class='invisible-divider'>
-									</td>
-								</tr>
-							</thead>
-							<tbody id='dbTableDetails'></tbody>
-						</table>
-					</div>
-				</div>
-				<div class='col-sm-8 pl-0'>
-					<div id='mainTabsWrapper' class='card rounded-0 border-right-0'>
-						<ul id='mainTabs' class='nav nav-tabs' role='tablist'>
-						  	<li class='nav-item'>
-						    	<a class='nav-link rounded-0 active' id='browse-tab' href='#browse' data-bs-toggle='tab' data-height='true' aria-controls='browse' aria-selected='true' role='tab'><small>🔎 Browse Data</small></a>
-					    	</li>
-					    	<li class='nav-item'>
-						    	<a class='nav-link rounded-0' id='editor-tab' href='#editor' data-bs-toggle='tab' data-height='true' aria-controls='editor' aria-selected='true' role='tab'><small>❮⁄❯ Query Editor</small></a>
-						  	</li>
-						  	<li class='nav-item'>
-						    	<a class='nav-link rounded-0' id='logs-tab' href='#logs' data-bs-toggle='tab' data-height='true' aria-controls='logs' aria-selected='true' role='tab'><small>📝 Output Logs</small></a>
-						  	</li>
-						</ul>
-					
-						<div class='card-body tab-content'>
-							<p id='errorDisplay' class='m-0 p-0 small text-danger'></p>
-
-							<div id='browse' role='tabpanel' class='tab-pane fade active show' aria-labelledby='browse-tab'>
-								
-								<div class='btn-group btn-group-sm m-0'>
-							  		<div class='btn-group btn-group-sm'>
-									    <button id='exportToggleBtn' type='button' class='btn btn-sm btn-light text-info border-info dropdown-toggle rounded-0' data-toggle='dropdown'><small>💾 Save…</small></button>
-									    <div class='dropdown-menu'>
-									      <button id='exportAsJSON' type='button' class='dropdown-item'><small>💽 Export datatable as JSON</small></button>
-									    </div>
-								    </div>
-								    <small id='tableDetails' class='ml-2'></small>
-							  	</div>
-
-								<hr class='invisible-divider'>
-								<div id='tableRecords' class='table-responsive'></div>
-								<hr class='invisible-divider'>
-								<ul id='tablePagination' class='pagination pagination-sm rounded-0'></ul>
-							</div>
-						  	
-						  	<div id='editor' role='tabpanel' class='tab-pane fade show' aria-labelledby='editor-tab'>
-						  		<div class='btn-group btn-group-sm m-0'>
-							  		<div class='btn-group btn-group-sm'>
-									    <button id='exportQueryToggleBtn' type='button' class='btn btn-sm btn-light text-info border-info dropdown-toggle rounded-0' data-toggle='dropdown'><small>💾 Save…</small></button>
-									    <div class='dropdown-menu'>
-									      <button id='exportQueryAsJSON' type='button' class='dropdown-item'><small>💽 Export resultset as JSON</small></button>
-									      <button id='exportEditorQuery' type='button' class='dropdown-item'><small>📄 Export SQL query to local file</small></button>
-									    </div>
-								    </div>
-								    <button id='runQueryBtn' type='button' class='btn btn-sm btn-light text-primary border-primary rounded-0 ml-2'><small>Run ⯈</small></button>
-								    <small id='tableQueryDetails' class='ml-2'></small>
-							  	</div>
-
-						  		<hr class='invisible-divider'>
-					  			<p class='mb-0'><textarea id='lineCounter' wrap='off' readonly>1.</textarea><textarea id='codeEditor' wrap='off'></textarea></p>
-					  			<div id='tableQueryRecords' class='table-responsive'></div>
-					  			<hr class='invisible-divider'>
-								<ul id='tableQueryPagination' class='pagination pagination-sm rounded-0'></ul>
-						  	</div>
+	  <!-- <div id="collapsibleNavbar" class="collapse navbar-collapse"> -->
+	    <!-- <ul class="navbar-nav">
+	      <li class="nav-item">
+	        <a class="nav-link">Link</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link">Link</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link">Link</a>
+	      </li>    
+	    </ul> -->
+	    <ul class="nav navbar-nav ml-auto nowrap">
+	      <li class="nav-item"><a id='upload-btn' type='button' class="btn btn-sm bg-custom-one text-white rounded-pill small nowrap symbol text-center ml-1 mr-1">⤒ Upload SQLite File<input id='upload' type='file' /></a>
+	      </li>
+	      <li class="nav-item"><a id='about-btn' type='button' class="btn btn-sm bg-custom-one text-white rounded-pill small nowrap symbol text-center" data-toggle="popover" data-title="Application Details" data-dismissible="true" data-placement="right" data-content='<div class="row">
+                <div class="col-sm-12" style="text-align:left">
+                    <p><span class="symbol">❶</span> Original work by Kripken <cite title="sql.js/sql.js: A javascript library to run SQLite on the web."><a href="https://github.com/sql-js/sql.js" target="_blank">sql.js</a></cite> which is <a href="LICENSE.txt" target="_blank">MIT licensed</a>.</p>
+                    <p><span class="symbol">❷</span> SQLite is a <abbr title="Relational Database Management System">RDBMS</abbr> with no dependencies and able to operate offline in-browser without a database engine.</p>
+                    <p><span class="symbol">❸</span> This application requires no server-side processing and was compiled with WASM. <span class="emoji">🚫</span> No server setup required.</p>
+                </div>
+            </div>'>🛈 About</a>
+	      </li>
+	    </ul>
+	  <!-- </div>   -->
+	</nav>
 
 
-						  	<div id='logs' role='tabpanel' class='tab-pane fade show' aria-labelledby='logs-tab'>
+	<div id="main-wrapper" class='w-100'>
+		<aside class="left-sidebar">
+	        <button id="toggleSidebarBtn" type="button" class='btn btn-sm bg-none text-custom-one border-custom-one symbol text-center m-1' value='false'>☰</button>
+	        <div id='databaseTables' class="scroll-sidebar ps-container ps-active-y pt-5 pb-2 custom-scrollbar">
+	        	<table class='table table-condensed small'>
+	        		<thead>
+	        			<tr><th class='w-35 p-2 text-right'>File Name:</th><th id='fileNameDisplay' class='symbol p-2 font-weight-lighter'>---</th></tr>
+	        			<tr><th class='w-35 p-2 text-right'>File Size:</th><th id='fileSizeDisplay' class='symbol p-2 font-weight-lighter'>---</th></tr>
+	        		</thead>
+					<tbody id='dbTableDetails'></tbody>
+				</table>
+	        </div>
+	        <small class='nowrap small ml-1 pt-1 pb-1 pl-2 pr-2 rounded-0 attribution'><span class='symbol copyrightNote'>© Copyright</span> <span id='copyrightYearDisplay' class='copyrightNote'></span><span class='symbol pl-1 pr-1'>⯈ By</span><a href="https://medium.com/@geek-cc" target="_blank"><span class="symbol">ξ(</span><span class="emoji">🎀</span><span class="symbol">˶❛◡❛) ᵀᴴᴱ ᴿᴵᴮᴮᴼᴺ ᴳᴵᴿᴸ</span></a><span class='symbol pl-1 pr-1'><a href='https://github.com/incubated-geek-cc/' target='_blank'><span data-profile='github' class='attribution-icon'></span></a> ▪ <a href='https://medium.com/@geek-cc' target='_blank'><span data-profile='medium' class='attribution-icon'></span></a> ▪ <a href='https://www.linkedin.com/in/charmaine-chui-15133282/' target='_blank'><span data-profile='linkedin' class='attribution-icon'></span></a> ▪ <a href='https://twitter.com/IncubatedGeekCC' target='_blank'><span data-profile='twitter' class='attribution-icon'></span></a></span></small>
+	    </aside>
+	 	<div class="page-wrapper mt-0 mb-0 mr-1 pr-0 pl-1 pt-0 pb-0 h-100" style="display:block">
+				<!-- card -->
+	            <div class="card rounded-0 p-0 m-0">
+	            	<!-- card-body -->
+	            	<div class='card-body rounded-0 p-2 h-100'>
+						<p id='errorDisplay' class='m-0 p-0 small text-danger'></p>
 
-						  		<hr class='invisible-divider'>
-						  		<div id='logsRecords' class='table-responsive'></div>
+						<div id='filters' class='card-subtitle mt-0 mb-1 nowrap w-100'>
+							<strong class='symbol text-custom-one'>‹/› SQL Editor</strong>
+							<button id='runQueryBtn' type='button' class='btn btn-sm bg-none rounded-circle text-center p-0 site-header-btn'><small class='symbol'>▶</small></button>
+							<!-- badges -->
+							<span class='badge text-custom-one bg-white p-1 m-1 font-weight-500'><span class='symbol'>▦</span> <span id='noOfTablesDisplay'>0</span> tables in total</span>
+							<span class='badge text-custom-one bg-white p-1 m-1 font-weight-500'><span class='symbol'></span> Displaying <span id='displayedRecordsRange'>---</span> </span>
+		                    <span class='badge text-custom-one bg-white p-1 m-1 font-weight-500'><span class='symbol'></span> <span id='pageCountDisplay'>0</span> pages</span>
+		                    <span class='badge text-custom-one bg-white p-1 m-1 font-weight-500'><span class='symbol'></span> <span id='totalRowCount'>0</span> records in total</span>
+		                    <!-- //badges -->
 
-						  	</div>
+		                    <div class='btn-group btn-group-sm mr-auto'>
+							    <button id='exportQueryToggleBtn' type='button' class='btn btn-sm btn-light border dropdown-toggle btnSymbol' data-toggle='dropdown'><small class='symbol'>💾</small></button>
+							    <div class='dropdown-menu'>
+							      <button id='exportQueryAsJSON' type='button' class='dropdown-item'><small class='symbol'>💽 Export resultset as JSON</small></button>
+							      <button id='exportEditorQuery' type='button' class='dropdown-item'><small class='symbol'>📄 Export SQL query</small></button>
+							    </div>
+						    </div>
 						</div>
-
-
-
+						
+						<p class='mb-0'><textarea id='lineCounter' wrap='off' readonly>1.</textarea><textarea id='codeEditor' wrap='off'></textarea></p>
+						<div id='tableQueryRecords' class="table-responsive table-responsive-sm border"></div>
+						<hr class='invisible-divider mb-0 mt-0'>
+						<ul id='tableQueryPagination' class="pagination pagination-sm rounded-0 mb-1 mt-1"></ul>
 					</div>
-				</div>
-			</div>
+					<!-- // card-body -->
+	            </div>
+	            <!-- // card -->
 		</div>
-		<script src='js/polyfill.js'></script>
-	    <script src='js/ie10-viewport-bug-workaround.js'></script>
-	    <script src='js/bootstrap-native-v4.js'></script>
-	    <script>
-	    	if (document.readyState === 'complete' || document.readyState !== 'loading' && !document.documentElement.doScroll) {
-			    callback();
-			} else {
-			    document.addEventListener('DOMContentLoaded', async() => {
-			        console.log('DOMContentLoaded');
-
-			        if (!window.FileReader) {
-			        	errorDisplay.innerHTML='⛔ WARNING: Your browser does not support HTML5 \'FileReader\' function required to open a file.';
-			        	appendLogOutput('Your browser does not support HTML5 \'FileReader\' function required to open a file', 'WARNING');
-			      		return;
-			  		}
-			  		if (!window.Blob) {
-		                errorDisplay.innerHTML='⛔ WARNING: Your browser does not support HTML5 \'Blob\' function required to save a file.';
-		                appendLogOutput('Your browser does not support HTML5 \'Blob\' function required to save a file.', 'WARNING');
-			      		return;
-			  		}
-
-			  		var outputLogs=[];
-			  		function getCurrentDatetimeStamp() {
-			            const dateObject = new Date(Date.now());
-
-			            const dateYear=dateObject.getFullYear();
-			            const dateMonth=(((dateObject.getMonth()+1))<10) ? `0${((dateObject.getMonth()+1))}` : ((dateObject.getMonth()+1));
-			            const dateDay=((dateObject.getDate())<10) ? `0${(dateObject.getDate())}` : (dateObject.getDate());
-
-			            const datetimeHours=(((dateObject.getHours()))<10) ? `0${((dateObject.getHours()))}` : ((dateObject.getHours()));
-			            const datetimeMinutes=(((dateObject.getMinutes()))<10) ? `0${((dateObject.getMinutes()))}` : ((dateObject.getMinutes()));
-			            const datetimeSeconds=(((dateObject.getSeconds()))<10) ? `0${((dateObject.getSeconds()))}` : ((dateObject.getSeconds()));
-
-			            const datetimeStr=`${dateYear}-${dateMonth}-${dateDay} ${datetimeHours}:${datetimeMinutes}:${datetimeSeconds}`;
-
-			            return datetimeStr;
-			  		}
-
-			  		var logsRecords=document.getElementById('logsRecords');
-
-			  		function appendLogOutput(msg, type) {
-           				let logObj={
-           					'Datetime': getCurrentDatetimeStamp(),
-           					'Message': msg,
-           					'Type': 'ERROR'
-           				};
-           				outputLogs.push(logObj);
-
-           				logsRecords.innerText=JSON.stringify(outputLogs,null,2);
-			  		}
-
-			        const copyrightYearDisplay=document.getElementById('copyrightYearDisplay');
-			        copyrightYearDisplay.innerHTML=new Date().getFullYear();
-
-			        var mainTabs = document.getElementById('mainTabs');
-					var mainTabsCollection = mainTabs.getElementsByTagName('a');
-					Array.from(mainTabsCollection).forEach(tab => new BSN.Tab(tab));
-
-			        var uploadBtn=document.getElementById('upload-btn');
-		  			var upload=document.getElementById('upload');
-		  			uploadBtn.addEventListener('click', () => {
-		  				let clickEvent = new MouseEvent('click', { view: window, bubbles: false, cancelable: false });
-	            		upload.dispatchEvent(clickEvent);
-		  			}, false);
-
-					var dbTableDetails=document.getElementById('dbTableDetails');
-					var errorDisplay=document.getElementById('errorDisplay');
-
-					var db=null;
-
-					const tblIcon='▦ ';
-					const recordsPerPage=100;
-
-					// =============== BROWSE TAB =============================
-					var stmt='';
-					var resultset=[];
-
-					var currentPage=1;
-					var selected_tbl_name='';
-					var noOfPages=1;
-					var totalNoOfRecords=0;
-					var offset=0;
-
-					var tableDetails=document.getElementById('tableDetails');
-					var tableRecords=document.getElementById('tableRecords');
-					var tablePagination=document.getElementById('tablePagination');
-					var exportAsJSON=document.getElementById('exportAsJSON');
-
-					var firstPageBtn, prevPageBtn, currentPageNo, nextPageBtn, lastPageBtn;
-
-					// =============== QUERY TAB =============================
-					var queryStmt='';
-					var queryResultset=[];
-
-					var currentQueryPage=1;
-					var originalQueryStmt='';
-					var noOfQueryPages=1;
-					var totalNoOfQueryRecords=0;
-					var queryOffset=0;
-
-					var tableQueryDetails=document.getElementById('tableQueryDetails');
-					var tableQueryRecords=document.getElementById('tableQueryRecords');
-					var tableQueryPagination=document.getElementById('tableQueryPagination');
-
-					var exportQueryAsJSON=document.getElementById('exportQueryAsJSON');
-					var exportEditorQuery=document.getElementById('exportEditorQuery');
-
-					var firstQueryPageBtn, prevQueryPageBtn, currentQueryPageNo, nextQueryPageBtn, lastQueryPageBtn;
-
-		    		const paginationBtnProps={
-		    			'firstPageBtn': {
-		    				'className':'page-item disabled',
-		    				'linkClassName':'page-link',
-		    				'linkTitle':'first',
-		    				'linkInnerText':'⏮'
-		    			},
-		    			'prevPageBtn': {
-		    				'className':'page-item disabled',
-		    				'linkClassName':'page-link',
-		    				'linkTitle':'previous',
-		    				'linkInnerText':'⏪'
-		    			},
-		    			'nextPageBtn': {
-		    				'className':'page-item',
-		    				'linkClassName':'page-link',
-		    				'linkTitle':'next',
-		    				'linkInnerText':'⏩'
-		    			},
-		    			'lastPageBtn': {
-		    				'className':'page-item',
-		    				'linkClassName':'page-link',
-		    				'linkTitle':'last',
-		    				'linkInnerText':'⏭'
-		    			},
-	    				// =====================
-		    			'firstQueryPageBtn': {
-		    				'className':'page-item disabled',
-		    				'linkClassName':'page-link',
-		    				'linkTitle':'first',
-		    				'linkInnerText':'⏮'
-		    			},
-		    			'prevQueryPageBtn': {
-		    				'className':'page-item disabled',
-		    				'linkClassName':'page-link',
-		    				'linkTitle':'previous',
-		    				'linkInnerText':'⏪'
-		    			},
-		    			'nextQueryPageBtn': {
-		    				'className':'page-item',
-		    				'linkClassName':'page-link',
-		    				'linkTitle':'next',
-		    				'linkInnerText':'⏩'
-		    			},
-		    			'lastQueryPageBtn': {
-		    				'className':'page-item',
-		    				'linkClassName':'page-link',
-		    				'linkTitle':'last',
-		    				'linkInnerText':'⏭'
-		    			}
-		    		};
-
-					async function initPaginationBtn(paginationBtnType, tablePaginationEle) {
-						try {
-							let paginationBtn=document.createElement('li');
-		    				paginationBtn.id=paginationBtnType;
-		    				paginationBtn.className=paginationBtnProps[paginationBtnType]['className'];
-
-		    				let pageBtnLink=document.createElement('a');
-		    				pageBtnLink.className=paginationBtnProps[paginationBtnType]['linkClassName'];
-		    				pageBtnLink.setAttribute('title', paginationBtnProps[paginationBtnType]['linkTitle']);
-		    				pageBtnLink.innerText=paginationBtnProps[paginationBtnType]['linkInnerText'];
-
-		    				tablePaginationEle.appendChild(paginationBtn);
-		    				paginationBtn.appendChild(pageBtnLink);
-
-		    				return await Promise.resolve(paginationBtn);
-		    			} catch(err) {
-		    				throw new Error(err.message);
-		    			}
-					}
-					
-					async function initInputPageNo(tablePaginationEle,currentPageNoID,currentPageVal,noOfPagesVal) {
-						try {
-							let currentPageNoLI=document.createElement('li');
-		    				currentPageNoLI.className='page-item';
-		    				let currentPageNoLink=document.createElement('a');
-		    				currentPageNoLink.className='page-link';
-
-		    				let currentPageNo=document.createElement('input');
-		    				currentPageNo.id=currentPageNoID;
-	    					currentPageNo.className='form-control form-control-sm rounded-0';
-	    					currentPageNo.setAttribute('type','number');
-	    					currentPageNo.value=currentPageVal;
-	    					currentPageNo.setAttribute('min',1);
-	    					currentPageNo.setAttribute('max',noOfPagesVal);
-
-	    					let boldTextPrefix=document.createElement('b');
-	    					boldTextPrefix.className='pl-1 pr-1';
-	    					boldTextPrefix.innerText='/';
-
-	    					let boldTextSuffix=document.createElement('b');
-	    					boldTextSuffix.className='pl-1 pr-1';
-	    					boldTextSuffix.innerText=noOfPagesVal;
-
-	    					tablePaginationEle.appendChild(currentPageNoLI);
-		    				currentPageNoLI.appendChild(currentPageNoLink);
-	    					currentPageNoLink.appendChild(currentPageNo);
-	    					currentPageNoLink.appendChild(boldTextPrefix);
-	    					currentPageNoLink.appendChild(boldTextSuffix);
-
-	    					return await Promise.resolve(currentPageNo);
-    					} catch(err) {
-		    				throw new Error(err.message);
-		    			}
-					}
-
-					function removeAllChildNodes(parent) {
-						try {
-						    while (parent.firstChild) {
-						        parent.removeChild(parent.firstChild);
-						    }
-						} catch(err) {
-		    				throw new Error(err.message);
-		    			}
-					}
-
-					async function setPaginationClass() {
-						try {
-	    					currentPageNo.value=currentPage;
-	    					if(currentPage==1) {
-	    						if(!firstPageBtn.classList.contains('disabled')) {
-	    							firstPageBtn.classList.add('disabled');
-	    						}
-	    						if(!prevPageBtn.classList.contains('disabled')) {
-	    							prevPageBtn.classList.add('disabled');
-	    						}
-	    					} else if(currentPage>1) {
-	    						if(firstPageBtn.classList.contains('disabled')) {
-	    							firstPageBtn.classList.remove('disabled');
-	    						}
-	    						if(prevPageBtn.classList.contains('disabled')) {
-	    							prevPageBtn.classList.remove('disabled');
-	    						}
-	    					}
-	    					if(currentPage==noOfPages) {
-	    						if(!nextPageBtn.classList.contains('disabled')) {
-	    							nextPageBtn.classList.add('disabled');
-	    						}
-	    						if(!lastPageBtn.classList.contains('disabled')) {
-	    							lastPageBtn.classList.add('disabled');
-	    						}
-	    					} else if(currentPage<noOfPages) {
-	    						if(nextPageBtn.classList.contains('disabled')) {
-	    							nextPageBtn.classList.remove('disabled');
-	    						}
-	    						if(lastPageBtn.classList.contains('disabled')) {
-	    							lastPageBtn.classList.remove('disabled');
-	    						}
-	    					}
-	    					offset=(currentPage-1)*recordsPerPage;
-	    					stmt='SELECT * FROM `' + selected_tbl_name + '` LIMIT ' + offset + ',' + recordsPerPage;
-	    					resultset = db.exec(stmt);
-	    					await renderDatatable(resultset,tableRecords);
-
-	    					let tableDetailsHtmlStr=`${tblIcon}${selected_tbl_name} ⯈ Total no. of records: <kbd>${totalNoOfRecords}</kbd> ⯈ Displaying records <kbd>${offset} ― ${offset+recordsPerPage}</kbd>`;
-	    					tableDetails.innerHTML=tableDetailsHtmlStr;
-    					} catch(err) {
-		    				throw new Error(err.message);
-		    			}
-    				}
-
-					function loadTableSelectable(tblName) {
-						let tblClickableBtn=document.createElement('button');
-						tblClickableBtn.setAttribute('type','button');
-						tblClickableBtn.setAttribute('class','btn btn-sm btn-link rounded-0 datatable');
-						tblClickableBtn.innerText=`${tblIcon}${tblName}`;
-
-						let tblClickableRow=dbTableDetails.insertRow(0);
-						let tblClickableCell=tblClickableRow.insertCell(0);
-						tblClickableCell.setAttribute('colspan',2);
-
-						tblClickableCell.appendChild(tblClickableBtn);
-
-						try {
-	  						tblClickableBtn.addEventListener('click', async(e) => {
-	  							e.stopPropagation();
-
-								selected_tbl_name=tblClickableBtn.innerText;
-								selected_tbl_name=selected_tbl_name.replace(tblIcon,'');
-								// ================================================
-								tableDetails.innerHTML='';
-								removeAllChildNodes(tablePagination);
-								// ================================================
-								currentPage=1;
-								offset=(currentPage-1)*recordsPerPage;
-								// ================================================
-								stmt='SELECT COUNT(*) FROM `' + selected_tbl_name + '`';
-			    				resultset = db.exec(stmt);
-			    				// ================================================
-			    				totalNoOfRecords=resultset[0]['values'][0];
-			    				totalNoOfRecords=parseInt(totalNoOfRecords);
-			    				noOfPages=totalNoOfRecords/recordsPerPage;
-			    				noOfPages=Math.ceil(noOfPages);
-			    				// ================================================
-			    				tableDetails.innerHTML=`${tblIcon}${selected_tbl_name} ⯈ Total no. of records: <kbd>${totalNoOfRecords}</kbd> ⯈ Displaying records <kbd>${offset} ― ${offset+recordsPerPage}</kbd>`;
-			    				// ================================================
-			    				firstPageBtn=await initPaginationBtn('firstPageBtn',tablePagination);
-			    				// ================================================
-			    				prevPageBtn=await initPaginationBtn('prevPageBtn',tablePagination);
-			    				// ================================================
-								currentPageNo=await initInputPageNo(tablePagination,'currentPageNo',currentPage,noOfPages);
-								// ================================================
-								nextPageBtn=await initPaginationBtn('nextPageBtn',tablePagination);
-								// ================================================
-								lastPageBtn=await initPaginationBtn('lastPageBtn',tablePagination);
-								// ================================================
-			    				
-			    				// render datatable records
-			    				stmt='SELECT * FROM `' + selected_tbl_name + '` LIMIT ' + offset + ',' + recordsPerPage;
-			    				resultset = db.exec(stmt);
-			    				await renderDatatable(resultset,tableRecords);
-
-			    				currentPageNo.addEventListener('change', (evt0) => {
-			    					evt0.stopPropagation();
-			    					currentPage=parseInt(evt0.target.value);
-			    					setPaginationClass();
-			    				});
-			    				firstPageBtn.addEventListener('click', (evt1) => {
-			    					evt1.stopPropagation();
-			    					currentPage=1;
-			    					setPaginationClass();
-			    				});
-			    				prevPageBtn.addEventListener('click', (evt2) => {
-			    					evt2.stopPropagation();
-			    					if(currentPage>1) {
-			    						currentPage=currentPage-1;
-			    						setPaginationClass();
-			    					}
-			    				});
-			    				nextPageBtn.addEventListener('click', (evt3) => {
-			    					evt3.stopPropagation();
-			    					if(currentPage<noOfPages) {
-			    						currentPage=currentPage+1;
-			    						setPaginationClass();
-			    					}
-			    				});
-			    				lastPageBtn.addEventListener('click', (evt4) => {
-			    					evt4.stopPropagation();
-			    					currentPage=noOfPages;
-			    					setPaginationClass();
-			    				});
-							}, false);
-						} catch(err) {
-		    				throw new Error(err.message);
-		    			}
-					}
-
-					function getResultSetAsRowJSON(_db, _stmt) {
-						try {
-							let _resultset = _db.exec(_stmt);
-							let _columns=_resultset[0]['columns'];
-							let _values=_resultset[0]['values'];
-							let rowJSONOutput=[];
-							for(let valArr of _values) {
-								let obj={};
-								for(let v in valArr) { obj[_columns[v]]=valArr[v]; }
-								rowJSONOutput.push(obj);
-							}
-							return rowJSONOutput;
-						} catch(err) {
-							throw new Error(err.message);
-						}
-					}
-
-					async function renderDatatable(resultset, tableRecordsEle) {
-						try {
-		                	tableRecordsEle.innerHTML='';
-
-		                	let tableHtmlStr='';
-		    				tableHtmlStr+='<table class="table table-striped table-condensed small table-bordered">';
-		    				tableHtmlStr+='<thead>';
-		    				tableHtmlStr+='<tr><th></th><th>'+resultset[0]['columns'].join('</th><th>')+'</th></tr>';
-		    				tableHtmlStr+='</thead>';
-		    				tableHtmlStr+='<tbody>';
-		    				let tableValues=resultset[0]['values'];
-		    				for(let v in tableValues) {
-		    					tableHtmlStr+='<tr><th>' + (parseInt(v)+1) + '</th><td>'+tableValues[v].join('</td><td>') + '</td></tr>';
-		    				}
-		    				tableHtmlStr+='</tbody>';
-		    				tableHtmlStr+='</table>';
-		    				tableHtmlStr+='</div>';
-		    				tableRecordsEle.innerHTML=tableHtmlStr;
-
-		    				errorDisplay.innerHTML='';
-
-		    				return await Promise.resolve('success');
-	    				} catch(err) {
-		    				throw new Error(err.message);
-		    			}
-	                }
-
-
-	                // ================================== Query Editor Tab ===========================
-	                var sampleQueryStmt='SELECT patient_id,diagnosis_code,icd9_description'
-							+'\n FROM'
-							+'\n (SELECT'
-							+'\n 	patient_id,'
-							+'\n 	diagnosis_code'
-							+'\n FROM patient_diagnosis) A LEFT JOIN '
-							+'\n (SELECT icd9_code, icd9_description FROM icd9_mapping) B'
-							+'\n ON A.diagnosis_code = B.icd9_code;';
-			  		var codeEditor = document.getElementById('codeEditor');
-					var lineCounter = document.getElementById('lineCounter');
-					
-
-					var _buffer;
-					function countLines(textarea) {
-						if(_buffer==null) {
-						    _buffer = document.createElement('textarea');
-					        _buffer.style.border = 'none';
-					        _buffer.style.height = '0';
-					        _buffer.style.overflow = 'hidden';
-					        _buffer.style.padding = '0';
-					        _buffer.style.position = 'absolute';
-					        _buffer.style.left = '0';
-					        _buffer.style.top = '0';
-					        _buffer.style.zIndex = '-1';
-					        document.body.appendChild(_buffer);
-				        }
-					    let cs = window.getComputedStyle(textarea);
-					    let pl = parseInt(cs.paddingLeft);
-					    let pr = parseInt(cs.paddingRight);
-					    let lh = parseInt(cs.lineHeight);
-					    if (isNaN(lh)) lh = parseInt(cs.fontSize);
-					    _buffer.style.width = (textarea.clientWidth - pl - pr) + 'px';
-					    _buffer.style.font = cs.font;
-					    _buffer.style.letterSpacing = cs.letterSpacing;
-					    _buffer.style.whiteSpace = cs.whiteSpace;
-					    _buffer.style.wordBreak = cs.wordBreak;
-					    _buffer.style.wordSpacing = cs.wordSpacing;
-					    _buffer.style.wordWrap = cs.wordWrap;
-
-					    _buffer.value = textarea.value;
-
-					    let result = Math.floor(_buffer.scrollHeight / lh);
-					    if (result == 0) result = 1;
-					    return result;
-					}
-					
-
-					var onFirstLoad=true;
-					var lineCountCache=0;
-					var outArrCache=new Array();
-					
-					async function line_counter() {
-				        let lineCount = codeEditor.value.split('\n').length;
-				        let outarr = new Array();
-			            for (var x = 0; x < lineCount; x++) {
-			                outarr[x] = (x + 1) + '.';
-			            }
-			            await Promise.resolve(outarr);
-					    lineCountCache = lineCount;
-				        lineCounter.value = outarr.join('\n');
-					}
-
-					codeEditor.addEventListener('scroll', () => {
-						lineCounter.scrollTop = codeEditor.scrollTop;
-					    lineCounter.scrollLeft = codeEditor.scrollLeft;
-					});
-
-					
-					codeEditor.addEventListener('input', () => {
-						line_counter();
-					});
-
-					codeEditor.addEventListener('keydown', (e) => {
-					    let { keyCode } = e;
-					    let { value, selectionStart, selectionEnd } = codeEditor;
-					    if (keyCode === 9) {
-					      e.preventDefault();
-					      codeEditor.value = value.slice(0, selectionStart) + '\t' + value.slice(selectionEnd);
-					      codeEditor.setSelectionRange(selectionStart+2, selectionStart+1)
-					    }
-				  	});
-				  	codeEditor.value = sampleQueryStmt;
-				  	line_counter();
-
-					async function setQueryPaginationClass() {
-						try {
-	    					currentQueryPageNo.value=currentQueryPage;
-	    					if(currentQueryPage==1) {
-	    						if(!firstQueryPageBtn.classList.contains('disabled')) {
-	    							firstQueryPageBtn.classList.add('disabled');
-	    						}
-	    						if(!prevQueryPageBtn.classList.contains('disabled')) {
-	    							prevQueryPageBtn.classList.add('disabled');
-	    						}
-	    					} else if(currentQueryPage>1) {
-	    						if(firstQueryPageBtn.classList.contains('disabled')) {
-	    							firstQueryPageBtn.classList.remove('disabled');
-	    						}
-	    						if(prevQueryPageBtn.classList.contains('disabled')) {
-	    							prevQueryPageBtn.classList.remove('disabled');
-	    						}
-	    					}
-	    					if(currentQueryPage==noOfQueryPages) {
-	    						if(!nextQueryPageBtn.classList.contains('disabled')) {
-	    							nextQueryPageBtn.classList.add('disabled');
-	    						}
-	    						if(!lastQueryPageBtn.classList.contains('disabled')) {
-	    							lastQueryPageBtn.classList.add('disabled');
-	    						}
-	    					} else if(currentQueryPage<noOfQueryPages) {
-	    						if(nextQueryPageBtn.classList.contains('disabled')) {
-	    							nextQueryPageBtn.classList.remove('disabled');
-	    						}
-	    						if(lastQueryPageBtn.classList.contains('disabled')) {
-	    							lastQueryPageBtn.classList.remove('disabled');
-	    						}
-	    					}
-	    					queryOffset=(currentQueryPage-1)*recordsPerPage;
-	    					queryStmt='SELECT * FROM (' + originalQueryStmt + ') LIMIT ' + queryOffset + ',' + recordsPerPage;
-	    					queryResultset = db.exec(queryStmt);
-	    					await renderDatatable(queryResultset,tableQueryRecords);
-
-	    					let tableQueryDetailsHtmlStr=`${tblIcon} ⯈ Total no. of records: <kbd>${totalNoOfQueryRecords}</kbd> ⯈ Displaying records <kbd>${queryOffset} ― ${queryOffset+recordsPerPage}</kbd>`;
-	    					tableQueryDetails.innerHTML=tableQueryDetailsHtmlStr;
-    					} catch(err) {
-		    				throw new Error(err.message);
-		    			}
-    				}
-
-
-				  	var runQueryBtn=document.getElementById('runQueryBtn');
-				  	runQueryBtn.addEventListener('click', async() => {
-				  		try {
-				  			queryStmt=codeEditor.value;
-				  			originalQueryStmt=queryStmt.trim();
-		    				if(originalQueryStmt.charAt(originalQueryStmt.length-1)==';') {
-		    					originalQueryStmt=originalQueryStmt.substr(0,originalQueryStmt.length-1);
-		    				}
-					  		// ================================================
-							queryStmt='SELECT COUNT(*) FROM (' + originalQueryStmt + ')';
-		    				queryResultset=db.exec(queryStmt);
-		    				// ================================================
-		    				tableQueryDetails.innerHTML='';
-							removeAllChildNodes(tableQueryPagination);
-							// ================================================
-							currentQueryPage=1;
-							queryOffset=(currentQueryPage-1)*recordsPerPage;
-							// ================================================
-		    				totalNoOfQueryRecords=queryResultset[0]['values'][0];
-		    				totalNoOfQueryRecords=parseInt(totalNoOfQueryRecords);
-		    				noOfQueryPages=totalNoOfQueryRecords/recordsPerPage;
-		    				noOfQueryPages=Math.ceil(noOfQueryPages);
-		    				// ================================================
-		    				tableQueryDetails.innerHTML=`${tblIcon} ⯈ Total no. of records: <kbd>${totalNoOfQueryRecords}</kbd> ⯈ Displaying records <kbd>${queryOffset} ― ${queryOffset+recordsPerPage}</kbd>`;
-							// ================================================
-		    				firstQueryPageBtn=await initPaginationBtn('firstQueryPageBtn',tableQueryPagination);
-		    				// ================================================
-		    				prevQueryPageBtn=await initPaginationBtn('prevQueryPageBtn',tableQueryPagination);
-		    				// ================================================
-							currentQueryPageNo=await initInputPageNo(tableQueryPagination,'currentQueryPageNo',currentQueryPage,noOfQueryPages);
-							// ================================================
-							nextQueryPageBtn=await initPaginationBtn('nextQueryPageBtn',tableQueryPagination);
-							// ================================================
-							lastQueryPageBtn=await initPaginationBtn('lastQueryPageBtn',tableQueryPagination);
-							// ================================================
-		    				// render datatable records
-		    				queryStmt='SELECT * FROM (' + originalQueryStmt + ') LIMIT ' + queryOffset + ',' + recordsPerPage;
-		    				queryResultset = db.exec(queryStmt);
-		    				await renderDatatable(queryResultset,tableQueryRecords);
-
-		    				currentQueryPageNo.addEventListener('change', (evt0) => {
-		    					evt0.stopPropagation();
-		    					currentQueryPage=parseInt(evt0.target.value);
-		    					setQueryPaginationClass();
-		    				});
-		    				firstQueryPageBtn.addEventListener('click', (evt1) => {
-		    					evt1.stopPropagation();
-		    					currentQueryPage=1;
-		    					setQueryPaginationClass();
-		    				});
-		    				prevQueryPageBtn.addEventListener('click', (evt2) => {
-		    					evt2.stopPropagation();
-		    					if(currentQueryPage>1) {
-		    						currentQueryPage=currentQueryPage-1;
-		    						setQueryPaginationClass();
-		    					}
-		    				});
-		    				nextQueryPageBtn.addEventListener('click', (evt3) => {
-		    					evt3.stopPropagation();
-		    					if(currentQueryPage<noOfQueryPages) {
-		    						currentQueryPage=currentQueryPage+1;
-		    						setQueryPaginationClass();
-		    					}
-		    				});
-		    				lastQueryPageBtn.addEventListener('click', (evt4) => {
-		    					evt4.stopPropagation();
-		    					currentQueryPage=noOfQueryPages;
-		    					setQueryPaginationClass();
-		    				});
-					  	} catch(err) {
-					  		errorDisplay.innerHTML='';
-	           				errorDisplay.innerHTML=`⚠ ERROR: ${err.message}`;
-	           				appendLogOutput(err.message, 'ERROR');
-					  	}
-				  	},false);
-
-	           		exportAsJSON.addEventListener('click', (ev) => {
-	           			try {
-		           			let jsonObj=getResultSetAsRowJSON(db, 'SELECT * FROM `' + selected_tbl_name + '`');
-		                	let jsonStr=JSON.stringify(jsonObj);
-			                let textblob = new Blob([jsonStr], {
-			                    type: 'application/json'
-			                });
-			                let dwnlnk = document.createElement('a');
-			                dwnlnk.download = `${selected_tbl_name}.json`;
-			                if (window.webkitURL != null) { dwnlnk.href = window.webkitURL.createObjectURL(textblob); }
-			                dwnlnk.click();
-		                } catch(err) {
-			            	errorDisplay.innerHTML='';
-	           				errorDisplay.innerHTML=`⚠ ERROR: ${err.message}`;
-
-	           				appendLogOutput(err.message, 'ERROR');
-			            }
-	                });
-
-	                exportQueryAsJSON.addEventListener('click', (ev) => {
-	                	try {
-		           			let jsonObj=getResultSetAsRowJSON(db, 'SELECT * FROM (' + originalQueryStmt + ')');
-		                	let jsonStr=JSON.stringify(jsonObj);
-			                let textblob = new Blob([jsonStr], {
-			                    type: 'application/json'
-			                });
-			                let dwnlnk = document.createElement('a');
-			                dwnlnk.download = 'queryResultset.json';
-			                if (window.webkitURL != null) { dwnlnk.href = window.webkitURL.createObjectURL(textblob); }
-			                dwnlnk.click();
-		                } catch(err) {
-			            	errorDisplay.innerHTML='';
-	           				errorDisplay.innerHTML=`⚠ ERROR: ${err.message}`;
-
-	           				appendLogOutput(err.message, 'ERROR');
-			            }
-	                });
-
-	                exportEditorQuery.addEventListener('click', (ev) => {
-	                	try {
-		           			let queryStr=codeEditor.value;
-			                let textblob = new Blob([queryStr], {
-			                    type: 'text/plain'
-			                });
-			                let dwnlnk = document.createElement('a');
-			                dwnlnk.download = 'query.sql';
-			                if (window.webkitURL != null) { dwnlnk.href = window.webkitURL.createObjectURL(textblob); }
-			                dwnlnk.click();
-		                } catch(err) {
-			            	errorDisplay.innerHTML='';
-	           				errorDisplay.innerHTML=`⚠ ERROR: ${err.message}`;
-
-	           				appendLogOutput(err.message, 'ERROR');
-			            }
-	                });
-
-					function readFileAsArrayBuffer(file) {
-		             	return new Promise((resolve,reject) => {
-		                    let fileredr = new FileReader();
-		                    fileredr.onload = () => resolve(fileredr.result);
-		                    fileredr.onerror = () => reject(fileredr);
-		                    fileredr.readAsArrayBuffer(file);
-		                });
-	           		}
-
-	           		var fileNameDisplay=document.getElementById('fileNameDisplay');
-					var fileSizeDisplay=document.getElementById('fileSizeDisplay');
-					var noOfTablesDisplay=document.getElementById('noOfTablesDisplay');
-
-	           		upload.addEventListener('change', async(ev) => {
-	           			errorDisplay.innerHTML='';
-
-		                let file = ev.currentTarget.files[0];
-		                if(!file) return;
-
-		                try {
-		                    fileNameDisplay.innerText=file.name;
-		                    fileSizeDisplay.innerText=`${parseInt(file.size/1024)} ㎅`;
-
-		                    let arrayBuffer=await readFileAsArrayBuffer(file);
-							let uInt8Array=new Uint8Array(arrayBuffer);
-							db=new SQL.Database(uInt8Array);
-
-				        	stmt='SELECT * FROM sqlite_master WHERE type=\'table\'';
-			    			resultset = getResultSetAsRowJSON(db, stmt);
-			                let noOfTables=resultset.length;
-			                noOfTablesDisplay.innerHTML=`<kbd>${noOfTables}</kdb>`;
-
-			            	for(let rowObj of resultset) {
-			            		let tblName=rowObj['tbl_name'];
-			            		loadTableSelectable(tblName);
-			            	}
-			            } catch(err) {
-			            	errorDisplay.innerHTML='';
-	           				errorDisplay.innerHTML=`⚠ ERROR: ${err.message}`;
-
-	           				appendLogOutput(err.message, 'ERROR');
-			            }
-                   }, false); // upload file change event
-			    }); // DOMContentLoaded
-			}
-	    </script>
+	    <!-- // page-wrapper -->
+</div>
+	<script src='js/polyfill.js'></script>
+    <script src='js/ie10-viewport-bug-workaround.js'></script>
+    <script src='js/bootstrap-native-v4.js'></script>
+    <script src='js/custom.js'></script>
 	</body>
 </html>
