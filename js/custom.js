@@ -534,7 +534,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 
 		exportEditorQuery.addEventListener('click', () => {
 			try {
-					let queryStr=codeEditor.value;
+				let queryStr=codeEditor.value;
 		        let textblob = new Blob([queryStr], {
 		            type: 'text/plain'
 		        });
@@ -558,7 +558,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 			}
 			// const binaryArray = db.export();
 			const fileNameDisplay=document.querySelector('#fileNameDisplay');
-		const fileSizeDisplay=document.querySelector('#fileSizeDisplay');
+			const fileSizeDisplay=document.querySelector('#fileSizeDisplay');
 			upload.addEventListener('change', async(ev) => {
 				errorDisplay.innerHTML='';
 
@@ -603,6 +603,20 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 	        	errorDisplay.innerHTML='';
 					errorDisplay.innerHTML=`<span class='emoji'>⚠</span> ERROR: ${err.message}`;
 	        }
+
+	        const convertBitArrtoB64 = (bitArr) => ( btoa( bitArr.reduce((data, byte) => data + String.fromCharCode(byte), '') ) );
+
+	        const exportDB=document.querySelector('#exportDB');
+	        exportDB.addEventListener('click', (evt)=> {
+	        	const arrayBuffer = db.export();
+	        	let uInt8Array=new Uint8Array(arrayBuffer);
+	        	let b64Str=convertBitArrtoB64(uInt8Array);
+
+	        	let dwnlnk = document.createElement('a');
+		        dwnlnk.download = 'sqliteDatabaseOutput.db';
+		        dwnlnk.href=`data:application/db;base64,${b64Str}`;
+		        dwnlnk.click();
+	        });
 	   }); // upload file change event
 	}); // DOMContentLoaded
 }

@@ -66,6 +66,8 @@
 								      <button id='exportQueryAsJSON' type='button' class='dropdown-item'><strong class='text-custom-one'>{;}</strong> <small>Export Resultset (.json)</small></button>
 								      <li class="divider"></li>
 								      <button id='exportEditorQuery' type='button' class='dropdown-item symbol'><strong class='text-custom-one'>‹/›</strong> <small>Export SQL statements (.sql)</small></button>
+								      <li class="divider"></li>
+							      		<button id='exportDB' type='button' class='dropdown-item symbol'><strong class='text-custom-one'>‹/›</strong> <small>Export SQLite Database (.db)</small></button>
 								    </div>
 							    </div>
 					    	</th>
@@ -91,10 +93,10 @@
 							<button id='runQueryBtn' type='button' class='btn btn-sm bg-custom-one text-white rounded-pill small text-center'><small class='symbol'><sup>Run</sup> ▶</small></button>
 
 							<!-- badges -->
-							<span class='badge text-custom-one bg-white p-1 m-1 font-weight-500'><span class='symbol'>▦</span> <span id='noOfTablesDisplay'>0</span> tables in total</span>
-							<span class='badge text-custom-one bg-white p-1 mt-1 mb-1 mr-1 font-weight-500'><span class='symbol'>⛶</span> Showing records <span id='displayedRecordsRange'>---</span> </span>
+							<span class='badge text-custom-one bg-white p-1 m-1 font-weight-500'><span class='symbol'>▦</span> <span id='noOfTablesDisplay'>0</span> total tables</span>
+							<span class='badge text-custom-one bg-white p-1 mt-1 mb-1 mr-1 font-weight-500'><span class='symbol'>⛶</span> Showing rows <span id='displayedRecordsRange'>---</span> </span>
 		                    <span class='badge text-custom-one bg-white p-1 mt-1 mb-1 mr-1 font-weight-500'><span class='symbol'>📄</span> <span id='pageCountDisplay'>0</span> pages</span>
-		                    <span class='badge text-custom-one bg-white p-1 mt-1 mb-1 font-weight-500'><span class='symbol'>📚</span> <span id='totalRowCount'>0</span> records in total</span>
+		                    <span class='badge text-custom-one bg-white p-1 mt-1 mb-1 font-weight-500'><span class='symbol'>📚</span> <span id='totalRowCount'>0</span> total records</span>
 		                    <!-- //badges -->
 
 						</div>
