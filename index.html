@@ -97,7 +97,7 @@
 	            	<!-- card-body -->
 	            	<div class='card-body rounded-0 p-0 h-100'>
 						<p id='errorDisplay' class='m-1 p-0 small text-danger'></p>
-						<div id='filters' class='card-subtitle m-1 nowrap w-100'>
+						<div id='filters' class='card-subtitle m-1 custom-scrollbar nowrap w-100'>
 							<strong class='symbol text-custom-one'>‹/› SQL Editor</strong>
 							<span class='symbol text-custom-one mr-1 ml-1'>❘</span>
 							<button id='runQueryBtn' type='button' class='btn btn-sm bg-custom-one text-white rounded-pill small text-center'><small class='symbol'><sup>Run</sup> ▶</small></button>
@@ -105,8 +105,8 @@
 							<ul id='tableQueryPagination' class="pagination pagination-sm rounded-0 mb-1 mt-1"></ul>
 						</div>
 						
-						<p class="ml-1 mt-1 mr-1 mb-1"><textarea id='lineCounter' wrap='off' readonly>1.</textarea><textarea id='codeEditor' wrap='off'></textarea></p>
-						<div id='tableQueryRecords' class="table-responsive table-responsive-sm border mt-1 ml-1 mr-1 mb-2"></div>
+						<p class="ml-1 mt-1 mr-1 mb-1"><textarea id='lineCounter' wrap='off' readonly>1.</textarea><textarea id='codeEditor' class='custom-scrollbar' wrap='off'></textarea></p>
+						<div id='tableQueryRecords' class="table-responsive table-responsive-sm border custom-scrollbar mt-1 ml-1 mr-1 mb-2"></div>
 						<!-- <hr class='invisible-divider mb-0 mt-0'> -->
 						
 					</div>
