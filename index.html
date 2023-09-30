@@ -58,6 +58,18 @@
 	        <div id='databaseTables' class="scroll-sidebar ps-container ps-active-y pt-5 pb-2 custom-scrollbar">
 	        	<table class='table table-condensed small'>
 	        		<thead>
+	        			<tr>
+	        				<th colspan='2'>
+	        					<div class='btn-group btn-group-sm'>
+								    <button id='exportQueryToggleBtn' type='button' class="btn btn-sm bg-custom-two text-white border border-white dropdown-toggle btnSymbol" data-toggle='dropdown'><small class='symbol'>💾 Save As…</small></button>
+								    <div class='dropdown-menu'>
+								      <button id='exportQueryAsJSON' type='button' class='dropdown-item'><strong class='text-custom-one'>{;}</strong> <small>Export Resultset (.json)</small></button>
+								      <li class="divider"></li>
+								      <button id='exportEditorQuery' type='button' class='dropdown-item symbol'><strong class='text-custom-one'>‹/›</strong> <small>Export SQL statements (.sql)</small></button>
+								    </div>
+							    </div>
+					    	</th>
+					    </tr>
 	        			<tr><th class='w-35 p-2 text-right'>File Name:</th><th id='fileNameDisplay' class='symbol p-2 font-weight-lighter'>---</th></tr>
 	        			<tr><th class='w-35 p-2 text-right'>File Size:</th><th id='fileSizeDisplay' class='symbol p-2 font-weight-lighter'>---</th></tr>
 	        		</thead>
@@ -73,7 +85,7 @@
 	            	<div class='card-body rounded-0 p-2 h-100'>
 						<p id='errorDisplay' class='m-0 p-0 small text-danger'></p>
 
-						<div id='filters' class='card-subtitle mt-0 pb-1 mb-1 nowrap w-100'>
+						<div id='filters' class='card-subtitle mt-0 pb-1 mb-1 ml-4 nowrap w-100'>
 							<strong class='symbol text-custom-one'>‹/› SQL Editor</strong>
 							<span class='symbol text-custom-one mr-1 ml-1'>❘</span>
 							<button id='runQueryBtn' type='button' class='btn btn-sm bg-custom-one text-white rounded-pill small text-center'><small class='symbol'><sup>Run</sup> ▶</small></button>
@@ -85,14 +97,6 @@
 		                    <span class='badge text-custom-one bg-white p-1 mt-1 mb-1 font-weight-500'><span class='symbol'>📚</span> <span id='totalRowCount'>0</span> records in total</span>
 		                    <!-- //badges -->
 
-		                    <div class='btn-group btn-group-sm float-left mr-2'>
-							    <button id='exportQueryToggleBtn' type='button' class="btn btn-sm bg-custom-two text-white border border-white dropdown-toggle btnSymbol" data-toggle='dropdown'><small class='symbol'>💾</small></button>
-							    <div class='dropdown-menu'>
-							      <button id='exportQueryAsJSON' type='button' class='dropdown-item'><small class='symbol'>Export resultset as <code>JSON</code></small></button>
-							      <li class="divider"></li>
-							      <button id='exportEditorQuery' type='button' class='dropdown-item'><small class='symbol'>📄 Export SQL query statements</small></button>
-							    </div>
-						    </div>
 						</div>
 						
 						<p class='mb-0'><textarea id='lineCounter' wrap='off' readonly>1.</textarea><textarea id='codeEditor' wrap='off'></textarea></p>
