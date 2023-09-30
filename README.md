@@ -27,8 +27,8 @@
 [**Article :: Link :: Read & Export SQLite Data in a JavaScript-enabled Browser Locally**](https://medium.com/weekly-webtips/read-export-sqlite-data-in-a-javascript-enabled-browser-locally-b655deda879d)
 
 
-#### Status
-<p>Still a WIP.</p>
+#### ⚠ Current Status
+<p>Still a WIP</p>
 
 <p>— <b>Join me on 📝 <b>Medium</b> at <a href='https://medium.com/@geek-cc' target='_blank'>~ ξ(🎀˶❛◡❛) @geek-cc</a></b></p>
 

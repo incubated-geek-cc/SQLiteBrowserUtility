@@ -500,10 +500,15 @@ details[open] > summary {
   border-color: rgba(28,205,188) !important; 
 }
 
+#filters .btn-group.btn-group-sm.mr-auto.float-right {
+  position: fixed;
+    z-index: 999;
+}
 #upload-btn,
-#about-btn  {
+#about-btn,
+#runQueryBtn  {
   height: 26px;
-  font: small-caption;
+  /*font: small-caption;*/
   display:inline;
 }
 
@@ -516,6 +521,13 @@ button.navbar-toggler:focus {
 
 ul.nav.navbar-nav {
   display:inline;
+}
+
+.dropdown-menu .divider {
+    height: 1px;
+    margin: 1px 0;
+    overflow: hidden;
+    background-color: #e5e5e5;
 }
 
 #filters .badge {

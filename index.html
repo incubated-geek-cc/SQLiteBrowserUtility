@@ -37,15 +37,15 @@
 	      </li>    
 	    </ul> -->
 	    <ul class="nav navbar-nav ml-auto nowrap">
-	      <li class="nav-item"><a id='upload-btn' type='button' class="btn btn-sm bg-custom-one text-white rounded-pill small nowrap symbol text-center ml-1 mr-1">⤒ Upload SQLite File<input id='upload' type='file' /></a>
+	      <li class="nav-item"><a id='upload-btn' type='button' class="btn btn-sm bg-custom-one text-white rounded-pill small nowrap text-center ml-1 mr-1"><span class='symbol'>📤</span> <sup>Upload SQLite File</sup><input id='upload' type='file' /></a>
 	      </li>
-	      <li class="nav-item"><a id='about-btn' type='button' class="btn btn-sm bg-custom-one text-white rounded-pill small nowrap symbol text-center" data-toggle="popover" data-title="Application Details" data-dismissible="true" data-placement="right" data-content='<div class="row">
+	      <li class="nav-item"><a id='about-btn' type='button' class="btn btn-sm bg-custom-one text-white rounded-pill small nowrap text-center" data-toggle="popover" data-title="Application Details" data-dismissible="true" data-placement="right" data-content='<div class="row">
                 <div class="col-sm-12" style="text-align:left">
                     <p><span class="symbol">❶</span> Original work by Kripken <cite title="sql.js/sql.js: A javascript library to run SQLite on the web."><a href="https://github.com/sql-js/sql.js" target="_blank">sql.js</a></cite> which is <a href="LICENSE.txt" target="_blank">MIT licensed</a>.</p>
                     <p><span class="symbol">❷</span> SQLite is a <abbr title="Relational Database Management System">RDBMS</abbr> with no dependencies and able to operate offline in-browser without a database engine.</p>
                     <p><span class="symbol">❸</span> This application requires no server-side processing and was compiled with WASM. <span class="emoji">🚫</span> No server setup required.</p>
                 </div>
-            </div>'>🛈 About</a>
+            </div>'><span class='symbol'>❓</span><sup>About</sup></a>
 	      </li>
 	    </ul>
 	  <!-- </div>   -->
@@ -64,7 +64,7 @@
 					<tbody id='dbTableDetails'></tbody>
 				</table>
 	        </div>
-	        <small class='nowrap small ml-1 pt-1 pb-1 pl-2 pr-2 rounded-0 attribution'><span class='symbol copyrightNote'>© Copyright</span> <span id='copyrightYearDisplay' class='copyrightNote'></span><span class='symbol pl-1 pr-1'>⯈ By</span><a href="https://medium.com/@geek-cc" target="_blank"><span class="symbol">ξ(</span><span class="emoji">🎀</span><span class="symbol">˶❛◡❛) ᵀᴴᴱ ᴿᴵᴮᴮᴼᴺ ᴳᴵᴿᴸ</span></a><span class='symbol pl-1 pr-1'><a href='https://github.com/incubated-geek-cc/' target='_blank'><span data-profile='github' class='attribution-icon'></span></a> ▪ <a href='https://medium.com/@geek-cc' target='_blank'><span data-profile='medium' class='attribution-icon'></span></a> ▪ <a href='https://www.linkedin.com/in/charmaine-chui-15133282/' target='_blank'><span data-profile='linkedin' class='attribution-icon'></span></a> ▪ <a href='https://twitter.com/IncubatedGeekCC' target='_blank'><span data-profile='twitter' class='attribution-icon'></span></a></span></small>
+	        <small class='nowrap small ml-1 pt-1 pb-1 pl-2 pr-2 rounded-0 attribution'><span class='symbol copyrightNote'>© Copyright</span> <span id='copyrightYearDisplay' class='copyrightNote'></span><span class='symbol pl-1 pr-1'>▪ By</span><a href="https://medium.com/@geek-cc" target="_blank"><span class="symbol">ξ(</span><span class="emoji">🎀</span><span class="symbol">˶❛◡❛) ᵀᴴᴱ ᴿᴵᴮᴮᴼᴺ ᴳᴵᴿᴸ</span></a><span class='symbol pl-1 pr-1'><a href='https://github.com/incubated-geek-cc/' target='_blank'><span data-profile='github' class='attribution-icon'></span></a> ▪ <a href='https://medium.com/@geek-cc' target='_blank'><span data-profile='medium' class='attribution-icon'></span></a> ▪ <a href='https://www.linkedin.com/in/charmaine-chui-15133282/' target='_blank'><span data-profile='linkedin' class='attribution-icon'></span></a> ▪ <a href='https://twitter.com/IncubatedGeekCC' target='_blank'><span data-profile='twitter' class='attribution-icon'></span></a></span></small>
 	    </aside>
 	 	<div class="page-wrapper mt-0 mb-0 mr-1 pr-0 pl-1 pt-0 pb-0 h-100" style="display:block">
 				<!-- card -->
@@ -73,21 +73,24 @@
 	            	<div class='card-body rounded-0 p-2 h-100'>
 						<p id='errorDisplay' class='m-0 p-0 small text-danger'></p>
 
-						<div id='filters' class='card-subtitle mt-0 mb-1 nowrap w-100'>
-							<strong class='symbol text-custom-one'>‹/› SQL Editor</strong>
-							<button id='runQueryBtn' type='button' class='btn btn-sm bg-none rounded-circle text-center p-0 site-header-btn'><small class='symbol'>▶</small></button>
+						<div id='filters' class='card-subtitle mt-0 pb-1 mb-1 nowrap w-100'>
+							<strong class='symbol text-custom-one ml-4'>‹/› SQL Editor</strong>
+							<span class='symbol text-custom-one mr-1 ml-1'>❘</span>
+							<button id='runQueryBtn' type='button' class='btn btn-sm bg-custom-one text-white rounded-pill small text-center'><small class='symbol'><sup>Run</sup> ▶</small></button>
+
 							<!-- badges -->
 							<span class='badge text-custom-one bg-white p-1 m-1 font-weight-500'><span class='symbol'>▦</span> <span id='noOfTablesDisplay'>0</span> tables in total</span>
-							<span class='badge text-custom-one bg-white p-1 m-1 font-weight-500'><span class='symbol'></span> Displaying <span id='displayedRecordsRange'>---</span> </span>
-		                    <span class='badge text-custom-one bg-white p-1 m-1 font-weight-500'><span class='symbol'></span> <span id='pageCountDisplay'>0</span> pages</span>
-		                    <span class='badge text-custom-one bg-white p-1 m-1 font-weight-500'><span class='symbol'></span> <span id='totalRowCount'>0</span> records in total</span>
+							<span class='badge text-custom-one bg-white p-1 m-1 font-weight-500'><span class='symbol'>⛶</span> Showing records <span id='displayedRecordsRange'>---</span> </span>
+		                    <span class='badge text-custom-one bg-white p-1 m-1 font-weight-500'><span class='symbol'>📄</span> <span id='pageCountDisplay'>0</span> pages</span>
+		                    <span class='badge text-custom-one bg-white p-1 m-1 font-weight-500'><span class='symbol'>📚</span> <span id='totalRowCount'>0</span> records in total</span>
 		                    <!-- //badges -->
 
-		                    <div class='btn-group btn-group-sm mr-auto'>
-							    <button id='exportQueryToggleBtn' type='button' class='btn btn-sm btn-light border dropdown-toggle btnSymbol' data-toggle='dropdown'><small class='symbol'>💾</small></button>
+		                    <div class='btn-group btn-group-sm mr-auto float-right'>
+							    <button id='exportQueryToggleBtn' type='button' class="btn btn-sm bg-custom-two text-white border border-white dropdown-toggle btnSymbol" data-toggle='dropdown'><small class='symbol'>💾</small></button>
 							    <div class='dropdown-menu'>
-							      <button id='exportQueryAsJSON' type='button' class='dropdown-item'><small class='symbol'>💽 Export resultset as JSON</small></button>
-							      <button id='exportEditorQuery' type='button' class='dropdown-item'><small class='symbol'>📄 Export SQL query</small></button>
+							      <button id='exportQueryAsJSON' type='button' class='dropdown-item'><small class='symbol'>Export resultset as <code>JSON</code></small></button>
+							      <li class="divider"></li>
+							      <button id='exportEditorQuery' type='button' class='dropdown-item'><small class='symbol'>📄 Export SQL query statements</small></button>
 							    </div>
 						    </div>
 						</div>
