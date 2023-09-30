@@ -156,9 +156,9 @@ a.dropdown-item {
     background-color: #d8d8d8;
     position: absolute;
     width: 2.25rem;
-    background-color: rgba(28,205,188);
+    background-color: rgb(28 205 188 / 25%);
     border-color: rgba(28,205,188);
-    color: #fefdfd;
+    color: rgba(8,152,138);
 }
 #lineCounter:focus-visible,
 #codeEditor:focus-visible {
