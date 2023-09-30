@@ -19,18 +19,18 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 		);
 
 	    if (!window.FileReader) {
-	    	errorDisplay.innerHTML='<span class=\'emoji\'>⛔</span> WARNING: Your browser does not support HTML5 \'FileReader\' function required to open a file.';
+	    		errorDisplay.innerHTML='<span class=\'emoji\'>⛔</span> WARNING: Your browser does not support HTML5 \'FileReader\' function required to open a file.';
 	  		return;
 			}
 			if (!window.Blob) {
-	        errorDisplay.innerHTML='<span class=\'emoji\'>⛔</span> WARNING: Your browser does not support HTML5 \'Blob\' function required to save a file.';
+	        	errorDisplay.innerHTML='<span class=\'emoji\'>⛔</span> WARNING: Your browser does not support HTML5 \'Blob\' function required to save a file.';
 	  		return;
-			}
+		}
 			
-			const toggleSidebarBtn = document.querySelector('#toggleSidebarBtn');
+		const toggleSidebarBtn = document.querySelector('#toggleSidebarBtn');
 	    const asideLeftSidebar = document.querySelector('aside.left-sidebar');
 	    const pageWrapper = document.querySelector('#main-wrapper .page-wrapper');
-	    const pageWrapperContainer = document.querySelector('#main-wrapper .page-wrapper >.container-fluid');
+	    // const pageWrapperContainer = document.querySelector('#main-wrapper .page-wrapper >.container-fluid');
 	    toggleSidebarBtn.addEventListener('click', (evt) => {
 	        let currentVal = evt.target.value;
 	        let latestVal = (currentVal == 'true') ? 'false' : 'true';
@@ -38,11 +38,11 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 	        if (latestVal == 'true') {
 	            asideLeftSidebar['style']['width'] = '0px';
 	            pageWrapper['style']['margin-left'] = '0px';
-	            pageWrapperContainer['style']['min-width'] = 'calc(100vw - 5.5em)';
+	            // pageWrapperContainer['style']['min-width'] = 'calc(100vw - 5.5em)';
 	        } else if (latestVal == 'false') {
 	            asideLeftSidebar['style']['width'] = '240px';
 	            pageWrapper['style']['margin-left'] = '240px';
-	            pageWrapperContainer['style']['min-width'] = 'calc(100vw - 240px - 5.5em)';
+	            // pageWrapperContainer['style']['min-width'] = 'calc(100vw - 240px - 5.5em)';
 	        }
 	    });
 			function htmlToElement(html) {
@@ -60,9 +60,9 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 			uploadBtn.addEventListener('click', () => {
 				let clickEvent = new MouseEvent('click', { view: window, bubbles: false, cancelable: false });
 			upload.dispatchEvent(clickEvent);
-			});
+		});
 
-			const displayedRecordsRange=document.querySelector('#displayedRecordsRange');
+		const displayedRecordsRange=document.querySelector('#displayedRecordsRange');
 		const noOfTablesDisplay=document.querySelector('#noOfTablesDisplay');
 		const totalRowCount=document.querySelector('#totalRowCount');
 		const pageCountDisplay=document.querySelector('#pageCountDisplay');
@@ -137,7 +137,9 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 
 				return await Promise.resolve(paginationBtn);
 			} catch(err) {
-				throw new Error(err.message);
+				errorDisplay.innerHTML='';
+				errorDisplay.innerHTML=`<span class='emoji'>⚠</span> ERROR: ${err.message}`;
+				console.log(err);
 			}
 		}
 		
@@ -173,7 +175,9 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 
 				return await Promise.resolve(currentPageNo);
 			} catch(err) {
-				throw new Error(err.message);
+				errorDisplay.innerHTML='';
+				errorDisplay.innerHTML=`<span class='emoji'>⚠</span> ERROR: ${err.message}`;
+				console.log(err);
 			}
 		}
 		function removeAllChildNodes(parent) {
@@ -183,7 +187,8 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 			    }
 			} catch(err) {
 				errorDisplay.innerHTML='';
-					errorDisplay.innerHTML=`<span class='emoji'>⚠</span> ERROR: ${err.message}`;
+				errorDisplay.innerHTML=`<span class='emoji'>⚠</span> ERROR: ${err.message}`;
+				console.log(err);
 			}
 		}
 		function loadTableSelectable(tblName) {
@@ -204,20 +209,19 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 
 					let selected_tbl_name=tblClickableBtn.innerText;
 					selected_tbl_name=selected_tbl_name.replace(tblIcon,'');
-
+					// ================================================
+					originalQueryStmt='SELECT COUNT(*) FROM `' + selected_tbl_name + '`';
+					queryStmt=originalQueryStmt;
+					queryResultset = db.exec(queryStmt);
 					// ================================================
 					removeAllChildNodes(tableQueryPagination);
 					// ================================================
 					currentQueryPage=1;
-					// =============== QUERY TAB =============================
 					queryOffset=(currentQueryPage-1)*recordsPerPage;
-					// ================================================
-					queryStmt='SELECT COUNT(*) FROM `' + selected_tbl_name + '`';
-					queryResultset = db.exec(queryStmt);
 					// ================================================
 					totalNoOfQueryRecords=queryResultset[0]['values'][0];
 					totalNoOfQueryRecords=parseInt(totalNoOfQueryRecords);
-					noOfPages=totalNoOfQueryRecords/recordsPerPage;
+					noOfQueryPages=totalNoOfQueryRecords/recordsPerPage;
 					noOfQueryPages=Math.ceil(noOfQueryPages);
 					// ================================================
 					totalRowCount.innerHTML=totalNoOfQueryRecords;
@@ -233,10 +237,12 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 					// ================================================
 					lastQueryPageBtn=await initPaginationBtn('lastQueryPageBtn',tableQueryPagination);
 					// ================================================
-					
 					// render datatable records
-					originalQueryStmt='SELECT * FROM `' + selected_tbl_name + '` LIMIT ' + queryOffset + ',' + recordsPerPage;
-					queryResultset = db.exec(originalQueryStmt);
+					originalQueryStmt='SELECT * FROM `' + selected_tbl_name + '`';
+					queryStmt='SELECT * FROM (' + originalQueryStmt + ') LIMIT ' + queryOffset + ',' + recordsPerPage;
+					queryResultset = db.exec(queryStmt);
+					// console.log(['originalQueryStmt',originalQueryStmt]);
+					// console.log(['queryStmt',queryStmt]);
 					await renderDatatable(queryResultset,tableQueryRecords);
 
 					currentQueryPageNo.addEventListener('change', (evt0) => {
@@ -271,7 +277,8 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 				});
 			} catch(err) {
 				errorDisplay.innerHTML='';
-					errorDisplay.innerHTML=`<span class='emoji'>⚠</span> ERROR: ${err.message}`;
+				errorDisplay.innerHTML=`<span class='emoji'>⚠</span> ERROR: ${err.message}`;
+				console.log(err);
 			}
 		}
 		function getResultSetAsRowJSON(_db, _sqlQuery) {
@@ -288,7 +295,8 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 				return rowJSONOutput;
 			} catch(err) {
 				errorDisplay.innerHTML='';
-					errorDisplay.innerHTML=`<span class='emoji'>⚠</span> ERROR: ${err.message}`;
+				errorDisplay.innerHTML=`<span class='emoji'>⚠</span> ERROR: ${err.message}`;
+				console.log(err);
 			}
 		}
 		async function renderDatatable(resultset, tableRecordsEle) {
@@ -314,7 +322,9 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 
 				return await Promise.resolve('success');
 			} catch(err) {
-				throw new Error(err.message);
+				errorDisplay.innerHTML='';
+				errorDisplay.innerHTML=`<span class='emoji'>⚠</span> ERROR: ${err.message}`;
+				console.log(err);
 			}
 	    }
 	    // ================================== Query Editor Tab ===========================
@@ -430,13 +440,16 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 				queryOffset=(currentQueryPage-1)*recordsPerPage;
 				queryStmt='SELECT * FROM (' + originalQueryStmt + ') LIMIT ' + queryOffset + ',' + recordsPerPage;
 				queryResultset = db.exec(queryStmt);
+				// console.log(['originalQueryStmt',originalQueryStmt]);
+				// console.log(['queryStmt',queryStmt]);
 				await renderDatatable(queryResultset,tableQueryRecords);
 
 				totalRowCount.innerHTML=totalNoOfQueryRecords;
 				displayedRecordsRange.innerHTML=`${queryOffset} ― ${queryOffset+recordsPerPage}`;
 			} catch(err) {
 				errorDisplay.innerHTML='';
-					errorDisplay.innerHTML=`<span class='emoji'>⚠</span> ERROR: ${err.message}`;
+				errorDisplay.innerHTML=`<span class='emoji'>⚠</span> ERROR: ${err.message}`;
+				console.log(err);
 			}
 		}
 
@@ -478,6 +491,8 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 				// render datatable records
 				queryStmt='SELECT * FROM (' + originalQueryStmt + ') LIMIT ' + queryOffset + ',' + recordsPerPage;
 				queryResultset = db.exec(queryStmt);
+				// console.log(['originalQueryStmt',originalQueryStmt]);
+				// console.log(['queryStmt',queryStmt]);
 				await renderDatatable(queryResultset,tableQueryRecords);
 
 				currentQueryPageNo.addEventListener('change', (evt0) => {
@@ -511,7 +526,8 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 				});
 		  	} catch(err) {
 		  		errorDisplay.innerHTML='';
-					errorDisplay.innerHTML=`<span class='emoji'>⚠</span> ERROR: ${err.message}`;
+				errorDisplay.innerHTML=`<span class='emoji'>⚠</span> ERROR: ${err.message}`;
+				console.log(err);
 		  	}
 	  	});
 
@@ -529,6 +545,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 		    } catch(err) {
 		    	errorDisplay.innerHTML='';
 				errorDisplay.innerHTML=`<span class='emoji'>⚠</span> ERROR: ${err.message}`;
+				console.log(err);
 		    }
 		});
 
@@ -545,6 +562,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 		    } catch(err) {
 		    	errorDisplay.innerHTML='';
 				errorDisplay.innerHTML=`<span class='emoji'>⚠</span> ERROR: ${err.message}`;
+				console.log(err);
 		    }
 		});
 
@@ -601,7 +619,8 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 	        	}
 	        } catch(err) {
 	        	errorDisplay.innerHTML='';
-					errorDisplay.innerHTML=`<span class='emoji'>⚠</span> ERROR: ${err.message}`;
+				errorDisplay.innerHTML=`<span class='emoji'>⚠</span> ERROR: ${err.message}`;
+				console.log(err);
 	        }
 
 	        const convertBitArrtoB64 = (bitArr) => ( btoa( bitArr.reduce((data, byte) => data + String.fromCharCode(byte), '') ) );

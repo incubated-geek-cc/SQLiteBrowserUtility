@@ -48,7 +48,7 @@ div#tableRecords.table-responsive {
 }
 
 div#tableQueryRecords.table-responsive {
-    height:calc(100vh - 170px - 28vh + .3125rem + .3125rem);
+    height:calc(100vh - 170px - 28vh + .3125rem + .3125rem + .5rem);
     overflow-y:scroll;
 }
 #infoPanel {
@@ -169,6 +169,9 @@ a.dropdown-item {
 #tableQueryPagination,
 #errorDisplay {
     font-family: Segoe ui emoji;
+}
+#tableQueryPagination {
+  display: inline-flex;
 }
 .unicode {
     font-family: Cambria;
@@ -499,11 +502,11 @@ details[open] > summary {
 .border-custom-two {
   border-color: rgba(28,205,188) !important; 
 }
-
-#filters .btn-group.btn-group-sm.mr-auto.float-right {
-  position: fixed;
+/*
+#databaseTables .btn-group.btn-group-sm.mr-auto.float-right {
+    position: fixed;
     z-index: 999;
-}
+}*/
 #upload-btn,
 #about-btn,
 #runQueryBtn  {
@@ -530,7 +533,7 @@ ul.nav.navbar-nav {
     background-color: #e5e5e5;
 }
 
-#filters .badge {
+#databaseTables .badge {
   border: 1.5px solid rgba(8,152,138) !important;
 }
 
