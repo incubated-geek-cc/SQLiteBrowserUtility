@@ -165,13 +165,16 @@ a.dropdown-item {
     outline:none;
 }   
 
+#errorDisplay {
+  height:1.0rem;
+}
 #tablePagination,
-#tableQueryPagination,
 #errorDisplay {
     font-family: Segoe ui emoji;
 }
 #tableQueryPagination {
   display: inline-flex;
+  font-family: Segoe ui symbol;
 }
 .unicode {
     font-family: Cambria;
@@ -507,6 +510,16 @@ details[open] > summary {
     position: fixed;
     z-index: 999;
 }*/
+
+.page-link {
+  color:#08988a;
+}
+.page-item.disabled .page-link,
+.page-link {
+  /*color:#1ccdbc;*/
+  background:transparent; 
+}
+
 #upload-btn,
 #about-btn,
 #runQueryBtn  {
@@ -533,8 +546,10 @@ ul.nav.navbar-nav {
     background-color: #e5e5e5;
 }
 
-#databaseTables .badge {
-  border: 1.5px solid rgba(8,152,138) !important;
+.pagination-sm .page-link {
+    padding: 0.125rem 0.5rem;
+    font-size: .875rem;
+    line-height: 1.5;
 }
 
 .attribution {

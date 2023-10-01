@@ -30,7 +30,6 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 		const toggleSidebarBtn = document.querySelector('#toggleSidebarBtn');
 	    const asideLeftSidebar = document.querySelector('aside.left-sidebar');
 	    const pageWrapper = document.querySelector('#main-wrapper .page-wrapper');
-	    // const pageWrapperContainer = document.querySelector('#main-wrapper .page-wrapper >.container-fluid');
 	    toggleSidebarBtn.addEventListener('click', (evt) => {
 	        let currentVal = evt.target.value;
 	        let latestVal = (currentVal == 'true') ? 'false' : 'true';
@@ -38,14 +37,12 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 	        if (latestVal == 'true') {
 	            asideLeftSidebar['style']['width'] = '0px';
 	            pageWrapper['style']['margin-left'] = '0px';
-	            // pageWrapperContainer['style']['min-width'] = 'calc(100vw - 5.5em)';
 	        } else if (latestVal == 'false') {
 	            asideLeftSidebar['style']['width'] = '240px';
 	            pageWrapper['style']['margin-left'] = '240px';
-	            // pageWrapperContainer['style']['min-width'] = 'calc(100vw - 240px - 5.5em)';
 	        }
 	    });
-			function htmlToElement(html) {
+		function htmlToElement(html) {
 		    let documentFragment = document.createDocumentFragment();
 		    let template = document.createElement('template');
 		    template.innerHTML = html.trim();
@@ -64,8 +61,6 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 
 		const displayedRecordsRange=document.querySelector('#displayedRecordsRange');
 		const noOfTablesDisplay=document.querySelector('#noOfTablesDisplay');
-		const totalRowCount=document.querySelector('#totalRowCount');
-		const pageCountDisplay=document.querySelector('#pageCountDisplay');
 
 		const dbTableDetails=document.querySelector('#dbTableDetails');
 		const errorDisplay=document.querySelector('#errorDisplay');
@@ -145,8 +140,8 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 		
 		async function initInputPageNo(tablePaginationEle,currentPageNoID,currentPageVal,noOfPagesVal) {
 			try {
-				let currentPageNoLI=document.createElement('li');
-				currentPageNoLI.className='page-item';
+				let currentPageNoLi=document.createElement('li');
+				currentPageNoLi.className='page-item';
 				let currentPageNoLink=document.createElement('a');
 				currentPageNoLink.className='page-link';
 
@@ -165,10 +160,9 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 				let boldTextSuffix=document.createElement('b');
 				boldTextSuffix.className='pl-1 pr-1';
 				boldTextSuffix.innerText=noOfPagesVal;
-				pageCountDisplay.innerText=noOfPagesVal;
 
-				tablePaginationEle.appendChild(currentPageNoLI);
-				currentPageNoLI.appendChild(currentPageNoLink);
+				tablePaginationEle.appendChild(currentPageNoLi);
+				currentPageNoLi.appendChild(currentPageNoLink);
 				currentPageNoLink.appendChild(currentPageNo);
 				currentPageNoLink.appendChild(boldTextPrefix);
 				currentPageNoLink.appendChild(boldTextSuffix);
@@ -191,6 +185,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 				console.log(err);
 			}
 		}
+
 		function loadTableSelectable(tblName) {
 			let tblClickableBtn=document.createElement('button');
 			tblClickableBtn.setAttribute('type','button');
@@ -224,8 +219,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 					noOfQueryPages=totalNoOfQueryRecords/recordsPerPage;
 					noOfQueryPages=Math.ceil(noOfQueryPages);
 					// ================================================
-					totalRowCount.innerHTML=totalNoOfQueryRecords;
-					displayedRecordsRange.innerHTML=`${queryOffset} ― ${queryOffset+recordsPerPage}`;
+					displayedRecordsRange.innerHTML=`<span class='small text-muted'>Showing <strong>${queryOffset} to ${queryOffset+recordsPerPage}</strong> of <strong>${totalNoOfQueryRecords}</strong> rows</span>`;
 					// ================================================
 					firstQueryPageBtn=await initPaginationBtn('firstQueryPageBtn',tableQueryPagination);
 					// ================================================
@@ -443,9 +437,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 				// console.log(['originalQueryStmt',originalQueryStmt]);
 				// console.log(['queryStmt',queryStmt]);
 				await renderDatatable(queryResultset,tableQueryRecords);
-
-				totalRowCount.innerHTML=totalNoOfQueryRecords;
-				displayedRecordsRange.innerHTML=`${queryOffset} ― ${queryOffset+recordsPerPage}`;
+				displayedRecordsRange.innerHTML=`<span class='small text-muted'>Showing <strong>${queryOffset} to ${queryOffset+recordsPerPage}</strong> of <strong>${totalNoOfQueryRecords}</strong> rows</span>`;
 			} catch(err) {
 				errorDisplay.innerHTML='';
 				errorDisplay.innerHTML=`<span class='emoji'>⚠</span> ERROR: ${err.message}`;
@@ -475,8 +467,8 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 				noOfQueryPages=totalNoOfQueryRecords/recordsPerPage;
 				noOfQueryPages=Math.ceil(noOfQueryPages);
 				// ================================================
-				totalRowCount.innerHTML=totalNoOfQueryRecords;
-				displayedRecordsRange.innerHTML=`${queryOffset} ― ${queryOffset+recordsPerPage}`;
+				// displayedRecordsRange.innerHTML=`Showing ${queryOffset} to ${queryOffset+recordsPerPage} of ${totalNoOfQueryRecords} rows`;
+				displayedRecordsRange.innerHTML=`<span class='small text-muted'>Showing <strong>${queryOffset} to ${queryOffset+recordsPerPage}</strong> of <strong>${totalNoOfQueryRecords}</strong> rows</span>`;
 				// ================================================
 				firstQueryPageBtn=await initPaginationBtn('firstQueryPageBtn',tableQueryPagination);
 				// ================================================
@@ -623,19 +615,19 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 				console.log(err);
 	        }
 
-	        const convertBitArrtoB64 = (bitArr) => ( btoa( bitArr.reduce((data, byte) => data + String.fromCharCode(byte), '') ) );
+	        // const convertBitArrtoB64 = (bitArr) => ( btoa( bitArr.reduce((data, byte) => data + String.fromCharCode(byte), '') ) );
 
-	        const exportDB=document.querySelector('#exportDB');
-	        exportDB.addEventListener('click', (evt)=> {
-	        	const arrayBuffer = db.export();
-	        	let uInt8Array=new Uint8Array(arrayBuffer);
-	        	let b64Str=convertBitArrtoB64(uInt8Array);
+	        // const exportDB=document.querySelector('#exportDB');
+	        // exportDB.addEventListener('click', (evt)=> {
+	        // 	const arrayBuffer = db.export();
+	        // 	let uInt8Array=new Uint8Array(arrayBuffer);
+	        // 	let b64Str=convertBitArrtoB64(uInt8Array);
 
-	        	let dwnlnk = document.createElement('a');
-		        dwnlnk.download = 'sqliteDatabaseOutput.db';
-		        dwnlnk.href=`data:application/db;base64,${b64Str}`;
-		        dwnlnk.click();
-	        });
+	        // 	let dwnlnk = document.createElement('a');
+		       //  dwnlnk.download = 'sqliteDatabaseOutput.db';
+		       //  dwnlnk.href=`data:application/db;base64,${b64Str}`;
+		       //  dwnlnk.click();
+	        // });
 	   }); // upload file change event
 	}); // DOMContentLoaded
 }
