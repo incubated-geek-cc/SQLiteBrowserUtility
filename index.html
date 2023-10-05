@@ -20,7 +20,7 @@
 	</head>
 	<body>
 	<noscript>You need to enable JavaScript to run this app.</noscript>
-	<nav class="navbar navbar-expand-sm bg-light navbar-light fixed-top">
+	<nav class="navbar navbar-expand-sm navbar-light fixed-top">
 	  <a class="navbar-brand p-0"><img id='site-logo' src='img/site-logo.png' /></a>
 	  <!-- <button class="navbar-toggler symbol text-center border-custom-one bg-light text-custom-one pt-1 pb-1 pl-2 pr-2" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">☰</button> -->
 
@@ -37,71 +37,122 @@
 	      </li>    
 	    </ul> -->
 	    <ul class="nav navbar-nav ml-auto nowrap">
-	      <li class="nav-item"><a id='upload-btn' type='button' class="btn btn-sm bg-custom-one text-white rounded-pill small nowrap text-center ml-1 mr-1"><span class='symbol'>📤</span> <sup>Upload SQLite File</sup><input id='upload' type='file' /></a>
+	      <li class="nav-item">
+	      	<!-- <a id='upload-btn' type='button' class="btn btn-sm bg-custom-one text-white rounded-pill small nowrap text-center ml-1 mr-1"> -->
+	      	<label for="upload" class="site-header-btn bg-custom-one text-white rounded-pill mb-0 pr-3 pl-2">
+	      		<input id="upload" type="file" accept=".sqlite, .sqlite3, .db, .db3, .s3db, .sl3">
+	      		<span class="btn bg-custom-one text-white rounded-circle text-center site-header-icon upload-icon"></span><small>Upload SQLite File</small>
+	      	</label>
 	      </li>
-	      <li class="nav-item"><a id='about-btn' type='button' class="btn btn-sm bg-custom-one text-white rounded-pill small nowrap text-center" data-toggle="popover" data-title="Application Details" data-dismissible="true" data-placement="right" data-content='<div class="row">
+	      <!-- <li class="nav-item">
+	      	<a type='button' class="btn bg-custom-one text-white rounded-circle text-center site-header-btn site-header-icon about-icon" data-toggle="popover" data-title="Application Details" data-dismissible="true" data-placement="right" data-content='<div class="row">
                 <div class="col-sm-12" style="text-align:left">
                     <p><span class="symbol">❶</span> Original work by Kripken <cite title="sql.js/sql.js: A javascript library to run SQLite on the web."><a href="https://github.com/sql-js/sql.js" target="_blank">sql.js</a></cite> which is <a href="LICENSE.txt" target="_blank">MIT licensed</a>.</p>
                     <p><span class="symbol">❷</span> SQLite is a <abbr title="Relational Database Management System">RDBMS</abbr> with no dependencies and able to operate offline in-browser without a database engine.</p>
-                    <p><span class="symbol">❸</span> This application requires no server-side processing and was compiled with WASM. <span class="emoji">🚫</span> No server setup required.</p>
+                    <p><span class="symbol">❸</span> This application requires no server-side processing i.e. <span class="emoji">🚫</span> No server setup required.</p>
+                    <p><span class="symbol">❹</span> Mobile-responsive and works on JavaScript-enabled mobile web browsers.</p>
                 </div>
-            </div>'><span class='symbol'>❓</span><sup>About</sup></a>
-	      </li>
+            </div>'></a>
+	      </li> -->
 	    </ul>
-	  <!-- </div>   -->
+	  <!-- </div> application/vnd.sqlite3  -->
 	</nav>
 
 
 	<div id="main-wrapper" class='w-100'>
 		<aside class="left-sidebar">
-	        <button id="toggleSidebarBtn" type="button" class='btn btn-sm bg-none text-custom-one border-custom-one symbol text-center m-1' value='false'>☰</button>
-	        <div id='databaseTables' class="scroll-sidebar ps-container ps-active-y pt-5 pb-2 custom-scrollbar">
-	        	<table class='table table-condensed small'>
-	        		<thead>
-	        			<tr>
-	        				<th colspan='2'>
-	        					<div class='btn-group btn-group-sm'>
-								    <button id='exportQueryToggleBtn' type='button' class="btn btn-sm bg-custom-two text-white border border-white dropdown-toggle btnSymbol" data-toggle='dropdown'><small class='symbol'>💾 Save As…</small></button>
-								    <div class='dropdown-menu'>
-								      <button id='exportQueryAsJSON' type='button' class='dropdown-item'><strong class='text-custom-one'>{;}</strong> <small>Export Resultset (.json)</small></button>
-								      <li class="divider"></li>
-								      <button id='exportEditorQuery' type='button' class='dropdown-item symbol'><strong class='text-custom-one'>‹/›</strong> <small>Export SQL statements (.sql)</small></button>
-								      <li class="divider"></li>
-							      		<!-- <button id='exportDB' type='button' class='dropdown-item symbol'><strong class='text-custom-one'>‹/›</strong> <small>Export SQLite Database (.db)</small></button> -->
-								    </div>
-							    </div>
-					    	</th>
-					    </tr>
-	        			<tr><th class='w-35 p-2 text-right'>File Name:</th><th id='fileNameDisplay' class='symbol p-2 font-weight-lighter'>---</th></tr>
-	        			<tr><th class='w-35 p-2 text-right'>File Size:</th><th id='fileSizeDisplay' class='symbol p-2 font-weight-lighter'>---</th></tr>
-	        			<tr><th class='w-35 p-2 text-right'><span class='symbol'>▦</span> Tables:</th><th id='noOfTablesDisplay' class='symbol p-2 font-weight-lighter'>---</th></tr>
-	        		</thead>
-					<tbody id='dbTableDetails'></tbody>
-				</table>
+	        <button id="toggleSidebarBtn" type="button" class='btn btn-sm btn-outline-custom-two symbol text-center m-1 font-weight-bolder' value='false'>☰</button>
+	        <div id='databaseTables' class="scroll-sidebar ps-container ps-active-y pt-5 pb-1 custom-scrollbar border-bottom h-100">
+	       		<label id='sidebarUpload' class="site-header-btn bg-custom-one text-white rounded-pill mt-2 mb-2 ml-3 mr-3 pr-3 pl-2">
+		      		<span class="btn bg-custom-one text-white rounded-circle text-center site-header-icon upload-icon"></span><small>Upload SQLite File</small>
+		      	</label>
+		      	<hr class='invisible-divider mb-0 mt-0'>
+		      	<span class="icon icon-database p-2 mr-2 ml-3"></span><span class='text-custom-one font-weight-700'>SQLite Database</span>
+		      	<hr class='invisible-divider mb-1 mt-0'>
+		      	<div class='small row no-gutters pl-2'><div class='col-4 text-left pl-2 font-weight-600'>File Name:</div><div id='fileNameDisplay' class='col-8 symbol font-weight-lighter'>---</div></div>
+		      	<hr class='invisible-divider mb-1 mt-1'>
+		      	<div class='small row no-gutters pl-2'><div class='col-4 text-left pl-2 font-weight-600'>File Size:</div><div id='fileSizeDisplay' class='col-8 symbol font-weight-lighter'>---</div></div>
+		      	<hr class='invisible-divider mb-1 mt-1'>
+
+		      	<div class='accordion-wrapper small border-top border-bottom'>
+		      		<details class="accordion-item rounded-0 border-bottom border-top">
+				        <summary class="accordion-button border-bottom pt-2 pb-2 pr-3 pl-3">
+				        <div class="w-100 accordion-header user-select-none font-weight-600">
+				            <span class="icon icon-datatable p-2 mr-2"></span>Tables<span id="noOfTablesDisplay" class="ml-2 mr-1 badge bg-custom-one text-white symbol font-weight-lighter">0</span></div>
+				        </summary>
+				        <div id='dbTableDetails' class="accordion-body border-bottom"></div>
+				    </details>
+
+				    <details class="accordion-item rounded-0 border-bottom">
+				        <summary class="accordion-button border-bottom pt-2 pb-2 pr-3 pl-3">
+				            <div class="w-100 accordion-header user-select-none font-weight-600">
+				            	<span class="icon icon-download p-2 mr-2"></span>File Downloads
+				            </div>
+				        </summary>
+				        <div class="accordion-body border-bottom">
+				        	<button id='exportQueryAsJSON' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3'><span class='symbol mr-2'>📄</span>Data ResultSet (.json)</button>
+		            		<button id='exportEditorQuery' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3'><span class='symbol mr-2'>📄</span>SQL Statements (.sql)</button>
+				        </div>
+				    </details>
+				    <!-- <details class="accordion-item rounded-0 border-bottom">
+				        <summary class="accordion-button border-bottom pt-2 pb-2 pr-3 pl-3">
+				            <div class="w-100 accordion-header user-select-none font-weight-600">Accordion Title</div>
+				        </summary>
+				        <div class="accordion-body border-bottom">
+				            
+				        </div>
+				    </details>
+ -->				<button id='infoModalBtn' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top border-bottom rounded-0 datatable pt-2 pb-2 pr-3 pl-3 font-weight-600'><span class="icon icon-info p-2 mr-2"></span>About</button>
+				    <hr class='mb-0 mt-0'>
+
+		            <p class='text-center nowrap mt-1 mb-1 pl-2'><span class='symbol'>© 𝖢𝗈𝗉𝗒𝗋𝗂𝗀𝗁𝗍</span> <span id='copyrightYearDisplay' class='copyrightNote'></span> <a href="https://medium.com/@geek-cc" target="_blank"><span class="symbol">~ ξ(</span><span class="emoji">🎀</span><span class="symbol">˶❛◡❛)</span></a></p>
+
+				    <p class='text-center nowrap mt-1 mb-1 pl-2'><span class='symbol'>𝖥𝗈𝗅𝗅𝗈𝗐 𝗆𝖾 𝖺𝗍</span><span class='symbol pl-0 pr-1 ml-2 mr-2 text-center'><a href='https://github.com/incubated-geek-cc/' target='_blank'><span data-profile='github' class='attribution-icon'></span></a> ▪ <a href='https://medium.com/@geek-cc' target='_blank'><span data-profile='medium' class='attribution-icon'></span></a> ▪ <a href='https://www.linkedin.com/in/charmaine-chui-15133282/' target='_blank'><span data-profile='linkedin' class='attribution-icon'></span></a> ▪ <a href='https://twitter.com/IncubatedGeekCC' target='_blank'><span data-profile='twitter' class='attribution-icon'></span></a></span></p>
+					
+					
+
+			    
+		        	<!-- <div class='btn-group btn-group-sm'>
+					    <button id='exportQueryToggleBtn' type='button' class="btn btn-sm bg-custom-two text-white border border-white dropdown-toggle btnSymbol" data-toggle='dropdown'><small class='symbol'>💾 Save As…</small></button>
+					    <div class='dropdown-menu'>
+					      <button  type='button' class='dropdown-item'><strong class='text-custom-one'>{;}</strong> <small>Export Resultset (.json)</small></button>
+					      <li class="divider"></li>
+					      <button  type='button' class='dropdown-item symbol'><strong class='text-custom-one'>‹/›</strong> <small>Export SQL statements (.sql)</small></button>
+					      <li class="divider"></li>
+				      		<button id='exportDB' type='button' class='dropdown-item symbol'><strong class='text-custom-one'>‹/›</strong> <small>Export SQLite Database (.db)</small></button>
+					    </div>
+				    </div> -->
 	        </div>
-	        <small class='nowrap small ml-1 pt-1 pb-1 pl-2 pr-2 rounded-0 attribution'><span class='symbol copyrightNote'>© Copyright</span> <span id='copyrightYearDisplay' class='copyrightNote'></span><span class='symbol pl-1 pr-1'>▪ By</span><a href="https://medium.com/@geek-cc" target="_blank"><span class="symbol">ξ(</span><span class="emoji">🎀</span><span class="symbol">˶❛◡❛) ᵀᴴᴱ ᴿᴵᴮᴮᴼᴺ ᴳᴵᴿᴸ</span></a><span class='symbol pl-1 pr-1'><a href='https://github.com/incubated-geek-cc/' target='_blank'><span data-profile='github' class='attribution-icon'></span></a> ▪ <a href='https://medium.com/@geek-cc' target='_blank'><span data-profile='medium' class='attribution-icon'></span></a> ▪ <a href='https://www.linkedin.com/in/charmaine-chui-15133282/' target='_blank'><span data-profile='linkedin' class='attribution-icon'></span></a> ▪ <a href='https://twitter.com/IncubatedGeekCC' target='_blank'><span data-profile='twitter' class='attribution-icon'></span></a></span></small>
+	        
 	    </aside>
 	 	<div class="page-wrapper mt-0 mb-0 mr-1 pr-0 pl-1 pt-0 pb-0 h-100" style="display:block">
 				<!-- card -->
-	            <div class="card rounded-0 p-0 m-0">
+	            <div class="card rounded-0 p-0 m-0" style='height:calc(100% - 0.5rem)'>
 	            	<!-- card-body -->
 	            	<div class='card-body rounded-0 p-0 h-100'>
 						<p id='errorDisplay' class='m-1 p-0 small text-danger'></p>
-						<div id='filters' class='card-subtitle m-1 custom-scrollbar nowrap w-100'>
+						<div id='filters' class='card-subtitle ml-1 mr-1 mb-0 mt-2 custom-scrollbar nowrap'>
 							<strong class='symbol text-custom-one'>‹/› SQL Editor</strong>
+
+							<button id='hint-btn' type='button' class="btn btn-sm bg-custom-one text-white rounded-pill pl-2 pr-2 pt-1 pb-1 mb-1 text-center border-0" data-toggle="popover" data-title="Application Details" data-dismissible="true" data-placement="right" data-content='<div class="row">
+		                <div class="col-sm-12" style="text-align:left">
+		                    <p><span class="symbol">❶</span> Original work by Kripken <cite title="sql.js/sql.js: A javascript library to run SQLite on the web."><a href="https://github.com/sql-js/sql.js" target="_blank">sql.js</a></cite> which is <a href="LICENSE.txt" target="_blank">MIT licensed</a>.</p>
+		                    <p><span class="symbol">❷</span> SQLite is a <abbr title="Relational Database Management System">RDBMS</abbr> with no dependencies and able to operate offline in-browser without a database engine.</p>
+		                    <p><span class="symbol">❸</span> This application requires no server-side processing i.e. <span class="emoji">🚫</span> No server setup required.</p>
+		                    <p><span class="symbol">❹</span> Mobile-responsive and works on JavaScript-enabled mobile web browsers.</p>
+		                </div>
+		            </div>'><small class='symbol'>💡 Hint</small></button>
+
 							<span class='symbol text-custom-one mr-1 ml-1'>❘</span>
-							<button id='runQueryBtn' type='button' class='btn btn-sm bg-custom-one text-white rounded-pill small text-center'><small class='symbol'><sup>Run</sup> ▶</small></button>
-
-							<!-- <span class='symbol text-custom-one mr-1 ml-1'>❘</span> -->
-							<span class='nowrap ml-1'><small id='displayedRecordsRange'></small></span>
+							<button id='runQueryBtn' type='button' class='btn btn-sm bg-custom-one text-white rounded-pill pl-2 pr-2 pt-1 pb-1 mb-1 text-center border-0'><small class='symbol'>Run ▶</small></button>
+							
 							<ul id='tableQueryPagination' class="pagination pagination-sm ml-1 mr-1 mb-0 mt-0"></ul>
-
-
+							<span class='nowrap mr-2'><small id='displayedRecordsRange'></small></span>
 						</div>
 						
-						<p class="ml-1 mt-1 mr-1 mb-1"><textarea id='lineCounter' wrap='off' readonly>1.</textarea><textarea id='codeEditor' class='custom-scrollbar' wrap='off'></textarea></p>
+						<p class="mb-0 mt-0 ml-1 mr-1"><textarea id='lineCounter' wrap='off' readonly>1.</textarea><textarea id='codeEditor' class='custom-scrollbar' wrap='off'></textarea></p>
 						<div id='tableQueryRecords' class="table-responsive table-responsive-sm border custom-scrollbar mt-1 ml-1 mr-1 mb-2"></div>
-						<!-- <hr class='invisible-divider mb-0 mt-0'> -->
+						
 						
 					</div>
 					<!-- // card-body -->
@@ -109,7 +160,10 @@
 	            <!-- // card -->
 		</div>
 	    <!-- // page-wrapper -->
-</div>
+	    <div id="siteModal" class="custom-scrollbar modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+	    	<div class="modal-dialog"><div class="modal-content"></div></div>
+		</div>
+	</div>
 	<script src='js/polyfill.js'></script>
     <script src='js/ie10-viewport-bug-workaround.js'></script>
     <script src='js/bootstrap-native-v4.js'></script>
