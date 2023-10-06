@@ -282,7 +282,6 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 
                 errorDisplay.innerHTML = '';
 
-                setQueryRecordsHeight();
                 return await Promise.resolve('success');
             } catch (err) {
                 errorDisplay.innerHTML = '';
@@ -349,6 +348,8 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 await renderDatatable(queryResultset, tableQueryRecords);
 
                 displayedRecordsRange.innerHTML = `<span class='small text-muted'>Showing <strong>${queryOffset} to ${queryOffset+recordsPerPage}</strong> of <strong>${totalNoOfQueryRecords}</strong> rows</span>`;
+                
+                setQueryRecordsHeight();
             } catch (err) {
                 errorDisplay.innerHTML = '';
                 errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
