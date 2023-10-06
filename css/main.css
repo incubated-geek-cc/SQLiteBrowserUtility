@@ -48,7 +48,7 @@ div#tableRecords.table-responsive {
 }
 
 div#tableQueryRecords.table-responsive {
-    height: calc(100% - 0.3125rem - 0.3125rem - 35px - 1px - 2.5em - 28vh - 20px);
+    /*height: calc(100% - 0.3125rem - 0.3125rem - 35px - 1px - 2.5em - 28vh);*/
     width: calc(100% - 8px);
     overflow-y: scroll;
 }

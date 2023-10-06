@@ -57,16 +57,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             }
         });
         
-        window.addEventListener('resize', (evt)=> {
-            let w=window.innerWidth;
-            if(w<720) {
-                toggleSidebarBtn.value=false;
-            } else {
-                toggleSidebarBtn.value=true;
-            }
-            triggerEvent(toggleSidebarBtn,'click');
-        });
-        triggerEvent(window,'resize');
+
 
         function htmlToElement(html) {
             let documentFragment = document.createDocumentFragment();
@@ -123,6 +114,10 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 
         const dbTableDetails = document.querySelector('#dbTableDetails');
         const errorDisplay = document.querySelector('#errorDisplay');
+
+        const codeEditor = document.querySelector('#codeEditor');
+        const lineCounter = document.querySelector('#lineCounter');
+        const filters = document.querySelector('#filters');
 
         var db = null;
 
@@ -287,6 +282,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 
                 errorDisplay.innerHTML = '';
 
+                setQueryRecordsHeight();
                 return await Promise.resolve('success');
             } catch (err) {
                 errorDisplay.innerHTML = '';
@@ -295,7 +291,23 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             }
         }
         
+        function setQueryRecordsHeight() {
+            let cssHeight = pageWrapper.clientHeight - (lineCounter.clientHeight + filters.clientHeight + errorDisplay.clientHeight + 31);
+            tableQueryRecords['style']['height']=`${cssHeight}px`;
+        }
 
+        window.addEventListener('resize', (evt)=> {
+            let w=window.innerWidth;
+            if(w<720) {
+                toggleSidebarBtn.value=false;
+            } else {
+                toggleSidebarBtn.value=true;
+            }
+            triggerEvent(toggleSidebarBtn,'click');
+            setQueryRecordsHeight();
+        });
+        triggerEvent(window,'resize');
+        
         async function setQueryPaginationClass() {
             try {
                 currentQueryPageNo.value = currentQueryPage;
@@ -335,6 +347,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 // console.log(['originalQueryStmt',originalQueryStmt]);
                 // console.log(['queryStmt',queryStmt]);
                 await renderDatatable(queryResultset, tableQueryRecords);
+
                 displayedRecordsRange.innerHTML = `<span class='small text-muted'>Showing <strong>${queryOffset} to ${queryOffset+recordsPerPage}</strong> of <strong>${totalNoOfQueryRecords}</strong> rows</span>`;
             } catch (err) {
                 errorDisplay.innerHTML = '';
@@ -630,8 +643,6 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             '\n FROM patient_diagnosis) A LEFT JOIN ' +
             '\n (SELECT icd9_code, icd9_description FROM icd9_mapping) B' +
             '\n ON A.diagnosis_code = B.icd9_code;';
-        const codeEditor = document.querySelector('#codeEditor');
-        const lineCounter = document.querySelector('#lineCounter');
 
         var _buffer;
         function countLines(textarea) {
