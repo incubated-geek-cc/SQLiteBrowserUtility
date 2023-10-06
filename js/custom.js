@@ -108,7 +108,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                         <small><span class='symbol pl-1 pr-1'>— Created by</span><a href="https://medium.com/@geek-cc" target="_blank"><span class="symbol">ξ(</span><span class="emoji">🎀</span><span class="symbol">˶❛◡❛) ᵀᴴᴱ ᴿᴵᴮᴮᴼᴺ ᴳᴵᴿᴸ</span>
                         </a></small><span class='symbol pl-1 pr-1'><a href='https://github.com/incubated-geek-cc/' target='_blank'><span data-profile='github' class='attribution-icon'></span></a> ▪ <a href='https://medium.com/@geek-cc' target='_blank'><span data-profile='medium' class='attribution-icon'></span></a> ▪ <a href='https://www.linkedin.com/in/charmaine-chui-15133282/' target='_blank'><span data-profile='linkedin' class='attribution-icon'></span></a> ▪ <a href='https://twitter.com/IncubatedGeekCC' target='_blank'><span data-profile='twitter' class='attribution-icon'></span></a></span>
                       </div>`,
-            backdrop: false,
+            backdrop: true,
             keyboard: true
           }
         );
@@ -271,7 +271,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 tableRecordsEle.innerHTML = '';
 
                 let tableHtmlStr = '';
-                tableHtmlStr += '<table class="table table-striped table-condensed small table-bordered">';
+                tableHtmlStr += '<table class="table table-striped table-condensed small table-bordered mb-0">';
                 tableHtmlStr += '<thead>';
                 tableHtmlStr += '<tr><th></th><th>' + resultset[0]['columns'].join('</th><th>') + '</th></tr>';
                 tableHtmlStr += '</thead>';
@@ -606,6 +606,21 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             dwnlnk.href = './database_files/healthcare_records.db';
             dwnlnk.click();
         });
+        // Prepare an sql statement
+                    // sqlQuery="WITH tables AS \n" +
+                    // "(SELECT name, sql FROM sqlite_master \n" +
+                    // "WHERE type = 'table' AND name NOT LIKE 'sqlite_%' AND name='"+ tblName +"')\n" +
+                    // "SELECT cid,fields.name FROM tables \n" +
+                    // "CROSS JOIN pragma_table_info(tables.name) fields";
+                    // console.log(sqlQuery);
+                    // stmt = db.prepare(sqlQuery);
+                    // resultset = db.exec(sqlQuery);
+                    // console.log(resultset);
+                    // Bind values to the parameters and fetch the results of the query
+                    // resultObj = stmt.getAsObject({':tblNameVal' : tblName});
+                    // console.log(resultObj); // Will print {a:1, b:'world'}
+                    // free the memory used by the statement
+                    // stmt.free();
         // ================================== Query Editor Tab ===========================
         const sampleQueryStmt = 'SELECT patient_id,diagnosis_code,icd9_description' +
             '\n FROM' +

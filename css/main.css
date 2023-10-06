@@ -48,7 +48,7 @@ div#tableRecords.table-responsive {
 }
 
 div#tableQueryRecords.table-responsive {
-    height: calc(100vh - 170px - 28vh + 0.3125rem + 0.3125rem + 0.5rem + 0.5rem + 0.5rem);
+    height: calc(100% - 0.3125rem - 0.3125rem - 35px - 1px - 2.5em - 28vh);
     width: calc(100% - 8px);
     overflow-y: scroll;
 }
@@ -218,7 +218,8 @@ nav.fixed-top {
 }
 #main-wrapper .page-wrapper {
     margin-left: 240px;
-    height: calc(100% - 0.3125rem - 0.3125rem - 40px - 0.8rem + .45rem);
+    height: calc(100% - 0.3125rem - 0.3125rem - 35px + 2.5rem - 1px);
+    display: block;
 }
 .page-wrapper {
   position: relative;
@@ -645,6 +646,9 @@ summary::-webkit-details-marker {
 .accordion-item:first-of-type .accordion-button {
     border-top-left-radius: calc(0rem - 1px);
     border-top-right-radius: calc(0rem - 1px);
+}
+.accordion-body > button:last-child {
+    border-bottom:0;
 }
 details.accordion-item[open] .accordion-button::after {
   background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyBmaWxsPSJyZ2JhKDI1NSwgMjU1LCAyNTUpIiB2aWV3Qm94PSIwIDAgMjU2IDI1NiIgaWQ9IkZsYXQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHBhdGggZD0iTTEyOCwxODhhMTEuOTYxODcsMTEuOTYxODcsMCwwLDEtOC40ODUzNS0zLjUxNDY1bC04MC04MGExMi4wMDAxLDEyLjAwMDEsMCwwLDEsMTYuOTcwNy0xNi45NzA3TDEyOCwxNTkuMDI5M2w3MS41MTQ2NS03MS41MTQ2NWExMi4wMDAxLDEyLjAwMDEsMCwwLDEsMTYuOTcwNywxNi45NzA3bC04MCw4MEExMS45NjE4NywxMS45NjE4NywwLDAsMSwxMjgsMTg4WiIvPgo8L3N2Zz4=');

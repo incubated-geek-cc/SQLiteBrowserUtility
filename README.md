@@ -28,7 +28,17 @@
 
 
 ### ⚠ Current Status
-<p>WIP. Other functionalities are still in development.</p>
+<p>As of October 2023, UI has been changed to</p>
+<img src='https://raw.githubusercontent.com/incubated-geek-cc/SQLiteBrowserUtility/main/img/updated_layout(laptops_n_desktops).png' width="600px" />
+<p>Note: Still a WIP. Other functionalities pending and in development are</p>
+<ul>
+	<li>Linearea wrap on/off toggle button</li>
+	<li>Export database</li>
+	<li>Replace code editor area with latest query reflected i.e. when table is selected</li>
+	<li>Render SQLite query tips and tricks in popover above editor area</li>
+	<li>A 'Reset' button</li>
+	<li>UI/UX refinement - e.g. disable/enable selections before/after uploads</li>
+</ul>
 
 <p>— <b>Join me on 📝 <b>Medium</b> at <a href='https://medium.com/@geek-cc' target='_blank'>~ ξ(🎀˶❛◡❛) @geek-cc</a></b></p>
 
