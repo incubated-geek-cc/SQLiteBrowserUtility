@@ -293,7 +293,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
         
         function setQueryRecordsHeight() {
             let cssHeight = pageWrapper.clientHeight - (lineCounter.clientHeight + filters.clientHeight + errorDisplay.clientHeight + 31);
-            tableQueryRecords['style']['height']=`${cssHeight}px`;
+            tableQueryRecords['style']['height']=`calc(${cssHeight}px - 2rem)`;
         }
 
         window.addEventListener('resize', (evt)=> {
@@ -307,7 +307,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             setQueryRecordsHeight();
         });
         triggerEvent(window,'resize');
-        
+
         async function setQueryPaginationClass() {
             try {
                 currentQueryPageNo.value = currentQueryPage;
