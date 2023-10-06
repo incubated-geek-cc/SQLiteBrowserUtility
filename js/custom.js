@@ -271,7 +271,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 tableRecordsEle.innerHTML = '';
 
                 let tableHtmlStr = '';
-                tableHtmlStr += '<table class="table table-striped table-condensed small table-bordered mb-0">';
+                tableHtmlStr += '<table class="table table-striped table-condensed small table-bordered h-100 w-100">';
                 tableHtmlStr += '<thead>';
                 tableHtmlStr += '<tr><th></th><th>' + resultset[0]['columns'].join('</th><th>') + '</th></tr>';
                 tableHtmlStr += '</thead>';
