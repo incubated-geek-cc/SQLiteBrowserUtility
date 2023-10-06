@@ -28,9 +28,11 @@
 
 
 ### ⚠ Current Status
+
 <p>As of October 2023, UI has been changed to</p>
 #### Preview (1) On laptops and desktops
 <img src='https://raw.githubusercontent.com/incubated-geek-cc/SQLiteBrowserUtility/main/img/updated_layout(laptops_n_desktops).png' width="600px" />
+
 #### Preview (2) On mobile
 
 <table>
@@ -43,7 +45,7 @@
 	<tbody>
 		<tr>
 			<td><img src='https://raw.githubusercontent.com/incubated-geek-cc/SQLiteBrowserUtility/main/img/updated_layout(mobile).jpg' width="300px" /></td>
-			<td><img src='https://raw.githubusercontent.com/incubated-geek-cc/SQLiteBrowserUtility/main/img/updated_layout(laptops_n_desktops).png' width="300px" /></td>
+			<td><img src='https://raw.githubusercontent.com/incubated-geek-cc/SQLiteBrowserUtility/main/img/updated_layout(mobile-sidebar).png' width="300px" /></td>
 		</tr>
 	</tbody>
 </table>
