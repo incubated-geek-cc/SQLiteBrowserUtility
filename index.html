@@ -38,22 +38,11 @@
 	    </ul> -->
 	    <ul class="nav navbar-nav ml-auto nowrap">
 	      <li class="nav-item">
-	      	<!-- <a id='upload-btn' type='button' class="btn btn-sm bg-custom-one text-white rounded-pill small nowrap text-center ml-1 mr-1"> -->
 	      	<label for="upload" class="site-header-btn bg-custom-one text-white rounded-pill mb-0 pr-3 pl-2">
 	      		<input id="upload" type="file" accept=".sqlite, .sqlite3, .db, .db3, .s3db, .sl3">
 	      		<span class="btn bg-custom-one text-white rounded-circle text-center site-header-icon upload-icon"></span><small>Upload SQLite File</small>
 	      	</label>
 	      </li>
-	      <!-- <li class="nav-item">
-	      	<a type='button' class="btn bg-custom-one text-white rounded-circle text-center site-header-btn site-header-icon about-icon" data-toggle="popover" data-title="Application Details" data-dismissible="true" data-placement="right" data-content='<div class="row">
-                <div class="col-sm-12" style="text-align:left">
-                    <p><span class="symbol">❶</span> Original work by Kripken <cite title="sql.js/sql.js: A javascript library to run SQLite on the web."><a href="https://github.com/sql-js/sql.js" target="_blank">sql.js</a></cite> which is <a href="LICENSE.txt" target="_blank">MIT licensed</a>.</p>
-                    <p><span class="symbol">❷</span> SQLite is a <abbr title="Relational Database Management System">RDBMS</abbr> with no dependencies and able to operate offline in-browser without a database engine.</p>
-                    <p><span class="symbol">❸</span> This application requires no server-side processing i.e. <span class="emoji">🚫</span> No server setup required.</p>
-                    <p><span class="symbol">❹</span> Mobile-responsive and works on JavaScript-enabled mobile web browsers.</p>
-                </div>
-            </div>'></a>
-	      </li> -->
 	    </ul>
 	  <!-- </div> application/vnd.sqlite3  -->
 	</nav>
@@ -90,8 +79,11 @@
 				            </div>
 				        </summary>
 				        <div class="accordion-body border-bottom">
+				        	<button id='exportSampleDB' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3'><span class='symbol mr-2'>📄</span>Sample Database (.db)</button>
+				        
 				        	<button id='exportQueryAsJSON' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3'><span class='symbol mr-2'>📄</span>Data ResultSet (.json)</button>
 		            		<button id='exportEditorQuery' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3'><span class='symbol mr-2'>📄</span>SQL Statements (.sql)</button>
+		            		<!-- <button id='exportDB' type='button' class='dropdown-item symbol'><strong class='text-custom-one'>‹/›</strong> <small>Export SQLite Database (.db)</small></button> -->
 				        </div>
 				    </details>
 				    <!-- <details class="accordion-item rounded-0 border-bottom">
@@ -99,7 +91,7 @@
 				            <div class="w-100 accordion-header user-select-none font-weight-600">Accordion Title</div>
 				        </summary>
 				        <div class="accordion-body border-bottom">
-				            
+
 				        </div>
 				    </details>
  -->				<button id='infoModalBtn' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top border-bottom rounded-0 datatable pt-2 pb-2 pr-3 pl-3 font-weight-600'><span class="icon icon-info p-2 mr-2"></span>About</button>
@@ -108,20 +100,6 @@
 		            <p class='text-center nowrap mt-1 mb-1 pl-2'><span class='symbol'>© 𝖢𝗈𝗉𝗒𝗋𝗂𝗀𝗁𝗍</span> <span id='copyrightYearDisplay' class='copyrightNote'></span> <a href="https://medium.com/@geek-cc" target="_blank"><span class="symbol">~ ξ(</span><span class="emoji">🎀</span><span class="symbol">˶❛◡❛)</span></a></p>
 
 				    <p class='text-center nowrap mt-1 mb-1 pl-2'><span class='symbol'>𝖥𝗈𝗅𝗅𝗈𝗐 𝗆𝖾 𝖺𝗍</span><span class='symbol pl-0 pr-1 ml-2 mr-2 text-center'><a href='https://github.com/incubated-geek-cc/' target='_blank'><span data-profile='github' class='attribution-icon'></span></a> ▪ <a href='https://medium.com/@geek-cc' target='_blank'><span data-profile='medium' class='attribution-icon'></span></a> ▪ <a href='https://www.linkedin.com/in/charmaine-chui-15133282/' target='_blank'><span data-profile='linkedin' class='attribution-icon'></span></a> ▪ <a href='https://twitter.com/IncubatedGeekCC' target='_blank'><span data-profile='twitter' class='attribution-icon'></span></a></span></p>
-					
-					
-
-			    
-		        	<!-- <div class='btn-group btn-group-sm'>
-					    <button id='exportQueryToggleBtn' type='button' class="btn btn-sm bg-custom-two text-white border border-white dropdown-toggle btnSymbol" data-toggle='dropdown'><small class='symbol'>💾 Save As…</small></button>
-					    <div class='dropdown-menu'>
-					      <button  type='button' class='dropdown-item'><strong class='text-custom-one'>{;}</strong> <small>Export Resultset (.json)</small></button>
-					      <li class="divider"></li>
-					      <button  type='button' class='dropdown-item symbol'><strong class='text-custom-one'>‹/›</strong> <small>Export SQL statements (.sql)</small></button>
-					      <li class="divider"></li>
-				      		<button id='exportDB' type='button' class='dropdown-item symbol'><strong class='text-custom-one'>‹/›</strong> <small>Export SQLite Database (.db)</small></button>
-					    </div>
-				    </div> -->
 	        </div>
 	        
 	    </aside>
@@ -151,7 +129,7 @@
 						</div>
 						
 						<p class="mb-0 mt-0 ml-1 mr-1"><textarea id='lineCounter' wrap='off' readonly>1.</textarea><textarea id='codeEditor' class='custom-scrollbar' wrap='off'></textarea></p>
-						<div id='tableQueryRecords' class="table-responsive table-responsive-sm border custom-scrollbar mt-1 ml-1 mr-1 mb-2"></div>
+						<div id='tableQueryRecords' class="table-responsive table-responsive-sm border custom-scrollbar mt-0 ml-1 mr-1 mb-1 pb-0"></div>
 						
 						
 					</div>

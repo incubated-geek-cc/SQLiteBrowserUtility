@@ -27,6 +27,20 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             return;
         }
 
+        // IE8
+        // IE9+ and other modern browsers
+        function triggerEvent(el, type) {
+            let e = ( ('createEvent' in document) ? document.createEvent('HTMLEvents') : document.createEventObject() );
+            if ('createEvent' in document) { 
+              e.initEvent(type, false, true);
+              el.dispatchEvent(e);
+            } else { 
+              e.eventType = type;
+              el.fireEvent('on' + e.eventType, e);
+            }
+        }
+
+
         const toggleSidebarBtn = document.querySelector('#toggleSidebarBtn');
         const asideLeftSidebar = document.querySelector('aside.left-sidebar');
         const pageWrapper = document.querySelector('#main-wrapper .page-wrapper');
@@ -42,19 +56,17 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 pageWrapper['style']['margin-left'] = '240px';
             }
         });
-
-        // IE8
-        // IE9+ and other modern browsers
-        function triggerEvent(el, type) {
-            let e = ( ('createEvent' in document) ? document.createEvent('HTMLEvents') : document.createEventObject() );
-            if ('createEvent' in document) { 
-              e.initEvent(type, false, true);
-              el.dispatchEvent(e);
-            } else { 
-              e.eventType = type;
-              el.fireEvent('on' + e.eventType, e);
+        
+        window.addEventListener('resize', (evt)=> {
+            let w=window.innerWidth;
+            if(w<720) {
+                toggleSidebarBtn.value=false;
+            } else {
+                toggleSidebarBtn.value=true;
             }
-        }
+            triggerEvent(toggleSidebarBtn,'click');
+        });
+        triggerEvent(window,'resize');
 
         function htmlToElement(html) {
             let documentFragment = document.createDocumentFragment();
@@ -74,6 +86,37 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
         sidebarUpload.addEventListener('click', () => {
             upload.click();
         });
+
+        const infoModalBtn = document.querySelector('#infoModalBtn');
+        const myModalInstance = new BSN.Modal(
+          '#siteModal', { 
+            content: `<div class="modal-header">
+                        <h5 class="modal-title"><span class='icon icon-info p-2 mr-2'></span> About SQLite Browser Tool</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-12" style="text-align:left">
+                                <p><span class="symbol">➊</span> Original work by Kripken <cite title="sql.js/sql.js: A javascript library to run SQLite on the web."><a href="https://github.com/sql-js/sql.js" target="_blank">sql.js</a></cite> which is <a href="LICENSE.txt" target="_blank">MIT licensed</a>.</p>
+                                <p><span class="symbol">➋</span> SQLite is a <abbr title="Relational Database Management System">RDBMS</abbr> with no dependencies and able to operate offline in-browser without a database engine.</p>
+                                <p><span class="symbol">➌</span> <span class="emoji">🚫</span> No server-side processing <span class='symbol'>⇒</span> No server setup required.</p>
+                                <p><span class="symbol">➍</span> <span class="emoji">📱</span> Mobile-responsive and works on JavaScript-enabled mobile web browsers.</p>
+                            </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer text-right">
+                        <small><span class='symbol pl-1 pr-1'>— Created by</span><a href="https://medium.com/@geek-cc" target="_blank"><span class="symbol">ξ(</span><span class="emoji">🎀</span><span class="symbol">˶❛◡❛) ᵀᴴᴱ ᴿᴵᴮᴮᴼᴺ ᴳᴵᴿᴸ</span>
+                        </a></small><span class='symbol pl-1 pr-1'><a href='https://github.com/incubated-geek-cc/' target='_blank'><span data-profile='github' class='attribution-icon'></span></a> ▪ <a href='https://medium.com/@geek-cc' target='_blank'><span data-profile='medium' class='attribution-icon'></span></a> ▪ <a href='https://www.linkedin.com/in/charmaine-chui-15133282/' target='_blank'><span data-profile='linkedin' class='attribution-icon'></span></a> ▪ <a href='https://twitter.com/IncubatedGeekCC' target='_blank'><span data-profile='twitter' class='attribution-icon'></span></a></span>
+                      </div>`,
+            backdrop: false,
+            keyboard: true
+          }
+        );
+
+        infoModalBtn.addEventListener('click', ()=>{
+            myModalInstance.toggle();
+        });
+        triggerEvent(infoModalBtn,'click');
 
         const displayedRecordsRange = document.querySelector('#displayedRecordsRange');
         const noOfTablesDisplay = document.querySelector('#noOfTablesDisplay');
@@ -322,7 +365,6 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 noOfQueryPages = totalNoOfQueryRecords / recordsPerPage;
                 noOfQueryPages = Math.ceil(noOfQueryPages);
                 // ================================================
-                // displayedRecordsRange.innerHTML=`Showing ${queryOffset} to ${queryOffset+recordsPerPage} of ${totalNoOfQueryRecords} rows`;
                 displayedRecordsRange.innerHTML = `<span class='small text-muted'>Showing <strong>${queryOffset} to ${queryOffset+recordsPerPage}</strong> of <strong>${totalNoOfQueryRecords}</strong> rows</span>`;
                 // ================================================
                 firstQueryPageBtn = await initPaginationBtn('firstQueryPageBtn', tableQueryPagination);
@@ -417,35 +459,6 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             }
         });
 
-        var myModalInstance = new BSN.Modal(
-          '#siteModal', { 
-            content: `<div class="modal-header">
-                        <h5 class="modal-title"><span class='icon icon-info p-2 mr-2'></span> About SQLite Browser Tool</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                      </div>
-                      <div class="modal-body">
-                        <div class="row">
-                            <div class="col-sm-12" style="text-align:left">
-                                <p><span class="symbol">➊</span> Original work by Kripken <cite title="sql.js/sql.js: A javascript library to run SQLite on the web."><a href="https://github.com/sql-js/sql.js" target="_blank">sql.js</a></cite> which is <a href="LICENSE.txt" target="_blank">MIT licensed</a>.</p>
-                                <p><span class="symbol">➋</span> SQLite is a <abbr title="Relational Database Management System">RDBMS</abbr> with no dependencies and able to operate offline in-browser without a database engine.</p>
-                                <p><span class="symbol">➌</span> <span class="emoji">🚫</span> No server-side processing <span class='symbol'>⇒</span> No server setup required.</p>
-                                <p><span class="symbol">➍</span> <span class="emoji">📱</span> Mobile-responsive and works on JavaScript-enabled mobile web browsers.</p>
-                            </div>
-                        </div>
-                      </div>
-                      <div class="modal-footer text-right">
-                        <small><span class='symbol pl-1 pr-1'>— Created by</span><a href="https://medium.com/@geek-cc" target="_blank"><span class="symbol">ξ(</span><span class="emoji">🎀</span><span class="symbol">˶❛◡❛) ᵀᴴᴱ ᴿᴵᴮᴮᴼᴺ ᴳᴵᴿᴸ</span>
-                        </a></small><span class='symbol pl-1 pr-1'><a href='https://github.com/incubated-geek-cc/' target='_blank'><span data-profile='github' class='attribution-icon'></span></a> ▪ <a href='https://medium.com/@geek-cc' target='_blank'><span data-profile='medium' class='attribution-icon'></span></a> ▪ <a href='https://www.linkedin.com/in/charmaine-chui-15133282/' target='_blank'><span data-profile='linkedin' class='attribution-icon'></span></a> ▪ <a href='https://twitter.com/IncubatedGeekCC' target='_blank'><span data-profile='twitter' class='attribution-icon'></span></a></span>
-                      </div>`,
-            backdrop: false,
-            keyboard: true
-          }
-        );
-
-        document.getElementById('infoModalBtn').addEventListener('click', ()=>{
-            myModalInstance.toggle();
-        });
-
 
         function loadTableSelectable(tblName) {
             let tblClickableBtn = document.createElement('button');
@@ -532,8 +545,6 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             }
         }
 
-
-
         function readFileAsArrayBuffer(file) {
             return new Promise((resolve, reject) => {
                 let fileredr = new FileReader();
@@ -566,23 +577,6 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 
                 for (let rowObj of resultset) {
                     let tblName = rowObj['table_name']; // {table_name: 'icd9_mapping'}
-
-                    // Prepare an sql statement
-                    // sqlQuery="WITH tables AS \n" +
-                    // "(SELECT name, sql FROM sqlite_master \n" +
-                    // "WHERE type = 'table' AND name NOT LIKE 'sqlite_%' AND name='"+ tblName +"')\n" +
-                    // "SELECT cid,fields.name FROM tables \n" +
-                    // "CROSS JOIN pragma_table_info(tables.name) fields";
-                    // console.log(sqlQuery);
-                    // stmt = db.prepare(sqlQuery);
-                    // resultset = db.exec(sqlQuery);
-                    // console.log(resultset);
-                    // Bind values to the parameters and fetch the results of the query
-                    // resultObj = stmt.getAsObject({':tblNameVal' : tblName});
-                    // console.log(resultObj); // Will print {a:1, b:'world'}
-                    // free the memory used by the statement
-                    // stmt.free();
-
                     loadTableSelectable(tblName);
                 }
             } catch (err) {
@@ -605,7 +599,13 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             //  dwnlnk.click();
             // });
         }); // upload file change event
-
+        const exportSampleDB=document.querySelector('#exportSampleDB');
+        exportSampleDB.addEventListener('click', (evt)=> {
+            let dwnlnk=document.createElement('a');
+            dwnlnk.download = 'healthcare_records.db';
+            dwnlnk.href = './database_files/healthcare_records.db';
+            dwnlnk.click();
+        });
         // ================================== Query Editor Tab ===========================
         const sampleQueryStmt = 'SELECT patient_id,diagnosis_code,icd9_description' +
             '\n FROM' +
