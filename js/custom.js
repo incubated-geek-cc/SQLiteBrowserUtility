@@ -292,7 +292,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
         
         function setQueryRecordsHeight() {
             let cssHeight = pageWrapper.clientHeight - (lineCounter.clientHeight + filters.clientHeight + errorDisplay.clientHeight + 31);
-            tableQueryRecords['style']['height']=`calc(${cssHeight}px - 2rem)`;
+            tableQueryRecords['style']['height']=`calc(${cssHeight}px - 1rem)`;
         }
 
         window.addEventListener('resize', (evt)=> {
@@ -348,7 +348,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 await renderDatatable(queryResultset, tableQueryRecords);
 
                 displayedRecordsRange.innerHTML = `<span class='small text-muted'>Showing <strong>${queryOffset} to ${queryOffset+recordsPerPage}</strong> of <strong>${totalNoOfQueryRecords}</strong> rows</span>`;
-                
+
                 setQueryRecordsHeight();
             } catch (err) {
                 errorDisplay.innerHTML = '';
