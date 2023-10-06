@@ -120,13 +120,13 @@ a.dropdown-item {
 }
 
 #codeEditor, #lineCounter {
-    font-family: monospace;
     margin: 0;
     padding: 10px 0;
     height: 28vh;
     border-radius: 0;
     resize: none;
-    font-size: .8em;
+    font-size: 13.333333333px;
+    font-family: "Courier New", Courier, monospace;
     tab-size: 2;
     -webkit-hyphens: none;
     -moz-hyphens: none;
@@ -140,11 +140,11 @@ a.dropdown-item {
     box-sizing: border-box;
 }
 #codeEditor {
-    padding-left: calc(2.25rem + 5px);
+    padding-left: calc(4.25rem + 5px);
     width: 100%;
     background-color: #fefefd;
     border: 1.5px solid rgba(28,205,188);
-    color: rgb(8 152 138);
+    color: rgba(8,152,138);
     white-space: pre-wrap;
 }
 #lineCounter {
@@ -156,8 +156,8 @@ a.dropdown-item {
     color: #707070;
     background-color: #d8d8d8;
     position: absolute;
-    width: 2.25rem;
-    background-color: rgb(28 205 188 / 25%);
+    width: 4.25rem;
+    background-color: rgba(28,205,188,.25);
     border-color: rgba(28,205,188);
     color: rgba(8,152,138);
 }

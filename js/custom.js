@@ -644,51 +644,31 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             '\n FROM patient_diagnosis) A LEFT JOIN ' +
             '\n (SELECT icd9_code, icd9_description FROM icd9_mapping) B' +
             '\n ON A.diagnosis_code = B.icd9_code;';
+        /*
+        SELECT patient_id,diagnosis_code,icd9_description
+         FROM
+         (SELECT patient_id, diagnosis_code FROM patient_diagnosis) A LEFT JOIN (SELECT icd9_code, icd9_description FROM icd9_mapping) B
+        ON A.diagnosis_code = B.icd9_code;
+        */
+        const codeEditorWidth=document.querySelector('#codeEditor').clientWidth;
+        const lineCounterWidth=document.querySelector('#lineCounter').clientWidth;
+        const codeEditorEditableWidth=codeEditorWidth-lineCounterWidth-5;
 
-        var _buffer;
-        function countLines(textarea) {
-            if (_buffer == null) {
-                _buffer = document.createElement('textarea');
-                _buffer.style.border = 'none';
-                _buffer.style.height = '0';
-                _buffer.style.overflow = 'hidden';
-                _buffer.style.padding = '0';
-                _buffer.style.position = 'absolute';
-                _buffer.style.left = '0';
-                _buffer.style.top = '0';
-                _buffer.style.zIndex = '-1';
-                document.body.appendChild(_buffer);
-            }
-            let cs = window.getComputedStyle(textarea);
-            let pl = parseInt(cs.paddingLeft);
-            let pr = parseInt(cs.paddingRight);
-            let lh = parseInt(cs.lineHeight);
-            if (isNaN(lh)) lh = parseInt(cs.fontSize);
-            _buffer.style.width = (textarea.clientWidth - pl - pr) + 'px';
-            _buffer.style.font = cs.font;
-            _buffer.style.letterSpacing = cs.letterSpacing;
-            _buffer.style.whiteSpace = cs.whiteSpace;
-            _buffer.style.wordBreak = cs.wordBreak;
-            _buffer.style.wordSpacing = cs.wordSpacing;
-            _buffer.style.wordWrap = cs.wordWrap;
-
-            _buffer.value = textarea.value;
-
-            let result = Math.floor(_buffer.scrollHeight / lh);
-            if (result == 0) result = 1;
-            return result;
-        }
-        var onFirstLoad = true;
-        var lineCountCache = 0;
-        var outArrCache = new Array();
-        async function line_counter() {
-            let lineCount = codeEditor.value.split('\n').length;
+        function line_counter() {
+            let lines = codeEditor.value.split('\n');
+            let lineCount = lines.length;
             let outarr = new Array();
-            for (var x = 0; x < lineCount; x++) {
-                outarr[x] = (x + 1) + '.';
+            for (let x = 0; x < lineCount; x++) {
+                if ((lines[x].length * 8) + 5 > codeEditorEditableWidth) {
+                    outarr.push(`${parseInt(x + 1)}.`);
+                    let nbWrap = Math.floor(((lines[x].length * 8) + 5) / codeEditorEditableWidth);
+                    for (let y = 0; y < nbWrap; y++) {
+                        outarr.push(' ');
+                    }
+                } else {
+                    outarr.push(`${parseInt(x + 1)}.`);
+                }
             }
-            await Promise.resolve(outarr);
-            lineCountCache = lineCount;
             lineCounter.value = outarr.join('\n');
         }
         codeEditor.addEventListener('scroll', () => {
