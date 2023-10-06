@@ -45,7 +45,7 @@
 	<tbody>
 		<tr>
 			<td><img src='https://raw.githubusercontent.com/incubated-geek-cc/SQLiteBrowserUtility/main/img/updated_layout(mobile).jpg' width="300px" /></td>
-			<td><img src='https://raw.githubusercontent.com/incubated-geek-cc/SQLiteBrowserUtility/main/img/updated_layout(mobile-sidebar).png' width="300px" /></td>
+			<td><img src='https://raw.githubusercontent.com/incubated-geek-cc/SQLiteBrowserUtility/main/img/updated_layout(mobile-sidebar).jpg' width="300px" /></td>
 		</tr>
 	</tbody>
 </table>
