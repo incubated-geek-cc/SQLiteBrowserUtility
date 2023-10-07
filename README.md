@@ -27,7 +27,7 @@
 [**Article :: Link :: Read & Export SQLite Data in a JavaScript-enabled Browser Locally**](https://medium.com/weekly-webtips/read-export-sqlite-data-in-a-javascript-enabled-browser-locally-b655deda879d)
 
 
-### ⚠ Current Status
+### ⚠ Current Status: WIP
 
 <p>As of October 2023, UI has been changed to:</p>
 
@@ -51,19 +51,15 @@
 		</tr>
 	</tbody>
 </table>
-<p>Note: Still a WIP. Other functionalities which are additional, pending or still in development are</p>
 
 <ul>
 	<li>🗹 Include code editor and browse tables into a single view</li>
 	<li>🗹 Code editor wrap lines toggle button</li>
 	<li>🗹 Mobile-responsiveness</li>
-
 	<li>☐ Replace code editor area with latest query reflected i.e. when table is selected</li>
 	<li>☐ Render SQLite query tips and tricks in popover above editor area</li>
-
 	<li>🗹 Export sample database</li>
 	<li>🗹 Export updated database</li>
-
 	<li>🗹 Include 'Reset' ⭯ button (clears cache)</li>
 	<li>☐ Pagination dropdown list for 'no. of rows per page'</li>
 	<li>☐ UI/UX refinement - e.g. disable/enable selections before/after uploads</li>
