@@ -12,7 +12,11 @@
 	    <link rel="icon" href="img/favicon-16x16.ico" type="image/x-icon" sizes="16x16">
 	    <link rel="icon" href="img/favicon-32x32.ico" type="image/x-icon" sizes="32x32">
 	    <link rel="icon" href="img/favicon-48x48.ico" type="image/x-icon" sizes="48x48">
-		<script type='text/javascript' src='js/sql-browser.min.js'></script>
+		<!-- <script type='text/javascript' src='js/sql-browser.min.js'></script> -->
+		<!-- <script type='text/javascript' src='js/sql-wasm.min.js'></script> -->
+		<!-- <script type='text/javascript' src='js/sql-asm.min.js'></script> -->
+		<script type='text/javascript' src='js/sql-asm-memory-growth.min.js'></script>
+
 		<link rel='stylesheet' type='text/css' href='css/bootstrap-4.5.2.min.css' />
 		<link rel='stylesheet' type='text/css' href='css/offcanvas.css' />
 		<link rel='stylesheet' type='text/css' href='css/main.css' />
@@ -42,9 +46,10 @@
 	      		<input id="upload" type="file" accept=".sqlite, .sqlite3, .db, .db3, .s3db, .sl3">
 	      		<span class="btn bg-custom-one text-white rounded-circle text-center site-header-icon upload-icon"></span><small>Upload SQLite File</small>
 	      	</label>
+	      	<button id='clearCache' type='button' class='btn btn-sm bg-custom-one text-white rounded-pill pl-2 pr-3 pt-0 pb-0 text-center border-0'><span class="btn bg-custom-one text-white rounded-circle text-center site-header-icon reload-icon"></span><small>Reload</small></button>
 	      </li>
 	    </ul>
-	  <!-- </div> application/vnd.sqlite3  -->
+	  <!-- </div> -->
 	</nav>
 
 
@@ -82,8 +87,10 @@
 				        	<button id='exportSampleDB' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3'><span class='symbol mr-2'>📄</span>Sample Database (.db)</button>
 				        
 				        	<button id='exportQueryAsJSON' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3'><span class='symbol mr-2'>📄</span>Data ResultSet (.json)</button>
-		            		<button id='exportEditorQuery' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-bottom-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3'><span class='symbol mr-2'>📄</span>SQL Statements (.sql)</button>
-		            		<!-- <button id='exportDB' type='button' class='dropdown-item symbol'><strong class='text-custom-one'>‹/›</strong> <small>Export SQLite Database (.db)</small></button> -->
+
+		            		<button id='exportEditorQuery' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3'><span class='symbol mr-2'>📄</span>SQL Statements (.sql)</button>
+
+		            		<button id='exportDB' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-bottom-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3'><span class='symbol mr-2'>📄</span>SQLite Database (.db)</button>
 				        </div>
 				    </details>
 				    <!-- <details class="accordion-item rounded-0 border-bottom">

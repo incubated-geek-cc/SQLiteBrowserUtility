@@ -4,6 +4,14 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
     document.addEventListener('DOMContentLoaded', async() => {
         console.log('DOMContentLoaded');
 
+        const clearCache=document.querySelector('#clearCache');
+        clearCache.addEventListener('click', () => {
+            requestAnimationFrame(() => {
+                localStorage.clear();
+                location.reload();
+            });
+        });
+
         const copyrightYearDisplay = document.querySelector('#copyrightYearDisplay');
         copyrightYearDisplay.innerHTML = new Date().getFullYear();
 
@@ -40,6 +48,15 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             }
         }
 
+        function htmlToElement(html) {
+            let documentFragment = document.createDocumentFragment();
+            let template = document.createElement('template');
+            template.innerHTML = html.trim();
+            for (let i = 0, e = template.content.childNodes.length; i < e; i++) {
+                documentFragment.appendChild(template.content.childNodes[i].cloneNode(true));
+            }
+            return documentFragment;
+        }
 
         const toggleSidebarBtn = document.querySelector('#toggleSidebarBtn');
         const asideLeftSidebar = document.querySelector('aside.left-sidebar');
@@ -56,18 +73,9 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 pageWrapper['style']['margin-left'] = '240px';
             }
         });
-        
 
-
-        function htmlToElement(html) {
-            let documentFragment = document.createDocumentFragment();
-            let template = document.createElement('template');
-            template.innerHTML = html.trim();
-            for (let i = 0, e = template.content.childNodes.length; i < e; i++) {
-                documentFragment.appendChild(template.content.childNodes[i].cloneNode(true));
-            }
-            return documentFragment;
-        }
+        const fileNameDisplay = document.querySelector('#fileNameDisplay');
+        const fileSizeDisplay = document.querySelector('#fileSizeDisplay');
 
         const sidebarUpload = document.querySelector('#sidebarUpload');
         const upload = document.querySelector('#upload');
@@ -79,35 +87,63 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
         });
 
         const infoModalBtn = document.querySelector('#infoModalBtn');
-        const myModalInstance = new BSN.Modal(
+        const infoModalContent = `<div class="modal-header">
+                                    <h5 class="modal-title"><span class='icon icon-info p-2 mr-2'></span> About SQLite Browser Tool</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-sm-12 text-left">
+                                            <p><span class="symbol">➊</span> SQLite is a <abbr title="Relational Database Management System">RDBMS</abbr> with no dependencies and able to operate offline in-browser without a database engine.</p>
+
+                                            <p><span class="symbol">➋</span> <span class="emoji">🚫</span> No server-side processing <span class='symbol'>⇒</span> No server setup required.</p>
+
+                                            <p><span class="symbol">➌</span> Application uses plugin from <cite title="sql.js is a relational database for the web."><a href="https://github.com/sql-js/sql.js" target="_blank">sql.js</a></cite> where original work was by Kripken <cite title="sql.js/sql.js: A javascript library to run SQLite on the web."><a href="https://github.com/kripken/sql.js/" target="_blank">sql.js</a></cite> which is <a href="LICENSE.txt" target="_blank">MIT licensed</a>.</p>
+
+                                            <p><span class="symbol">➍</span> <span class="emoji">📱</span> Mobile-responsive and works on JavaScript-enabled mobile web browsers as well.</p>
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer text-right">
+                                    <small><span class='symbol pl-1 pr-1'>— Created by</span><a href="https://medium.com/@geek-cc" target="_blank"><span class="symbol">ξ(</span><span class="emoji">🎀</span><span class="symbol">˶❛◡❛) ᵀᴴᴱ ᴿᴵᴮᴮᴼᴺ ᴳᴵᴿᴸ</span>
+                                    </a></small><span class='symbol pl-1 pr-1'><a href='https://github.com/incubated-geek-cc/' target='_blank'><span data-profile='github' class='attribution-icon'></span></a> ▪ <a href='https://medium.com/@geek-cc' target='_blank'><span data-profile='medium' class='attribution-icon'></span></a> ▪ <a href='https://www.linkedin.com/in/charmaine-chui-15133282/' target='_blank'><span data-profile='linkedin' class='attribution-icon'></span></a> ▪ <a href='https://twitter.com/IncubatedGeekCC' target='_blank'><span data-profile='twitter' class='attribution-icon'></span></a></span>
+                                  </div>`;
+
+        const loadModalContent = `<div class="modal-header">
+                                    <h5 class="modal-title"><span class='icon icon-info p-2 mr-2'></span> Running SQL Query</h5>
+                                  </div>
+                                  <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-sm-12 text-center">
+                                            <div class="spinner-border text-muted"></div>
+                                            <div class="text-secondary">Loading...</div>
+                                        </div>
+                                    </div>
+                                  </div>`;
+
+        const downloadModalContent = `<div class="modal-header">
+                                    <h5 class="modal-title"><span class='icon icon-info p-2 mr-2'></span> Exporting Database File</h5>
+                                  </div>
+                                  <div class="modal-body">
+                                    <div class="row">
+                                        <div class="col-sm-12 text-center">
+                                            <div class="spinner-border text-muted"></div>
+                                            <div class="text-secondary">Loading...</div>
+                                        </div>
+                                    </div>
+                                  </div>`;
+
+        const siteModalInstance = new BSN.Modal(
           '#siteModal', { 
-            content: `<div class="modal-header">
-                        <h5 class="modal-title"><span class='icon icon-info p-2 mr-2'></span> About SQLite Browser Tool</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                      </div>
-                      <div class="modal-body">
-                        <div class="row">
-                            <div class="col-sm-12" style="text-align:left">
-                                <p><span class="symbol">➊</span> Original work by Kripken <cite title="sql.js/sql.js: A javascript library to run SQLite on the web."><a href="https://github.com/sql-js/sql.js" target="_blank">sql.js</a></cite> which is <a href="LICENSE.txt" target="_blank">MIT licensed</a>.</p>
-                                <p><span class="symbol">➋</span> SQLite is a <abbr title="Relational Database Management System">RDBMS</abbr> with no dependencies and able to operate offline in-browser without a database engine.</p>
-                                <p><span class="symbol">➌</span> <span class="emoji">🚫</span> No server-side processing <span class='symbol'>⇒</span> No server setup required.</p>
-                                <p><span class="symbol">➍</span> <span class="emoji">📱</span> Mobile-responsive and works on JavaScript-enabled mobile web browsers.</p>
-                            </div>
-                        </div>
-                      </div>
-                      <div class="modal-footer text-right">
-                        <small><span class='symbol pl-1 pr-1'>— Created by</span><a href="https://medium.com/@geek-cc" target="_blank"><span class="symbol">ξ(</span><span class="emoji">🎀</span><span class="symbol">˶❛◡❛) ᵀᴴᴱ ᴿᴵᴮᴮᴼᴺ ᴳᴵᴿᴸ</span>
-                        </a></small><span class='symbol pl-1 pr-1'><a href='https://github.com/incubated-geek-cc/' target='_blank'><span data-profile='github' class='attribution-icon'></span></a> ▪ <a href='https://medium.com/@geek-cc' target='_blank'><span data-profile='medium' class='attribution-icon'></span></a> ▪ <a href='https://www.linkedin.com/in/charmaine-chui-15133282/' target='_blank'><span data-profile='linkedin' class='attribution-icon'></span></a> ▪ <a href='https://twitter.com/IncubatedGeekCC' target='_blank'><span data-profile='twitter' class='attribution-icon'></span></a></span>
-                      </div>`,
+            content: '',
             backdrop: true,
-            keyboard: true
+            keyboard: false
           }
         );
-
         infoModalBtn.addEventListener('click', ()=>{
-            myModalInstance.toggle();
+            siteModalInstance.setContent(infoModalContent);
+            siteModalInstance.toggle();
         });
-        triggerEvent(infoModalBtn,'click');
 
         const displayedRecordsRange = document.querySelector('#displayedRecordsRange');
         const noOfTablesDisplay = document.querySelector('#noOfTablesDisplay');
@@ -118,7 +154,14 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
         const codeEditor = document.querySelector('#codeEditor');
         const lineCounter = document.querySelector('#lineCounter');
         const filters = document.querySelector('#filters');
-
+        
+        const runQueryBtn = document.querySelector('#runQueryBtn');
+        // The older asm.js version of Sql.js. Slower and larger. Provided for compatibility reasons. 
+        // Handles error: Cannot enlarge memory arrays
+        const SQL = await initSqlJs({
+          locateFile: file => './js/sql-wasm.wasm'
+        });
+        // console.log(SQL);
         var db = null;
 
         const tblIcon = '▦ ';
@@ -139,6 +182,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 
         const exportQueryAsJSON = document.querySelector('#exportQueryAsJSON');
         const exportEditorQuery = document.querySelector('#exportEditorQuery');
+        const exportSampleDB=document.querySelector('#exportSampleDB');
 
         var firstQueryPageBtn, prevQueryPageBtn, currentQueryPageNo, nextQueryPageBtn, lastQueryPageBtn;
 
@@ -261,6 +305,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 console.log(err);
             }
         }
+
         async function renderDatatable(resultset, tableRecordsEle) {
             try {
                 tableRecordsEle.innerHTML = '';
@@ -289,23 +334,6 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 console.log(err);
             }
         }
-        
-        function setQueryRecordsHeight() {
-            let cssHeight = pageWrapper.clientHeight - (lineCounter.clientHeight + filters.clientHeight + errorDisplay.clientHeight + 31);
-            tableQueryRecords['style']['height']=`calc(${cssHeight}px - 2rem)`;
-        }
-
-        window.addEventListener('resize', (evt)=> {
-            let w=window.innerWidth;
-            if(w<720) {
-                toggleSidebarBtn.value=false;
-            } else {
-                toggleSidebarBtn.value=true;
-            }
-            triggerEvent(toggleSidebarBtn,'click');
-            setQueryRecordsHeight();
-        });
-        triggerEvent(window,'resize');
 
         async function setQueryPaginationClass() {
             try {
@@ -357,81 +385,126 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             }
         }
 
-        const runQueryBtn = document.querySelector('#runQueryBtn');
+        function setQueryRecordsHeight() {
+            let cssHeight = pageWrapper.clientHeight - (lineCounter.clientHeight + filters.clientHeight + errorDisplay.clientHeight + 31);
+            tableQueryRecords['style']['height']=`calc(${cssHeight}px - 2rem)`;
+        }
+
+        function appendTableSelectable() {
+            sqlQuery = 'SELECT name AS table_name FROM sqlite_master WHERE type =\'table\' AND name NOT LIKE \'sqlite_%\'';
+            resultset = getResultSetAsRowJSON(db, sqlQuery);
+
+            let noOfTables = resultset.length;
+            noOfTablesDisplay.innerHTML = noOfTables;
+
+            let allDisplayedTables={};
+            for(var c of dbTableDetails.children) {
+                let tbl=c.textContent;
+                tbl=tbl.replace(tblIcon, '');
+                allDisplayedTables[tbl]=true;
+            }
+
+            let displayedTablesArr=Object.keys(allDisplayedTables);
+            for (let rowObj of resultset) {
+                let tblName = rowObj['table_name']; // {table_name: 'icd9_mapping'}
+                if(!displayedTablesArr.includes(tblName)) {
+                    loadTableSelectable(tblName);
+                }
+            }
+        }
+
         runQueryBtn.addEventListener('click', async(e) => {
             try {
+                siteModalInstance.setContent(loadModalContent);
+                siteModalInstance.show();
+
                 queryStmt = codeEditor.value;
                 originalQueryStmt = queryStmt.trim();
                 if (originalQueryStmt.charAt(originalQueryStmt.length - 1) == ';') {
                     originalQueryStmt = originalQueryStmt.substr(0, originalQueryStmt.length - 1);
                 }
                 // ================================================
-                queryStmt = 'SELECT COUNT(*) FROM (' + originalQueryStmt + ')';
-                queryResultset = db.exec(queryStmt);
-                // ================================================
-                removeAllChildNodes(tableQueryPagination);
-                // ================================================
-                currentQueryPage = 1;
-                queryOffset = (currentQueryPage - 1) * recordsPerPage;
-                // ================================================
-                totalNoOfQueryRecords = queryResultset[0]['values'][0];
-                totalNoOfQueryRecords = parseInt(totalNoOfQueryRecords);
-                noOfQueryPages = totalNoOfQueryRecords / recordsPerPage;
-                noOfQueryPages = Math.ceil(noOfQueryPages);
-                // ================================================
-                displayedRecordsRange.innerHTML = `<span class='small text-muted'>Showing <strong>${queryOffset} to ${queryOffset+recordsPerPage}</strong> of <strong>${totalNoOfQueryRecords}</strong> rows</span>`;
-                // ================================================
-                firstQueryPageBtn = await initPaginationBtn('firstQueryPageBtn', tableQueryPagination);
-                // ================================================
-                prevQueryPageBtn = await initPaginationBtn('prevQueryPageBtn', tableQueryPagination);
-                // ================================================
-                currentQueryPageNo = await initInputPageNo(tableQueryPagination, 'currentQueryPageNo', currentQueryPage, noOfQueryPages);
-                // ================================================
-                nextQueryPageBtn = await initPaginationBtn('nextQueryPageBtn', tableQueryPagination);
-                // ================================================
-                lastQueryPageBtn = await initPaginationBtn('lastQueryPageBtn', tableQueryPagination);
-                // ================================================
-                // render datatable records
-                queryStmt = 'SELECT * FROM (' + originalQueryStmt + ') LIMIT ' + queryOffset + ',' + recordsPerPage;
-                queryResultset = db.exec(queryStmt);
-                // console.log(['originalQueryStmt',originalQueryStmt]);
-                // console.log(['queryStmt',queryStmt]);
-                await renderDatatable(queryResultset, tableQueryRecords);
+                let toExec=true;
+                try {
+                    errorDisplay.innerHTML = '';
+                    queryStmt = 'SELECT COUNT(*) FROM (' + originalQueryStmt + ')';
+                    queryResultset = db.exec(queryStmt);
+                } catch (err) {
+                    toExec=false;
+                }
+                if(!toExec) {
+                    db.run(originalQueryStmt);
+                    appendTableSelectable();
 
-                currentQueryPageNo.addEventListener('change', (evt0) => {
-                    evt0.stopPropagation();
-                    currentQueryPage = parseInt(evt0.target.value);
-                    setQueryPaginationClass();
-                });
-                firstQueryPageBtn.addEventListener('click', (evt1) => {
-                    evt1.stopPropagation();
+                    siteModalInstance.toggle();
+                } else {
+                    // ================================================
+                    removeAllChildNodes(tableQueryPagination);
+                    // ================================================
                     currentQueryPage = 1;
-                    setQueryPaginationClass();
-                });
-                prevQueryPageBtn.addEventListener('click', (evt2) => {
-                    evt2.stopPropagation();
-                    if (currentQueryPage > 1) {
-                        currentQueryPage = currentQueryPage - 1;
+                    queryOffset = (currentQueryPage - 1) * recordsPerPage;
+                    // ================================================
+                    totalNoOfQueryRecords = queryResultset[0]['values'][0];
+                    totalNoOfQueryRecords = parseInt(totalNoOfQueryRecords);
+                    noOfQueryPages = totalNoOfQueryRecords / recordsPerPage;
+                    noOfQueryPages = Math.ceil(noOfQueryPages);
+                    // ================================================
+                    displayedRecordsRange.innerHTML = `<span class='small text-muted'>Showing <strong>${queryOffset} to ${queryOffset+recordsPerPage}</strong> of <strong>${totalNoOfQueryRecords}</strong> rows</span>`;
+                    // ================================================
+                    firstQueryPageBtn = await initPaginationBtn('firstQueryPageBtn', tableQueryPagination);
+                    // ================================================
+                    prevQueryPageBtn = await initPaginationBtn('prevQueryPageBtn', tableQueryPagination);
+                    // ================================================
+                    currentQueryPageNo = await initInputPageNo(tableQueryPagination, 'currentQueryPageNo', currentQueryPage, noOfQueryPages);
+                    // ================================================
+                    nextQueryPageBtn = await initPaginationBtn('nextQueryPageBtn', tableQueryPagination);
+                    // ================================================
+                    lastQueryPageBtn = await initPaginationBtn('lastQueryPageBtn', tableQueryPagination);
+                    // ================================================
+                    // render datatable records
+                    queryStmt = 'SELECT * FROM (' + originalQueryStmt + ') LIMIT ' + queryOffset + ',' + recordsPerPage;
+                    queryResultset = db.exec(queryStmt);
+                    // console.log(['originalQueryStmt',originalQueryStmt]);
+                    // console.log(['queryStmt',queryStmt]);
+                    await renderDatatable(queryResultset, tableQueryRecords);
+                    // await new Promise((resolve, reject) => setTimeout(resolve, 500));
+                    siteModalInstance.toggle();
+
+                    currentQueryPageNo.addEventListener('change', (evt0) => {
+                        evt0.stopPropagation();
+                        currentQueryPage = parseInt(evt0.target.value);
                         setQueryPaginationClass();
-                    }
-                });
-                nextQueryPageBtn.addEventListener('click', (evt3) => {
-                    evt3.stopPropagation();
-                    if (currentQueryPage < noOfQueryPages) {
-                        currentQueryPage = currentQueryPage + 1;
+                    });
+                    firstQueryPageBtn.addEventListener('click', (evt1) => {
+                        evt1.stopPropagation();
+                        currentQueryPage = 1;
                         setQueryPaginationClass();
-                    }
-                });
-                lastQueryPageBtn.addEventListener('click', (evt4) => {
-                    evt4.stopPropagation();
-                    currentQueryPage = noOfQueryPages;
-                    setQueryPaginationClass();
-                });
+                    });
+                    prevQueryPageBtn.addEventListener('click', (evt2) => {
+                        evt2.stopPropagation();
+                        if (currentQueryPage > 1) {
+                            currentQueryPage = currentQueryPage - 1;
+                            setQueryPaginationClass();
+                        }
+                    });
+                    nextQueryPageBtn.addEventListener('click', (evt3) => {
+                        evt3.stopPropagation();
+                        if (currentQueryPage < noOfQueryPages) {
+                            currentQueryPage = currentQueryPage + 1;
+                            setQueryPaginationClass();
+                        }
+                    });
+                    lastQueryPageBtn.addEventListener('click', (evt4) => {
+                        evt4.stopPropagation();
+                        currentQueryPage = noOfQueryPages;
+                        setQueryPaginationClass();
+                    });
+                }
             } catch (err) {
                 errorDisplay.innerHTML = '';
                 errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
                 console.log(err);
-            }
+            } 
         });
 
         exportQueryAsJSON.addEventListener('click', () => {
@@ -471,6 +544,13 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
                 console.log(err);
             }
+        });
+
+        exportSampleDB.addEventListener('click', ()=> {
+            let dwnlnk=document.createElement('a');
+            dwnlnk.download = 'healthcare_records.db';
+            dwnlnk.href = './database_files/healthcare_records.db';
+            dwnlnk.click();
         });
 
 
@@ -567,9 +647,8 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 fileredr.readAsArrayBuffer(file);
             });
         }
-        // const binaryArray = db.export();
-        const fileNameDisplay = document.querySelector('#fileNameDisplay');
-        const fileSizeDisplay = document.querySelector('#fileSizeDisplay');
+        const convertBitArrtoB64 = (bitArr) => ( btoa( bitArr.reduce((data, byte) => data + String.fromCharCode(byte), '') ) );
+
         upload.addEventListener('change', async(ev) => {
             errorDisplay.innerHTML = '';
 
@@ -598,43 +677,46 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
                 console.log(err);
             }
-
-            // const convertBitArrtoB64 = (bitArr) => ( btoa( bitArr.reduce((data, byte) => data + String.fromCharCode(byte), '') ) );
-
-            // const exportDB=document.querySelector('#exportDB');
-            // exportDB.addEventListener('click', (evt)=> {
-            // 	const arrayBuffer = db.export();
-            // 	let uInt8Array=new Uint8Array(arrayBuffer);
-            // 	let b64Str=convertBitArrtoB64(uInt8Array);
-
-            // 	let dwnlnk = document.createElement('a');
-            //  dwnlnk.download = 'sqliteDatabaseOutput.db';
-            //  dwnlnk.href=`data:application/db;base64,${b64Str}`;
-            //  dwnlnk.click();
-            // });
         }); // upload file change event
-        const exportSampleDB=document.querySelector('#exportSampleDB');
-        exportSampleDB.addEventListener('click', (evt)=> {
-            let dwnlnk=document.createElement('a');
-            dwnlnk.download = 'healthcare_records.db';
-            dwnlnk.href = './database_files/healthcare_records.db';
-            dwnlnk.click();
+        
+        const exportDB=document.querySelector('#exportDB');
+        exportDB.addEventListener('click', async(evt)=> {
+            try {
+                siteModalInstance.setContent(downloadModalContent);
+                siteModalInstance.show();
+
+                const arrayBuffer = db.export();
+                let uInt8Array=new Uint8Array(arrayBuffer);
+                let b64Str=convertBitArrtoB64(uInt8Array);
+
+                let dwnlnk = document.createElement('a');
+                dwnlnk.download = `exported_${fileNameDisplay.innerText}`;
+                dwnlnk.href=`data:application/x-sqlite3;base64,${b64Str}`;
+                dwnlnk.click();
+
+                siteModalInstance.hide();
+            } catch (err) {
+                errorDisplay.innerHTML = '';
+                errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
+                console.log(err);
+            }
         });
+
         // Prepare an sql statement
-                    // sqlQuery="WITH tables AS \n" +
-                    // "(SELECT name, sql FROM sqlite_master \n" +
-                    // "WHERE type = 'table' AND name NOT LIKE 'sqlite_%' AND name='"+ tblName +"')\n" +
-                    // "SELECT cid,fields.name FROM tables \n" +
-                    // "CROSS JOIN pragma_table_info(tables.name) fields";
-                    // console.log(sqlQuery);
-                    // stmt = db.prepare(sqlQuery);
-                    // resultset = db.exec(sqlQuery);
-                    // console.log(resultset);
-                    // Bind values to the parameters and fetch the results of the query
-                    // resultObj = stmt.getAsObject({':tblNameVal' : tblName});
-                    // console.log(resultObj); // Will print {a:1, b:'world'}
-                    // free the memory used by the statement
-                    // stmt.free();
+        // sqlQuery="WITH tables AS \n" +
+        // "(SELECT name, sql FROM sqlite_master \n" +
+        // "WHERE type = 'table' AND name NOT LIKE 'sqlite_%' AND name='"+ tblName +"')\n" +
+        // "SELECT cid,fields.name FROM tables \n" +
+        // "CROSS JOIN pragma_table_info(tables.name) fields";
+        // console.log(sqlQuery);
+        // stmt = db.prepare(sqlQuery);
+        // resultset = db.exec(sqlQuery);
+        // console.log(resultset);
+        // Bind values to the parameters and fetch the results of the query
+        // resultObj = stmt.getAsObject({':tblNameVal' : tblName});
+        // console.log(resultObj); // Will print {a:1, b:'world'}
+        // free the memory used by the statement
+        // stmt.free();
         // ================================== Query Editor Tab ===========================
         const sampleQueryStmt = 'SELECT patient_id,diagnosis_code,icd9_description' +
             '\n FROM' +
@@ -650,18 +732,21 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
          (SELECT patient_id, diagnosis_code FROM patient_diagnosis) A LEFT JOIN (SELECT icd9_code, icd9_description FROM icd9_mapping) B
         ON A.diagnosis_code = B.icd9_code;
         */
-        const codeEditorWidth=document.querySelector('#codeEditor').clientWidth;
-        const lineCounterWidth=document.querySelector('#lineCounter').clientWidth;
-        const codeEditorEditableWidth=codeEditorWidth-lineCounterWidth-5;
 
-        function line_counter() {
+        function line_counter(codeEditor, lineCounter) {
+            const codeEditorWidth=codeEditor.clientWidth;
+            const lineCounterWidth=lineCounter.clientWidth;
+
+            const codeEditorLeftPadding = 5; // padding-left = 5 of #codeEditor
+            const codeEditorEditableWidth=codeEditorWidth-lineCounterWidth-codeEditorLeftPadding; 
+
             let lines = codeEditor.value.split('\n');
             let lineCount = lines.length;
             let outarr = new Array();
             for (let x = 0; x < lineCount; x++) {
-                if ((lines[x].length * 8) + 5 > codeEditorEditableWidth) {
+                if ((lines[x].length * 8) + codeEditorLeftPadding > codeEditorEditableWidth) {
                     outarr.push(`${parseInt(x + 1)}.`);
-                    let nbWrap = Math.floor(((lines[x].length * 8) + 5) / codeEditorEditableWidth);
+                    let nbWrap = Math.floor(((lines[x].length * 8) + codeEditorLeftPadding) / codeEditorEditableWidth);
                     for (let y = 0; y < nbWrap; y++) {
                         outarr.push(' ');
                     }
@@ -671,28 +756,48 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             }
             lineCounter.value = outarr.join('\n');
         }
-        codeEditor.addEventListener('scroll', () => {
-            lineCounter.scrollTop = codeEditor.scrollTop;
-            lineCounter.scrollLeft = codeEditor.scrollLeft;
-        });
-        codeEditor.addEventListener('input', () => {
-            line_counter();
-        });
-        codeEditor.addEventListener('keydown', (e) => {
-            let { keyCode } = e;
-            let {
-                value,
-                selectionStart,
-                selectionEnd
-            } = codeEditor;
-            if (keyCode === 9) {
-                e.preventDefault();
-                codeEditor.value = value.slice(0, selectionStart) + '\t' + value.slice(selectionEnd);
-                codeEditor.setSelectionRange(selectionStart + 2, selectionStart + 1)
-            }
-        });
+        function bindEventsToCodeEditor(codeEditor, lineCounter) {
+             codeEditor.addEventListener('scroll', () => {
+                lineCounter.scrollTop = codeEditor.scrollTop;
+                lineCounter.scrollLeft = codeEditor.scrollLeft;
+            });
+            codeEditor.addEventListener('input', () => {
+                line_counter(codeEditor, lineCounter);
+            });
+            codeEditor.addEventListener('keydown', (e) => {
+                let { keyCode } = e;
+                let {
+                    value,
+                    selectionStart,
+                    selectionEnd
+                } = codeEditor;
+                if (keyCode === 9) {
+                    e.preventDefault();
+                    codeEditor.value = value.slice(0, selectionStart) + '\t' + value.slice(selectionEnd);
+                    codeEditor.setSelectionRange(selectionStart + 2, selectionStart + 1)
+                }
+            });
+        }
         codeEditor.value = sampleQueryStmt;
-        line_counter();
+        line_counter(codeEditor, lineCounter);
+
+        window.addEventListener('resize', (evt)=> {
+            let w=window.innerWidth;
+            if(w<720) {
+                toggleSidebarBtn.value=false;
+            } else {
+                toggleSidebarBtn.value=true;
+            }
+            triggerEvent(toggleSidebarBtn,'click');
+            setQueryRecordsHeight();
+
+            const codeEditor=document.querySelector('#codeEditor');
+            const lineCounter=document.querySelector('#lineCounter');
+            line_counter(codeEditor, lineCounter);
+            bindEventsToCodeEditor(codeEditor, lineCounter);
+        });
+        triggerEvent(window,'resize');
+        triggerEvent(infoModalBtn,'click');
 
     }); // DOMContentLoaded
 }

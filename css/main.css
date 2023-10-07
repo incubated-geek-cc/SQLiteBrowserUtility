@@ -622,8 +622,16 @@ ul.nav.navbar-nav {
     border-left: 0;
     border-right: 0;
 }
-
-
+.reload-icon {
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+DQo8cGF0aCBmaWxsPScjZmZmZmZmJyBkPSJNMzIgMTJoLTEybDQuNDg1LTQuNDg1Yy0yLjI2Ny0yLjI2Ni01LjI4LTMuNTE1LTguNDg1LTMuNTE1cy02LjIxOSAxLjI0OC04LjQ4NSAzLjUxNWMtMi4yNjYgMi4yNjctMy41MTUgNS4yOC0zLjUxNSA4LjQ4NXMxLjI0OCA2LjIxOSAzLjUxNSA4LjQ4NWMyLjI2NyAyLjI2NiA1LjI4IDMuNTE1IDguNDg1IDMuNTE1czYuMjE5LTEuMjQ4IDguNDg1LTMuNTE1YzAuMTg5LTAuMTg5IDAuMzcxLTAuMzg0IDAuNTQ2LTAuNTgzbDMuMDEwIDIuNjM0Yy0yLjkzMyAzLjM0OS03LjIzOSA1LjQ2NC0xMi4wNDEgNS40NjQtOC44MzcgMC0xNi03LjE2My0xNi0xNnM3LjE2My0xNiAxNi0xNmM0LjQxOCAwIDguNDE4IDEuNzkxIDExLjMxMyA0LjY4N2w0LjY4Ny00LjY4N3YxMnoiLz4NCjwvc3ZnPg==');
+    padding: 7px 14px;
+    border: 8px solid rgba(8,152,138);
+    border-left: 0;
+    border-right: 0;
+}
+#clearCache {
+  font-size: 1rem;
+}
 
 /* [START] <details> + <summary> CSS for accordion */
 .user-select-none {
