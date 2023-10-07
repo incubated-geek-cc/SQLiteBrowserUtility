@@ -851,8 +851,8 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 }
             });
         }
-        codeEditor.value = sampleQueryStmt;
-        line_counter(codeEditor, lineCounter);
+        // codeEditor.value = sampleQueryStmt;
+        // line_counter(codeEditor, lineCounter);
 
         window.addEventListener('resize', (evt)=> {
             let w=window.innerWidth;
