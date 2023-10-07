@@ -52,18 +52,18 @@
 	</tbody>
 </table>
 
-<ul>
-	<li>🗹 Include code editor and browse tables into a single view</li>
-	<li>🗹 Code editor wrap lines toggle button</li>
-	<li>🗹 Mobile-responsiveness</li>
-	<li>☐ Replace code editor area with latest query reflected i.e. when table is selected</li>
-	<li>☐ Render SQLite query tips and tricks in popover above editor area</li>
-	<li>🗹 Export sample database</li>
-	<li>🗹 Export updated database</li>
-	<li>🗹 Include 'Reset' ⭯ button (clears cache)</li>
-	<li>☐ Pagination dropdown list for 'no. of rows per page'</li>
-	<li>☐ UI/UX refinement - e.g. disable/enable selections before/after uploads</li>
-</ul>
+<div align='left'>
+	<strong>「✓」</strong> Include code editor and browse tables into a single view<br>
+	<strong>「✓」</strong> Code editor wrap lines toggle button<br>
+	<strong>「✓」</strong> Mobile-responsiveness<br>
+	<strong>「✓」</strong> Replace code editor area with latest query reflected i.e. when table is selected<br>
+	<strong>「⋯」</strong> Render SQLite query tips and tricks in popover above editor area<br>
+	<strong>「⋯」</strong> Pagination dropdown list for 'no. of rows per page'<br>
+	<strong>「✓」</strong> Export sample database<br>
+	<strong>「✓」</strong> Export updated database<br>
+	<strong>「✓」</strong> Include 'Reset' ⟲ button (clear cache & reload page)<br>
+	<strong>「✓」</strong> UI/UX refinement - e.g. disable/enable selections before/after uploads, drag & drop file feature added
+</div>
 
 <p>— <b>Join me on 📝 <b>Medium</b> at <a href='https://medium.com/@geek-cc' target='_blank'>~ ξ(🎀˶❛◡❛) @geek-cc</a></b></p>
 

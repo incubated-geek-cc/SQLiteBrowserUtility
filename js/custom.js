@@ -4,6 +4,9 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
     document.addEventListener('DOMContentLoaded', async() => {
         console.log('DOMContentLoaded');
 
+        const dropFileZone=document.querySelector('#dropFileZone');
+        const dropFileInnerZone=dropFileZone.querySelector('.card-body');
+
         const clearCache=document.querySelector('#clearCache');
         clearCache.addEventListener('click', () => {
             requestAnimationFrame(() => {
@@ -60,7 +63,8 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 
         const toggleSidebarBtn = document.querySelector('#toggleSidebarBtn');
         const asideLeftSidebar = document.querySelector('aside.left-sidebar');
-        const pageWrapper = document.querySelector('#main-wrapper .page-wrapper');
+        const mainWrapper = document.querySelector('#main-wrapper');
+        const pageWrapper = mainWrapper.querySelector('.page-wrapper');
         toggleSidebarBtn.addEventListener('click', (evt) => {
             let currentVal = evt.target.value;
             let latestVal = (currentVal == 'true') ? 'false' : 'true';
@@ -74,21 +78,9 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             }
         });
 
-        const fileNameDisplay = document.querySelector('#fileNameDisplay');
-        const fileSizeDisplay = document.querySelector('#fileSizeDisplay');
-
-        const sidebarUpload = document.querySelector('#sidebarUpload');
-        const upload = document.querySelector('#upload');
-        upload.addEventListener('click', (ev) => {
-            ev.currentTarget.value='';
-        });
-        sidebarUpload.addEventListener('click', () => {
-            upload.click();
-        });
-
         const infoModalBtn = document.querySelector('#infoModalBtn');
         const infoModalContent = `<div class="modal-header">
-                                    <h5 class="modal-title"><span class='icon icon-info p-2 mr-2'></span> About SQLite Browser Tool</h5>
+                                    <h5 class="modal-title"><span class='mr-2 font-weight-bolder symbol'>𝖎</span> About SQLite Browser Tool</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                   </div>
                                   <div class="modal-body">
@@ -109,10 +101,10 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                                     </a></small><span class='symbol pl-1 pr-1'><a href='https://github.com/incubated-geek-cc/' target='_blank'><span data-profile='github' class='attribution-icon'></span></a> ▪ <a href='https://medium.com/@geek-cc' target='_blank'><span data-profile='medium' class='attribution-icon'></span></a> ▪ <a href='https://www.linkedin.com/in/charmaine-chui-15133282/' target='_blank'><span data-profile='linkedin' class='attribution-icon'></span></a> ▪ <a href='https://twitter.com/IncubatedGeekCC' target='_blank'><span data-profile='twitter' class='attribution-icon'></span></a></span>
                                   </div>`;
 
-        const loadModalContent = `<div class="modal-header">
-                                    <h5 class="modal-title"><span class='icon icon-info p-2 mr-2'></span> Running SQL Query</h5>
-                                  </div>
-                                  <div class="modal-body">
+        
+        async function showLoadingSignal(modalTitle) {
+            let modalHeader='<div class="modal-header"><h5 class="modal-title">'+modalTitle+'</h5></div>';
+            const modalContent = `<div class="modal-body">
                                     <div class="row">
                                         <div class="col-sm-12 text-center">
                                             <div class="spinner-border text-muted"></div>
@@ -121,22 +113,18 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                                     </div>
                                   </div>`;
 
-        const downloadModalContent = `<div class="modal-header">
-                                    <h5 class="modal-title"><span class='icon icon-info p-2 mr-2'></span> Exporting Database File</h5>
-                                  </div>
-                                  <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col-sm-12 text-center">
-                                            <div class="spinner-border text-muted"></div>
-                                            <div class="text-secondary">Loading...</div>
-                                        </div>
-                                    </div>
-                                  </div>`;
+            siteModalInstance.setContent(modalHeader + modalContent);
+            // wait 100 milliseconds
+            await new Promise((resolve, reject) => setTimeout(resolve, 100));
+            siteModalInstance.show();
+            return await Promise.resolve('Loading');
+        }
+
 
         const siteModalInstance = new BSN.Modal(
           '#siteModal', { 
             content: '',
-            backdrop: true,
+            backdrop: false,
             keyboard: false
           }
         );
@@ -230,7 +218,6 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 
                 return await Promise.resolve(paginationBtn);
             } catch (err) {
-                errorDisplay.innerHTML = '';
                 errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
                 console.log(err);
             }
@@ -267,7 +254,6 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 
                 return await Promise.resolve(currentPageNo);
             } catch (err) {
-                errorDisplay.innerHTML = '';
                 errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
                 console.log(err);
             }
@@ -279,7 +265,6 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                     parent.removeChild(parent.firstChild);
                 }
             } catch (err) {
-                errorDisplay.innerHTML = '';
                 errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
                 console.log(err);
             }
@@ -300,7 +285,6 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 }
                 return rowJSONOutput;
             } catch (err) {
-                errorDisplay.innerHTML = '';
                 errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
                 console.log(err);
             }
@@ -308,7 +292,11 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 
         async function renderDatatable(resultset, tableRecordsEle) {
             try {
+                let status = await showLoadingSignal('Running SQL query');
+                console.log(status);
+
                 tableRecordsEle.innerHTML = '';
+                errorDisplay.innerHTML = '';
 
                 let tableHtmlStr = '';
                 tableHtmlStr += '<table class="table table-striped table-condensed small table-bordered h-100 w-100">';
@@ -325,14 +313,14 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 tableHtmlStr += '</div>';
                 tableRecordsEle.innerHTML = tableHtmlStr;
 
-                errorDisplay.innerHTML = '';
-
+                await new Promise((resolve, reject) => setTimeout(resolve, 100));
+                siteModalInstance.hide();
+                await new Promise((resolve, reject) => setTimeout(resolve, 100));
                 return await Promise.resolve('success');
             } catch (err) {
-                errorDisplay.innerHTML = '';
                 errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
                 console.log(err);
-            }
+            } 
         }
 
         async function setQueryPaginationClass() {
@@ -374,18 +362,23 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 // console.log(['originalQueryStmt',originalQueryStmt]);
                 // console.log(['queryStmt',queryStmt]);
                 await renderDatatable(queryResultset, tableQueryRecords);
+                codeEditor.value=queryStmt;
 
                 displayedRecordsRange.innerHTML = `<span class='small text-muted'>Showing <strong>${queryOffset} to ${queryOffset+recordsPerPage}</strong> of <strong>${totalNoOfQueryRecords}</strong> rows</span>`;
                 
                 setQueryRecordsHeight();
             } catch (err) {
-                errorDisplay.innerHTML = '';
                 errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
                 console.log(err);
             }
         }
 
         function setQueryRecordsHeight() {
+            const pageWrapper = mainWrapper.querySelector('.page-wrapper');
+            const lineCounter = mainWrapper.querySelector('#lineCounter');
+            const filters = mainWrapper.querySelector('#filters');
+            const errorDisplay = mainWrapper.querySelector('#errorDisplay');
+
             let cssHeight = pageWrapper.clientHeight - (lineCounter.clientHeight + filters.clientHeight + errorDisplay.clientHeight + 31);
             tableQueryRecords['style']['height']=`calc(${cssHeight}px - 2rem)`;
         }
@@ -415,9 +408,6 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 
         runQueryBtn.addEventListener('click', async(e) => {
             try {
-                siteModalInstance.setContent(loadModalContent);
-                siteModalInstance.show();
-
                 queryStmt = codeEditor.value;
                 originalQueryStmt = queryStmt.trim();
                 if (originalQueryStmt.charAt(originalQueryStmt.length - 1) == ';') {
@@ -435,8 +425,6 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 if(!toExec) {
                     db.run(originalQueryStmt);
                     appendTableSelectable();
-
-                    siteModalInstance.toggle();
                 } else {
                     // ================================================
                     removeAllChildNodes(tableQueryPagination);
@@ -467,8 +455,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                     // console.log(['originalQueryStmt',originalQueryStmt]);
                     // console.log(['queryStmt',queryStmt]);
                     await renderDatatable(queryResultset, tableQueryRecords);
-                    // await new Promise((resolve, reject) => setTimeout(resolve, 500));
-                    siteModalInstance.toggle();
+                    codeEditor.value=queryStmt;
 
                     currentQueryPageNo.addEventListener('change', (evt0) => {
                         evt0.stopPropagation();
@@ -501,34 +488,42 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                     });
                 }
             } catch (err) {
-                errorDisplay.innerHTML = '';
                 errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
                 console.log(err);
             } 
         });
 
-        exportQueryAsJSON.addEventListener('click', () => {
+
+        exportQueryAsJSON.addEventListener('click', async() => {
             try {
+                let status = await showLoadingSignal('Exporting data resultset');
+                console.log(status);
+
                 let jsonObj = getResultSetAsRowJSON(db, 'SELECT * FROM (' + originalQueryStmt + ')');
                 let jsonStr = JSON.stringify(jsonObj);
                 let textblob = new Blob([jsonStr], {
                     type: 'application/json'
                 });
                 let dwnlnk = document.createElement('a');
-                dwnlnk.download = 'queryResultset.json';
+                dwnlnk.download = 'resultset.json';
                 if (window.webkitURL != null) {
                     dwnlnk.href = window.webkitURL.createObjectURL(textblob);
                 }
                 dwnlnk.click();
             } catch (err) {
-                errorDisplay.innerHTML = '';
                 errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
                 console.log(err);
+            } finally {
+                await new Promise((resolve, reject) => setTimeout(resolve, 100));
+                siteModalInstance.hide();
             }
         });
 
-        exportEditorQuery.addEventListener('click', () => {
+        exportEditorQuery.addEventListener('click', async() => {
             try {
+                let status = await showLoadingSignal('Saving SQL script');
+                console.log(status);
+
                 let queryStr = codeEditor.value;
                 let textblob = new Blob([queryStr], {
                     type: 'text/plain'
@@ -540,24 +535,36 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 }
                 dwnlnk.click();
             } catch (err) {
-                errorDisplay.innerHTML = '';
                 errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
                 console.log(err);
+            } finally {
+                await new Promise((resolve, reject) => setTimeout(resolve, 100));
+                siteModalInstance.hide();
             }
         });
 
-        exportSampleDB.addEventListener('click', ()=> {
-            let dwnlnk=document.createElement('a');
-            dwnlnk.download = 'healthcare_records.db';
-            dwnlnk.href = './database_files/healthcare_records.db';
-            dwnlnk.click();
-        });
+        exportSampleDB.addEventListener('click', async()=> {
+            try {
+                let status = await showLoadingSignal('Downloading sample database');
+                console.log(status);
 
+                let dwnlnk=document.createElement('a');
+                dwnlnk.download = 'healthcare_records.db';
+                dwnlnk.href = './database_files/healthcare_records.db';
+                dwnlnk.click();
+            } catch (err) {
+                errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
+                console.log(err);
+            } finally {
+                await new Promise((resolve, reject) => setTimeout(resolve, 100));
+                siteModalInstance.hide();
+            }
+        });
 
         function loadTableSelectable(tblName) {
             let tblClickableBtn = document.createElement('button');
             tblClickableBtn.setAttribute('type', 'button');
-            tblClickableBtn.setAttribute('class', 'btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3');
+            tblClickableBtn.setAttribute('class', 'btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-4');
             tblClickableBtn.innerHTML = `<span class='symbol mr-2'>${tblIcon}</span>${tblName}`;
 
             dbTableDetails.appendChild(tblClickableBtn);
@@ -601,6 +608,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                     // console.log(['originalQueryStmt',originalQueryStmt]);
                     // console.log(['queryStmt',queryStmt]);
                     await renderDatatable(queryResultset, tableQueryRecords);
+                    codeEditor.value=queryStmt;
 
                     currentQueryPageNo.addEventListener('change', (evt0) => {
                         evt0.stopPropagation();
@@ -633,7 +641,6 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                     });
                 });
             } catch (err) {
-                errorDisplay.innerHTML = '';
                 errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
                 console.log(err);
             }
@@ -647,14 +654,38 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 fileredr.readAsArrayBuffer(file);
             });
         }
-        const convertBitArrtoB64 = (bitArr) => ( btoa( bitArr.reduce((data, byte) => data + String.fromCharCode(byte), '') ) );
+        const fileNameDisplay = document.querySelector('#fileNameDisplay');
+        const fileSizeDisplay = document.querySelector('#fileSizeDisplay');
 
-        upload.addEventListener('change', async(ev) => {
-            errorDisplay.innerHTML = '';
+        const sidebarUpload = document.querySelector('#sidebarUpload');
+        const upload = document.querySelector('#upload');
 
-            let file = ev.currentTarget.files[0];
-            if (!file) return;
+        upload.addEventListener('click', (ev) => {
+            ev.currentTarget.value='';
+        });
+        sidebarUpload.addEventListener('click', () => {
+            upload.click();
+        });
 
+        dropFileZone.addEventListener("dragenter", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dropFileInnerZone.classList.add("bg-custom-two-05");
+        });
+
+        dropFileZone.addEventListener("dragleave", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dropFileInnerZone.classList.remove("bg-custom-two-05");
+        });
+
+        dropFileZone.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dropFileInnerZone.classList.add("bg-custom-two-05");
+        });
+
+        async function importDBFile(file) {
             try {
                 fileNameDisplay.innerText = file.name;
                 fileSizeDisplay.innerText = `${parseInt(file.size/1024)} ㎅`;
@@ -673,17 +704,68 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                     loadTableSelectable(tblName);
                 }
             } catch (err) {
-                errorDisplay.innerHTML = '';
                 errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
                 console.log(err);
+            } finally {
+                triggerEvent(infoModalBtn,'click');
+
+                upload.setAttribute('disabled','');
+                upload.classList.add('no-touch');
+                upload.classList.add('unselectable');
+
+                sidebarUpload.classList.add('no-touch');
+                sidebarUpload.classList.add('unselectable');
+
+                dropFileZone.setAttribute('hidden','');
+                mainWrapper.removeAttribute('hidden');
+
+                let tableTab=document.querySelector('details.accordion-item:not([open]):first-of-type .accordion-button');
+                if(tableTab != null) {
+                    tableTab.click();
+                }
+                triggerEvent(window,'resize');
+            }
+            return await Promise.resolve('success');
+        }
+
+        dropFileZone.addEventListener("drop", async(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dropFileInnerZone.classList.remove("bg-custom-two-05");
+
+            errorDisplay.innerHTML = '';
+            upload.value='';
+            
+            let draggedData = e.dataTransfer;
+            let file = draggedData.files[0];
+            if (!file) return;
+
+            await importDBFile(file);
+            let initTable=document.querySelector('#dbTableDetails.accordion-body:first-of-type button.datatable');
+            if(initTable != null) {
+                initTable.click();
+            }
+        }); // drop file change event
+
+        upload.addEventListener('change', async(ev) => {
+            errorDisplay.innerHTML = '';
+
+            let file = ev.currentTarget.files[0];
+            if (!file) return;
+
+            await importDBFile(file);
+            let initTable=document.querySelector('#dbTableDetails.accordion-body:first-of-type button.datatable');
+            if(initTable != null) {
+                initTable.click();
             }
         }); // upload file change event
         
+        const convertBitArrtoB64 = (bitArr) => ( btoa( bitArr.reduce((data, byte) => data + String.fromCharCode(byte), '') ) );
         const exportDB=document.querySelector('#exportDB');
         exportDB.addEventListener('click', async(evt)=> {
             try {
-                siteModalInstance.setContent(downloadModalContent);
-                siteModalInstance.show();
+                let status = await showLoadingSignal('Exporting database');
+                console.log(status);
 
                 const arrayBuffer = db.export();
                 let uInt8Array=new Uint8Array(arrayBuffer);
@@ -693,12 +775,12 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 dwnlnk.download = `exported_${fileNameDisplay.innerText}`;
                 dwnlnk.href=`data:application/x-sqlite3;base64,${b64Str}`;
                 dwnlnk.click();
-
-                siteModalInstance.hide();
             } catch (err) {
-                errorDisplay.innerHTML = '';
                 errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
                 console.log(err);
+           } finally {
+                await new Promise((resolve, reject) => setTimeout(resolve, 100));
+                siteModalInstance.hide();
             }
         });
 
@@ -718,20 +800,11 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
         // free the memory used by the statement
         // stmt.free();
         // ================================== Query Editor Tab ===========================
-        const sampleQueryStmt = 'SELECT patient_id,diagnosis_code,icd9_description' +
-            '\n FROM' +
-            '\n (SELECT' +
-            '\n     patient_id,' +
-            '\n     diagnosis_code' +
-            '\n FROM patient_diagnosis) A LEFT JOIN ' +
-            '\n (SELECT icd9_code, icd9_description FROM icd9_mapping) B' +
-            '\n ON A.diagnosis_code = B.icd9_code;';
-        /*
-        SELECT patient_id,diagnosis_code,icd9_description
-         FROM
-         (SELECT patient_id, diagnosis_code FROM patient_diagnosis) A LEFT JOIN (SELECT icd9_code, icd9_description FROM icd9_mapping) B
-        ON A.diagnosis_code = B.icd9_code;
-        */
+        const sampleQueryStmt = 'SELECT patient_id,diagnosis_code,icd9_description FROM' +
+             '\n  (SELECT patient_id,diagnosis_code FROM patient_diagnosis) A' + 
+             '\nLEFT JOIN ' +
+             '\n  (SELECT icd9_code, icd9_description FROM icd9_mapping) B' +
+             '\nON A.diagnosis_code = B.icd9_code;';
 
         function line_counter(codeEditor, lineCounter) {
             const codeEditorWidth=codeEditor.clientWidth;
@@ -797,7 +870,6 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             bindEventsToCodeEditor(codeEditor, lineCounter);
         });
         triggerEvent(window,'resize');
-        triggerEvent(infoModalBtn,'click');
 
     }); // DOMContentLoaded
 }
