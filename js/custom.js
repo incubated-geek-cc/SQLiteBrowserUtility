@@ -101,19 +101,22 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                                     <div class="text-center">
                                         <img src='img/logo.png' height='35' />
                                         <p class='lead pb-1'>Welcome to SQLite Browser Tool!</p>
-                                        <p class='text-custom-one'><strong>Create</strong>, <strong>Read</strong> & <strong>Edit</strong> an SQLite* database with client-side JavaScript entirely in browser <span class='symbol mr-1'>⇒</span><mark class='emoji'>🚫 No server required</mark></p>
+                                        <p class='text-custom-one mb-0'><strong>Create</strong>, <strong>Read</strong> & <strong>Edit</strong> an SQLite* database with client-side JavaScript entirely in browser</p>
+                                        <span class='symbol mr-1 font-weight-bold'>⇒</span><mark class='emoji'>🚫 No server required</mark>
                                     </div>
-                                    <p class='small secondary'>*SQLite is a file-based <abbr title="Relational Database Management System">RDBMS</abbr> that requires no database engine and is self-contained.</p>
+                                    <p class='small secondary mt-1'>*SQLite is a file-based <abbr title="Relational Database Management System">RDBMS</abbr> that requires no database engine and is self-contained.</p>
+
+                                    <hr class="mt-1">
                                     <div class="text-left">
-                                        <h6>Credits & Acknowledgements</h6>
-                                        <p>Application uses <cite title="A javascript library to run SQLite on the web."><a href="https://github.com/sql-js/sql.js" target="_blank">sql.js</a></cite> plugin (<a href="LICENSE.txt" target="_blank">MIT licensed</a>) which serves as a standalone GUI tool to > a SQLite file (a <abbr title="Relational Database Management System">RDBMS</abbr> without a database engine) entirely in-browser. Version of <cite title="A javascript library to run SQLite on the web."><a href="https://github.com/sql-js/sql.js" target="_blank">sql.js</a></cite> uses <a href='https://webassembly.org/' target='_blank'>WASM</a> alongside its JavaScript library.</p>
+                                        <h6><span class='emoji'>🏆</span> Credits & Acknowledgements</h6>
+                                        <p>Application uses <cite title="A javascript library to run SQLite on the web."><a href="https://github.com/sql-js/sql.js" target="_blank">sql.js</a></cite> plugin (<a href="LICENSE.txt" target="_blank">MIT licensed</a>) which serves as a standalone GUI tool to inspect a SQLite file (a <abbr title="Relational Database Management System">RDBMS</abbr> without a database engine) entirely in-browser. Version of <cite title="A javascript library to run SQLite on the web."><a href="https://github.com/sql-js/sql.js" target="_blank">sql.js</a></cite> uses <a href='https://webassembly.org/' target='_blank'>WASM</a> alongside its JavaScript library.</p>
                                     </div>
                                   </div>
                                   <div class="modal-footer text-right">
-                                    <small><span class='symbol pl-1 pr-1'>— Created by</span><a href="https://medium.com/@geek-cc" target="_blank"><span class="symbol">ξ(</span><span class="emoji">🎀</span><span class="symbol">˶❛◡❛) ᵀᴴᴱ ᴿᴵᴮᴮᴼᴺ ᴳᴵᴿᴸ</span>
-                                    </a></small><span class='symbol pl-1 pr-1'><a href='https://github.com/incubated-geek-cc/' target='_blank'><span data-profile='github' class='attribution-icon'></span></a> ▪ <a href='https://medium.com/@geek-cc' target='_blank'><span data-profile='medium' class='attribution-icon'></span></a> ▪ <a href='https://www.linkedin.com/in/charmaine-chui-15133282/' target='_blank'><span data-profile='linkedin' class='attribution-icon'></span></a> ▪ <a href='https://twitter.com/IncubatedGeekCC' target='_blank'><span data-profile='twitter' class='attribution-icon'></span></a></span>
+                                    <small><span class='symbol pl-1 pr-1'><a href='https://www.buymeacoffee.com/geekcc' target='_blank'><img src='img/buy_me_a_taco.png' height='30' /></a> </span><a href="https://medium.com/@geek-cc" target="_blank"><span class="symbol">ξ(</span><span class="emoji">🎀</span><span class="symbol">˶❛◡❛) ᵀᴴᴱ ᴿᴵᴮᴮᴼᴺ ᴳᴵᴿᴸ</span></a> 
+                                    </small> <span class='symbol text-custom-one'>❘</span> <span class='symbol pl-1 pr-1'><a href='https://github.com/incubated-geek-cc/' target='_blank'><span data-profile='github' class='attribution-icon'></span></a>▪<a href='https://medium.com/@geek-cc' target='_blank'><span data-profile='medium' class='attribution-icon'></span></a>▪<a href='https://www.linkedin.com/in/charmaine-chui-15133282/' target='_blank'><span data-profile='linkedin' class='attribution-icon'></span></a>▪<a href='https://twitter.com/IncubatedGeekCC' target='_blank'><span data-profile='twitter' class='attribution-icon'></span></a> </span>
                                   </div>`;
-// <p>Proceed to upload an SQLite file (<code>.sqlite, .sqlite3, .db, .db3, .s3db, .sl3</code>)</p>
+        // <p>Proceed to upload an SQLite file (<code>.sqlite, .sqlite3, .db, .db3, .s3db, .sl3</code>)</p>
         async function showLoadingSignal(modalTitle) {
             let modalHeader='<div class="modal-header"><h5 class="modal-title">'+modalTitle+'</h5></div>';
             const modalContent = `<div class="modal-body">
