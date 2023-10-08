@@ -4,6 +4,11 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
     document.addEventListener('DOMContentLoaded', async() => {
         console.log('DOMContentLoaded');
 
+        // Uint8Array to Base64
+        const convertBitArrtoB64 = (bitArr) => ( btoa( bitArr.reduce((data, byte) => data + String.fromCharCode(byte), '') ) );
+        // Base64 to Uint8Array
+        const convertB64ToBitArr = (b64Str) => ( Uint8Array.from(atob( (b64Str.includes(';base64,') ? (b64Str.split(','))[1] : b64Str) ), (v) => v.charCodeAt(0)) );
+
         const dropFileZone=document.querySelector('#dropFileZone');
         const dropFileInnerZone=dropFileZone.querySelector('.card-body');
 
@@ -27,6 +32,15 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 dismissible: true,
                 trigger: 'click'
             })
+        );
+
+        const elementsTooltip = document.querySelectorAll('[title]');
+        Array.from(elementsTooltip).map(
+          tip => new BSN.Tooltip( tip, {
+            placement: 'top', //string
+            animation: 'slideNfade', // CSS class
+            delay: 150, // integer
+          })
         );
 
         if (!window.FileReader) {
@@ -79,43 +93,40 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
         });
 
         const infoModalBtn = document.querySelector('#infoModalBtn');
-        const infoModalContent = `<div class="modal-header">
-                                    <h5 class="modal-title"><span class='mr-2 font-weight-bolder symbol'>𝖎</span> About SQLite Browser Tool</h5>
+        const infoModalContent = `<div class="modal-header pb-0 border-0">
+                                    <h5 class="modal-title"><span class='mr-2 font-weight-bolder symbol text-center'>𝖎</span> About</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                                   </div>
-                                  <div class="modal-body">
-                                    <div class="row">
-                                        <div class="col-sm-12 text-left">
-                                            <p><span class="symbol">➊</span> SQLite is a <abbr title="Relational Database Management System">RDBMS</abbr> with no dependencies and able to operate offline in-browser without a database engine.</p>
-
-                                            <p><span class="symbol">➋</span> <span class="emoji">🚫</span> No server-side processing <span class='symbol'>⇒</span> No server setup required.</p>
-
-                                            <p><span class="symbol">➌</span> Application uses plugin from <cite title="sql.js is a relational database for the web."><a href="https://github.com/sql-js/sql.js" target="_blank">sql.js</a></cite> where original work was by Kripken <cite title="sql.js/sql.js: A javascript library to run SQLite on the web."><a href="https://github.com/kripken/sql.js/" target="_blank">sql.js</a></cite> which is <a href="LICENSE.txt" target="_blank">MIT licensed</a>.</p>
-
-                                            <p><span class="symbol">➍</span> <span class="emoji">📱</span> Mobile-responsive and works on JavaScript-enabled mobile web browsers as well.</p>
-                                        </div>
+                                  <div class="modal-body pt-0 pb-0">
+                                    <div class="text-center">
+                                        <img src='img/logo.png' height='35' />
+                                        <p class='lead pb-1'>Welcome to SQLite Browser Tool!</p>
+                                        <p class='text-custom-one'><strong>Create</strong>, <strong>Read</strong> & <strong>Edit</strong> an SQLite* database with client-side JavaScript entirely in browser <span class='symbol mr-1'>⇒</span><mark class='emoji'>🚫 No server required</mark></p>
+                                    </div>
+                                    <p class='small secondary'>*SQLite is a file-based <abbr title="Relational Database Management System">RDBMS</abbr> that requires no database engine and is self-contained.</p>
+                                    <div class="text-left">
+                                        <h6>Credits & Acknowledgements</h6>
+                                        <p>Application uses <cite title="A javascript library to run SQLite on the web."><a href="https://github.com/sql-js/sql.js" target="_blank">sql.js</a></cite> plugin (<a href="LICENSE.txt" target="_blank">MIT licensed</a>) which serves as a standalone GUI tool to > a SQLite file (a <abbr title="Relational Database Management System">RDBMS</abbr> without a database engine) entirely in-browser. Version of <cite title="A javascript library to run SQLite on the web."><a href="https://github.com/sql-js/sql.js" target="_blank">sql.js</a></cite> uses <a href='https://webassembly.org/' target='_blank'>WASM</a> alongside its JavaScript library.</p>
                                     </div>
                                   </div>
                                   <div class="modal-footer text-right">
                                     <small><span class='symbol pl-1 pr-1'>— Created by</span><a href="https://medium.com/@geek-cc" target="_blank"><span class="symbol">ξ(</span><span class="emoji">🎀</span><span class="symbol">˶❛◡❛) ᵀᴴᴱ ᴿᴵᴮᴮᴼᴺ ᴳᴵᴿᴸ</span>
                                     </a></small><span class='symbol pl-1 pr-1'><a href='https://github.com/incubated-geek-cc/' target='_blank'><span data-profile='github' class='attribution-icon'></span></a> ▪ <a href='https://medium.com/@geek-cc' target='_blank'><span data-profile='medium' class='attribution-icon'></span></a> ▪ <a href='https://www.linkedin.com/in/charmaine-chui-15133282/' target='_blank'><span data-profile='linkedin' class='attribution-icon'></span></a> ▪ <a href='https://twitter.com/IncubatedGeekCC' target='_blank'><span data-profile='twitter' class='attribution-icon'></span></a></span>
                                   </div>`;
-
-        
+// <p>Proceed to upload an SQLite file (<code>.sqlite, .sqlite3, .db, .db3, .s3db, .sl3</code>)</p>
         async function showLoadingSignal(modalTitle) {
             let modalHeader='<div class="modal-header"><h5 class="modal-title">'+modalTitle+'</h5></div>';
             const modalContent = `<div class="modal-body">
                                     <div class="row">
                                         <div class="col-sm-12 text-center">
                                             <div class="spinner-border text-muted"></div>
-                                            <div class="text-secondary">Loading...</div>
+                                            <div class="text-secondary symbol">Loading…</div>
                                         </div>
                                     </div>
                                   </div>`;
 
             siteModalInstance.setContent(modalHeader + modalContent);
-            // wait 100 milliseconds
-            await new Promise((resolve, reject) => setTimeout(resolve, 100));
+            await new Promise((resolve, reject) => setTimeout(resolve, 100)); // wait 100 milliseconds
             siteModalInstance.show();
             return await Promise.resolve('Loading');
         }
@@ -128,10 +139,12 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             keyboard: false
           }
         );
-        infoModalBtn.addEventListener('click', ()=>{
+        infoModalBtn.addEventListener('click', async()=>{
             siteModalInstance.setContent(infoModalContent);
+            await new Promise((resolve, reject) => setTimeout(resolve, 100));
             siteModalInstance.toggle();
         });
+        triggerEvent(infoModalBtn,'click');
 
         const displayedRecordsRange = document.querySelector('#displayedRecordsRange');
         const noOfTablesDisplay = document.querySelector('#noOfTablesDisplay');
@@ -144,12 +157,21 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
         const filters = document.querySelector('#filters');
         
         const runQueryBtn = document.querySelector('#runQueryBtn');
-        // The older asm.js version of Sql.js. Slower and larger. Provided for compatibility reasons. 
-        // Handles error: Cannot enlarge memory arrays
+
+        const sql_wasm_typedarray = convertB64ToBitArr(sql_wasm_dataURL); // uInt8Array
+        const sql_wasm_blob = new Blob([sql_wasm_typedarray], { 
+            type: 'application/wasm' 
+        });
         const SQL = await initSqlJs({
-          locateFile: file => './js/sql-wasm.wasm'
+            locateFile: filename => URL.createObjectURL(sql_wasm_blob)
         });
         // console.log(SQL);
+
+        // const SQL = await initSqlJs({
+        //     locateFile: filename =>  './js/sql-wasm.wasm'
+        // });
+        // console.log(SQL);
+
         var db = null;
 
         const tblIcon = '▦ ';
@@ -299,7 +321,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 errorDisplay.innerHTML = '';
 
                 let tableHtmlStr = '';
-                tableHtmlStr += '<table class="table table-striped table-condensed small table-bordered h-100 w-100">';
+                tableHtmlStr += '<table class="table table-striped table-condensed small table-bordered">';
                 tableHtmlStr += '<thead>';
                 tableHtmlStr += '<tr><th></th><th>' + resultset[0]['columns'].join('</th><th>') + '</th></tr>';
                 tableHtmlStr += '</thead>';
@@ -374,12 +396,12 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
         }
 
         function setQueryRecordsHeight() {
-            const pageWrapper = mainWrapper.querySelector('.page-wrapper');
-            const lineCounter = mainWrapper.querySelector('#lineCounter');
-            const filters = mainWrapper.querySelector('#filters');
-            const errorDisplay = mainWrapper.querySelector('#errorDisplay');
+            const sidebar = document.querySelector('aside.left-sidebar');
+            const codeEditor = document.querySelector('#codeEditor');
+            const filters = document.querySelector('#filters');
+            const errorDisplay = document.querySelector('#errorDisplay');
 
-            let cssHeight = pageWrapper.clientHeight - (lineCounter.clientHeight + filters.clientHeight + errorDisplay.clientHeight + 31);
+            let cssHeight = sidebar.clientHeight - codeEditor.clientHeight - filters.clientHeight - errorDisplay.clientHeight - 8;
             tableQueryRecords['style']['height']=`calc(${cssHeight}px - 2rem)`;
         }
 
@@ -391,7 +413,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             noOfTablesDisplay.innerHTML = noOfTables;
 
             let allDisplayedTables={};
-            for(var c of dbTableDetails.children) {
+            for(let c of dbTableDetails.children) {
                 let tbl=c.textContent;
                 tbl=tbl.replace(tblIcon, '');
                 allDisplayedTables[tbl]=true;
@@ -656,15 +678,10 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
         }
         const fileNameDisplay = document.querySelector('#fileNameDisplay');
         const fileSizeDisplay = document.querySelector('#fileSizeDisplay');
-
-        const sidebarUpload = document.querySelector('#sidebarUpload');
+        
         const upload = document.querySelector('#upload');
-
         upload.addEventListener('click', (ev) => {
             ev.currentTarget.value='';
-        });
-        sidebarUpload.addEventListener('click', () => {
-            upload.click();
         });
 
         dropFileZone.addEventListener("dragenter", (e) => {
@@ -672,13 +689,11 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             e.stopPropagation();
             dropFileInnerZone.classList.add("bg-custom-two-05");
         });
-
         dropFileZone.addEventListener("dragleave", (e) => {
             e.preventDefault();
             e.stopPropagation();
             dropFileInnerZone.classList.remove("bg-custom-two-05");
         });
-
         dropFileZone.addEventListener("dragover", (e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -707,14 +722,9 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
                 console.log(err);
             } finally {
-                triggerEvent(infoModalBtn,'click');
-
                 upload.setAttribute('disabled','');
                 upload.classList.add('no-touch');
                 upload.classList.add('unselectable');
-
-                sidebarUpload.classList.add('no-touch');
-                sidebarUpload.classList.add('unselectable');
 
                 dropFileZone.setAttribute('hidden','');
                 mainWrapper.removeAttribute('hidden');
@@ -760,7 +770,10 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             }
         }); // upload file change event
         
-        const convertBitArrtoB64 = (bitArr) => ( btoa( bitArr.reduce((data, byte) => data + String.fromCharCode(byte), '') ) );
+
+        
+        
+
         const exportDB=document.querySelector('#exportDB');
         exportDB.addEventListener('click', async(evt)=> {
             try {
@@ -851,8 +864,6 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 }
             });
         }
-        // codeEditor.value = sampleQueryStmt;
-        // line_counter(codeEditor, lineCounter);
 
         window.addEventListener('resize', (evt)=> {
             let w=window.innerWidth;

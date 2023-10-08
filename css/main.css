@@ -52,6 +52,12 @@ div#tableQueryRecords.table-responsive {
     width: calc(100% - 8px);
     overflow-y: scroll;
 }
+
+div#tableQueryRecords.table-responsive table {
+    min-width: 100%;
+    height: calc(100% - 8px);
+}
+
 #infoPanel {
     overflow-y:auto;
 }
@@ -139,26 +145,36 @@ a.dropdown-item {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
-#codeEditor {
-    padding-left: calc(68px + 5px);
-    width: 100%;
+/*#codeEditor {
+    padding-left: calc(50px + 5px);
+    width: calc(100% - 8px);
     background-color: #fefefd;
     border: 1px solid rgba(28,205,188);
     color: rgba(8,152,138);
     white-space: pre-wrap;
+}*/
+#codeEditor {
+    padding-left: calc(50px + 5px);
+    width: calc(100% - 8px);
+    background-color: #fefefd;
+    border: 1px solid rgba(28,205,188);
+    color: rgba(8,152,138);
+    white-space: break-spaces;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    overflow-x: visible;
+    overflow-y: auto;
 }
 #lineCounter {
     display: flex;
-    border-color: transparent;
     overflow-y: hidden;
     text-align: right;
     box-shadow: none;
     color: #707070;
     background-color: #d8d8d8;
     position: absolute;
-    width: 68px;
+    width: 50px;
     background-color: rgba(28,205,188,.25);
-    border-color: rgba(28,205,188);
     color: rgba(8,152,138);
 }
 #lineCounter:focus-visible,
@@ -274,7 +290,6 @@ aside.left-sidebar {
   height: calc(100vh - 40px);
   position: relative;
 }
-
 .custom-scrollbar::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -282,7 +297,7 @@ aside.left-sidebar {
 
 .custom-scrollbar::-webkit-scrollbar-track {
   border-radius: 12px;
-  background-color: #CCCCCC;
+  background-color: #cccccc;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
@@ -466,6 +481,7 @@ details[open] > summary {
 #filters {
   overflow-x: auto;
   width: calc(100% - 8px);
+  margin-bottom:8px;
 }
 
 #databaseTables.scroll-sidebar {
@@ -561,6 +577,10 @@ details[open] > summary {
 
 #upload-btn, #hint-btn, #runQueryBtn {
     display: inline-flex;
+}
+#runQueryBtn {
+    height: 30px;
+    width: 30px;
 }
 button.navbar-toggler,
 button.navbar-toggler:focus-visible,

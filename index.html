@@ -24,16 +24,15 @@
       	<link rel="icon" sizes="16x16" href="img/favicon-16x16.ico" type="image/x-icon">
 	    <link rel="icon" sizes="32x32" href="img/favicon-32x32.ico" type="image/x-icon">
 	    <link rel="icon" sizes="48x48" href="img/favicon-48x48.ico" type="image/x-icon">
-
 		<!-- <script type='text/javascript' src='js/sql-browser.min.js'></script> -->
-		<!-- <script type='text/javascript' src='js/sql-wasm.min.js'></script> -->
+		<script type='text/javascript' src='js/sql_wasm_dataURL.js'></script>
+		<script type='text/javascript' src='js/sql-wasm.min.js'></script>
 		<!-- <script type='text/javascript' src='js/sql-asm.min.js'></script> -->
-		<script type='text/javascript' src='js/sql-asm-memory-growth.min.js'></script>
-
+		<!-- <script type='text/javascript' src='js/sql-asm-memory-growth.min.js'></script> -->
 		<link rel='stylesheet' type='text/css' href='css/bootstrap-4.5.2.min.css' />
 		<link rel='stylesheet' type='text/css' href='css/offcanvas.css' />
 		<link rel='stylesheet' type='text/css' href='css/main.css' />
-		<title>SQLite Browser Tool • Built In Client-Side JavaScript For Offline Use</title>
+		<title>SQLite Browser Tool ⸬ A Lightweight Client-Side JavaScript For Offline Use</title>
 	</head>
 	<body>
 	<noscript>You need to enable JavaScript to run this app.</noscript>
@@ -55,26 +54,27 @@
 	    </ul> -->
 	    <ul class="nav navbar-nav ml-auto nowrap">
 	      <li class="nav-item">
-	      	<label for="upload" class="site-header-btn btn btn-sm bg-custom-one text-white rounded-pill pl-2 pr-2 pt-1 pb-1 mb-0 text-center border-0">
-	      		<input id="upload" type="file" accept=".sqlite, .sqlite3, .db, .db3, .s3db, .sl3">
-	      		<!-- <span class="btn bg-custom-one text-white rounded-circle text-center site-header-icon upload-icon"></span><small>Upload SQLite File</small> -->
-	      		<span class="text-white text-center font-weight-400 mr-1 symbol">📤</span>Upload SQLite File
-	      	</label>
-	      	<button id="clearCache" type="button" class="site-header-btn btn btn-sm bg-custom-one text-white rounded-pill pl-2 pr-2 pt-1 pb-1 text-center border-0"><span class="text-white text-center font-weight-400 mr-1 symbol">⭯</span>Reload</button>
+	      	<button id="clearCache" type="button" class="site-header-btn btn btn-sm bg-custom-one text-white rounded-pill pl-2 pr-2 pt-1 pb-1 text-center border-0"><span class="text-white text-center font-weight-400 mr-1 symbol">🧹</span>Clear Cache</button>
 	      </li>
 	    </ul>
 	  <!-- </div> -->
 	</nav>
 
 
+	<div id="siteModal" class="custom-scrollbar modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    	<div class="modal-dialog"><div class="modal-content"></div></div>
+	</div>
 
-	<div id='dropFileZone' class="card rounded-0 p-0 m-4 text-center">
-    	<div class='card-body rounded-0 p-4 border-custom-one'>
-    		<h1 class='text-custom-one'>Drag & Drop SQLite file here</h1>
+	<div id='dropFileZone' class="card rounded-0 p-4 m-4">
+		<div class='card-header rounded-0 pl-0 pr-0 pt-0 pb-2 border-0 font-weight-bold text-left'>Upload SQLite File:</div>
+    	<div class='card-body rounded-0 p-4 border-custom-one text-center'>
+    		<h4 class='text-custom-one'>Drag & Drop</h4>
     		<hr class="invisible-divider mb-1 mt-1">
-    		<strong class='symbol text-custom-one custom-control-inline mr-1'>… or select</strong>
-    		<label id='sidebarUpload' class="site-header-btn btn btn-sm bg-custom-one text-white rounded-pill pl-2 pr-2 pt-1 pb-1 text-center border-0">
-	      		<span class="text-white text-center font-weight-400 mr-1 symbol">📤</span>Upload SQLite File
+    		<h4 class='text-custom-one'>or</h4>
+    		<hr class="invisible-divider mb-1 mt-1">
+    		<label for="upload" class="site-header-btn btn btn-sm bg-custom-one text-white rounded-pill pl-3 pr-3 pt-2 pb-2 mb-0 text-center border-0">
+	      		<input id="upload" type="file" accept=".sqlite, .sqlite3, .db, .db3, .s3db, .sl3">
+	      		<span class="text-white text-center font-weight-400 mr-1 symbol">📂</span>Choose File…
 	      	</label>
     	</div>
     </div>
@@ -104,13 +104,13 @@
 				            <div class="w-100 accordion-header user-select-none font-weight-600"><span class='mr-2 pr-1 pl-2 font-weight-bolder symbol d-inline-block'>📥</span>File Downloads</div>
 				        </summary>
 				        <div class="accordion-body border-bottom">
-				        	<button id='exportSampleDB' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3'><span class='symbol mr-2'>📄</span>Sample Database (.db)</button>
+				        	<button id='exportSampleDB' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3'  data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Select to download a sample database for upload and testing.</p>"><span class='symbol mr-2'>📄</span>Sample Database (.db)</button>
 				        
-				        	<button id='exportQueryAsJSON' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3'><span class='symbol mr-2'>📄</span>Data ResultSet (.json)</button>
+				        	<button id='exportQueryAsJSON' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3'  data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Select to export the full queried dataset in JSON format.</p>"><span class='symbol mr-2'>📄</span>Data ResultSet (.json)</button>
 
-		            		<button id='exportEditorQuery' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3'><span class='symbol mr-2'>📄</span>SQL Statements (.sql)</button>
+		            		<button id='exportEditorQuery' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3' data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Select to output all content in the code editor into an SQL script.</p>"><span class='symbol mr-2'>📄</span>SQL Statements (.sql)</button>
 
-		            		<button id='exportDB' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-bottom-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3'><span class='symbol mr-2'>📄</span>SQLite Database (.db)</button>
+		            		<button id='exportDB' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-bottom-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3' data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Select to export the latest version of the database including all changes which were made (if any).</p>"><span class='symbol mr-2'>📄</span>SQLite Database (.db)</button>
 				        </div>
 				    </details>
 				    <!-- <details class="accordion-item rounded-0 border-bottom">
@@ -124,7 +124,7 @@
  -->				
  					<hr class="invisible-divider mb-1 mt-1">
  					<hr class="border mb-0 mt-1">
- 					<!-- <button id='infoModalBtn' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top border-bottom rounded-0 datatable pt-2 pb-2 pr-3 pl-3 font-weight-600'><span class="icon icon-info p-2 mr-2"></span>About</button> -->
+
  					<button id='infoModalBtn' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top border-bottom rounded-0 datatable pt-2 pb-2 pr-3 pl-3 font-weight-600'><span class='mr-2 pr-1 pl-2 font-weight-bolder symbol d-inline-block'>𝖎</span>About</button>
 
  					<hr class="border mb-1 mt-0">
@@ -142,24 +142,24 @@
 	            	<!-- card-body -->
 	            	<div class='card-body rounded-0 p-0 h-100'>
 						<p id='errorDisplay' class='m-1 p-0 small text-danger'></p>
-						<div id='filters' class='card-subtitle m-1 custom-scrollbar nowrap'>
-						<button id='hint-btn' type='button' class="btn btn-sm bg-custom-one text-white rounded-pill pl-2 pr-2 pt-1 pb-1 mb-1 text-center border-0" data-toggle="popover" data-title="💡 Tips & Tricks" data-dismissible="true" data-placement="right" data-content='<div class="row">
+						<div id='filters' class="card-subtitle pl-1 pr-1 custom-scrollbar nowrap">
+						<!-- <button id='hint-btn' type='button' class="btn btn-sm bg-custom-one text-white rounded-pill pl-2 pr-2 pt-1 pb-1 mb-1 text-center border-0" data-toggle="popover" data-title="💡 Tips & Tricks" data-dismissible="true" data-placement="right" data-content='<div class="row">
 		                <div class="col-sm-12" style="text-align:left">
 		                    <p><span class="symbol">❶</span> Original work by Kripken <cite title="sql.js/sql.js: A javascript library to run SQLite on the web."><a href="https://github.com/sql-js/sql.js" target="_blank">sql.js</a></cite> which is <a href="LICENSE.txt" target="_blank">MIT licensed</a>.</p>
 		                    <p><span class="symbol">❷</span> SQLite is a <abbr title="Relational Database Management System">RDBMS</abbr> with no dependencies and able to operate offline in-browser without a database engine.</p>
 		                    <p><span class="symbol">❸</span> This application requires no server-side processing i.e. <span class="emoji">🚫</span> No server setup required.</p>
 		                    <p><span class="symbol">❹</span> Mobile-responsive and works on JavaScript-enabled mobile web browsers.</p>
 		                </div>
-		            </div>'><small class='symbol'>‹/› SQL Editor</small></button>
+		            </div>'><small class='symbol'>‹/› SQL Editor</small></button> -->
 
-							<span class='symbol text-custom-one mr-1 ml-1'>❘</span>
-							<button id='runQueryBtn' type='button' class='btn btn-sm bg-custom-one text-white rounded-pill pl-2 pr-2 pt-1 pb-1 mb-1 text-center border-0'><small class='symbol'>Run ▶</small></button>
+							<!-- <span class='symbol text-custom-one mr-1 ml-1'>❘</span> -->
+							<button id="runQueryBtn" type="button" class="btn btn-sm btn-outline-success rounded-circle symbol text-center" data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Select to run query in the code editor</p>">⯈</button>
 							
 							<ul id='tableQueryPagination' class="pagination pagination-sm ml-1 mr-1 mb-0 mt-0"></ul>
 							<span class='nowrap mr-2'><small id='displayedRecordsRange'></small></span>
 						</div>
 						
-						<p class="mb-0 mt-0 ml-1 mr-1"><textarea id='lineCounter' wrap='off' readonly rows='5'>1.</textarea><textarea id='codeEditor' class='custom-scrollbar' wrap='off' rows='5'></textarea></p>
+						<p class="mb-0 mt-0 ml-1 mr-1"><textarea id='lineCounter' wrap='off' readonly rows='5' class='border-0'>1.</textarea><textarea id='codeEditor' class='custom-scrollbar' wrap='off' rows='5'></textarea></p>
 						<div id='tableQueryRecords' class="table-responsive table-responsive-sm border custom-scrollbar m-1 p-0"></div>
 						
 						
@@ -169,9 +169,7 @@
 	            <!-- // card -->
 		</div>
 	    <!-- // page-wrapper -->
-	    <div id="siteModal" class="custom-scrollbar modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-	    	<div class="modal-dialog"><div class="modal-content"></div></div>
-		</div>
+	    
 	</div>
 	<script src='js/polyfill.js'></script>
     <script src='js/ie10-viewport-bug-workaround.js'></script>
