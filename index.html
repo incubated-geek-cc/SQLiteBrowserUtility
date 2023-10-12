@@ -53,9 +53,12 @@
 	      </li>    <span class="btn bg-custom-one text-white rounded-circle text-center site-header-icon reload-icon"></span>
 	    </ul> -->
 	    <ul class="nav navbar-nav ml-auto nowrap">
-	      <li class="nav-item">
-	      	<button id="clearCache" type="button" class="site-header-btn btn btn-sm bg-custom-one text-white rounded-pill pl-2 pr-2 pt-1 pb-1 text-center border-0"><span class="text-white text-center font-weight-400 mr-1 symbol">🧹</span>Clear Cache</button>
-	      </li>
+	    	<li class="nav-item">
+		      	<button id='infoModalBtn' type="button" class="site-header-btn btn btn-sm bg-custom-one text-white rounded-pill pl-2 pr-3 pt-1 pb-1 text-center border-0" data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Select to view information modal."><span class="text-white text-center font-weight-400 mr-2 pl-1 symbol">𝖎</span>About</button>
+		    </li>
+		    <li class="nav-item">
+		      	<button id="clearCache" type="button" class="site-header-btn btn btn-sm bg-custom-one text-white rounded-pill pl-2 pr-2 pt-1 pb-1 text-center border-0" data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Select to reload page and clear local storage.</p>"><span class="text-white text-center font-weight-400 mr-1 symbol">🧹</span>Clear Cache</button>
+		    </li>
 	    </ul>
 	  <!-- </div> -->
 	</nav>
@@ -65,14 +68,14 @@
     	<div class="modal-dialog"><div class="modal-content"></div></div>
 	</div>
 
-	<div id='dropFileZone' class="card rounded-0 p-4 m-4">
+	<div id='dropFileZone' class="card rounded-0 p-4 ml-2 mr-2 mt-1 mb-1">
 		<div class='card-header rounded-0 pl-0 pr-0 pt-0 pb-2 border-0 font-weight-bold text-left'>Upload SQLite File:</div>
     	<div class='card-body rounded-0 p-4 border-custom-one text-center'>
     		<h4 class='text-custom-one'>Drag & Drop</h4>
     		<hr class="invisible-divider mb-1 mt-1">
     		<h4 class='text-custom-one'>or</h4>
     		<hr class="invisible-divider mb-1 mt-1">
-    		<label for="upload" class="site-header-btn btn btn-sm bg-custom-one text-white rounded-pill pl-3 pr-3 pt-2 pb-2 mb-0 text-center border-0">
+    		<label for="upload" class="site-header-btn btn btn-sm bg-custom-one text-white rounded-pill pl-3 pr-3 pt-2 pb-2 mb-0 text-center border-0" data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Select SQLite file (.sqlite, .sqlite3, .db, .db3, .s3db, .sl3) from local disk"><span class="text-white text-center font-weight-400 mr-2 pl-1 symbol">
 	      		<input id="upload" type="file" accept=".sqlite, .sqlite3, .db, .db3, .s3db, .sl3">
 	      		<span class="text-white text-center font-weight-400 mr-1 symbol">📂</span>Choose File…
 	      	</label>
@@ -125,14 +128,17 @@
  					<hr class="invisible-divider mb-1 mt-1">
  					<hr class="border mb-0 mt-1">
 
- 					<button id='infoModalBtn' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top border-bottom rounded-0 datatable pt-2 pb-2 pr-3 pl-3 font-weight-600'><span class='mr-2 pr-1 pl-2 font-weight-bolder symbol d-inline-block'>𝖎</span>About</button>
+ 					<a href='https://medium.com/weekly-webtips/read-export-sqlite-data-in-a-javascript-enabled-browser-locally-b655deda879d' target='_blank' class='btn btn-sm btn-link border-left-0 border-right-0 border-top border-bottom rounded-0 datatable pt-2 pb-2 pr-3 pl-3 font-weight-600' data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Read & Export SQLite Data in a JavaScript-enabled Browser Locally"><span class='mr-2 pr-1 pl-2 font-weight-bolder symbol d-inline-block'>✎</span>View Article</a>
 
  					<hr class="border mb-1 mt-0">
 				    <hr class="invisible-divider mb-1 mt-1">
 
 				    <p class='text-center nowrap mt-1 mb-1 pl-2'><span class='symbol'>© 𝖢𝗈𝗉𝗒𝗋𝗂𝗀𝗁𝗍</span> <span id='copyrightYearDisplay' class='copyrightNote'></span> <span class='symbol pl-0 pr-1 ml-1 mr-2 text-center'> ▪ <a href='https://github.com/incubated-geek-cc/' target='_blank'><span data-profile='github' class='attribution-icon'></span></a> ▪ <a href='https://medium.com/@geek-cc' target='_blank'><span data-profile='medium' class='attribution-icon'></span></a> ▪ <a href='https://www.linkedin.com/in/charmaine-chui-15133282/' target='_blank'><span data-profile='linkedin' class='attribution-icon'></span></a> ▪ <a href='https://twitter.com/IncubatedGeekCC' target='_blank'><span data-profile='twitter' class='attribution-icon'></span></a></span></p>
-
+				    <hr class="invisible-divider mb-1 mt-1">
+ 					
 				    <p class='text-left nowrap mt-1 mb-1 pl-2'><a href='https://www.buymeacoffee.com/geekcc' target='_blank'><img src='img/buy_me_a_taco.png' height='30' /></a> <a href="https://medium.com/@geek-cc" target="_blank"><span class="symbol">~ ξ(</span><span class="emoji">🎀</span><span class="symbol">˶❛◡❛)</span></a></p>
+				    <hr class="invisible-divider mb-1 mt-1">
+ 					<hr class="border mb-0 mt-1">
 	        </div>
 	        
 	    </aside>
@@ -151,9 +157,8 @@
 		                    <p><span class="symbol">❹</span> Mobile-responsive and works on JavaScript-enabled mobile web browsers.</p>
 		                </div>
 		            </div>'><small class='symbol'>‹/› SQL Editor</small></button> -->
-
 							<!-- <span class='symbol text-custom-one mr-1 ml-1'>❘</span> -->
-							<button id="runQueryBtn" type="button" class="btn btn-sm btn-outline-success rounded-circle symbol text-center" data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Select to run query in the code editor</p>">⯈</button>
+							<button id="runQueryBtn" type="button" class="site-header-btn btn btn-sm bg-custom-one text-white rounded-pill pl-2 pr-3 pt-1 pb-1 text-center border-0 symbol" data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Select to run query in the code editor</p>">⯈ Run</button>
 							
 							<ul id='tableQueryPagination' class="pagination pagination-sm ml-1 mr-1 mb-0 mt-0"></ul>
 							<span class='nowrap mr-2'><small id='displayedRecordsRange'></small></span>

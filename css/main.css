@@ -545,14 +545,16 @@ details[open] > summary {
 }
 
 #dropFileZone {
-    height: calc(100% - 0.3125rem - 35px - 0.5rem - 1px - 1.5rem - 1.5rem);
-    top: calc(0.3125rem + 35px + 0.5rem);
+    height: calc(100% - 0.3125rem - 0.3125rem - 35px - 1rem - 1px - 1rem);
+    top: calc(0.3125rem + 35px + 1rem);
 }
 #dropFileZone .card-body {
     border-width: 3px;
     border-style: dashed;
 }
-
+#dropFileZone > div.card-body.rounded-0.p-4.border-custom-one.text-center > h4:nth-child(1) {
+  margin-top:4.25rem;
+}
 /*Lighter Green*/
 .text-custom-two {
   color:#1ccdbc !important; 
@@ -579,8 +581,7 @@ details[open] > summary {
     display: inline-flex;
 }
 #runQueryBtn {
-    height: 30px;
-    width: 30px;
+  font-size: .8rem;
 }
 button.navbar-toggler,
 button.navbar-toggler:focus-visible,
@@ -760,16 +761,16 @@ span.icon.icon-database {
 /* [END] <details> + <summary> CSS for accordion */
 
 
-#databaseTables > div.accordion-wrapper.small.border-top.border-bottom > button {
+#databaseTables > div.accordion-wrapper.small.border-top.border-bottom > .btn {
     background: rgba(28, 205, 188, .1);
 }
-#databaseTables > div.accordion-wrapper.small.border-top.border-bottom > button:focus {
+#databaseTables > div.accordion-wrapper.small.border-top.border-bottom > .btn:focus {
     z-index: 3;
     border-color: rgba(8,152,138);
     outline: 0;
     box-shadow: 0 0 0 0.25rem rgba(28, 205, 188, .15);
 }
-#databaseTables > div.accordion-wrapper.small.border-top.border-bottom > button:hover {
+#databaseTables > div.accordion-wrapper.small.border-top.border-bottom > .btn:hover {
     background-color: rgba(28, 205, 188, .25);
 }
 
