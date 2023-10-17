@@ -84,7 +84,7 @@
 
 	<div id="main-wrapper" class='w-100' hidden>
 		<aside class="left-sidebar">
-	        <button id="toggleSidebarBtn" type="button" class='btn btn-sm btn-outline-custom-two symbol text-center m-1 font-weight-bolder' value='false'>☰</button>
+	        <button id="toggleSidebarBtn" type="button" class='btn btn-sm btn-outline-custom-two symbol text-center mr-1 mt-1 mb-1 ml-2 font-weight-bolder' value='false'>☰</button>
 	        <div id='databaseTables' class="scroll-sidebar ps-container ps-active-y pt-5 pb-1 custom-scrollbar border-bottom h-100">
 		      	<hr class="invisible-divider mb-1 mt-1">
 		      	<span class="icon icon-database p-2 mr-2 ml-3"></span><span class='text-custom-one font-weight-700'>SQLite Database</span>
@@ -107,16 +107,31 @@
 				            <div class="w-100 accordion-header user-select-none font-weight-600"><span class='mr-2 pr-1 pl-2 font-weight-bolder symbol d-inline-block'>📥</span>File Downloads</div>
 				        </summary>
 				        <div class="accordion-body border-bottom">
-				        	<button id='exportSampleDB' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3'  data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Select to download a sample database for upload and testing.</p>"><span class='symbol mr-2'>📄</span>Sample Database (.db)</button>
+				        	<button id='exportSampleDB' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3' data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Select to download a sample database for upload and testing.</p>"><span class='symbol mr-2'>📄</span>Sample Database (.db)</button>
 				        
-				        	<button id='exportQueryAsJSON' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3'  data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Select to export the full queried dataset in JSON format.</p>"><span class='symbol mr-2'>📄</span>Data ResultSet (.json)</button>
+				        	<button id='exportQueryAsJSON' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3' data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Select to export the full queried dataset in JSON format.</p>"><span class='symbol mr-2'>📄</span>Data ResultSet (.json)</button>
 
 		            		<button id='exportEditorQuery' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3' data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Select to output all content in the code editor into an SQL script.</p>"><span class='symbol mr-2'>📄</span>SQL Statements (.sql)</button>
 
 		            		<button id='exportDB' type='button' class='btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-bottom-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3' data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Select to export the latest version of the database including all changes which were made (if any).</p>"><span class='symbol mr-2'>📄</span>SQLite Database (.db)</button>
 				        </div>
 				    </details>
-				    <!-- <details class="accordion-item rounded-0 border-bottom">
+				    <details class="accordion-item rounded-0 border-bottom">
+				        <summary class="accordion-button border-bottom pt-2 pb-2 pr-3 pl-3">
+				            <div class="w-100 accordion-header user-select-none font-weight-600"><span class='mr-2 pr-1 pl-2 font-weight-bolder symbol d-inline-block'>✎</span>Related Posts</div>
+				        </summary>
+				        <div class="accordion-body border-bottom">
+				        	<!-- Nov 4, 2021 -->
+				        	<a href='https://medium.com/geekculture/5-key-mysql-operations-which-sqlite-commands-can-emulate-b7a1a202856d' target='_blank' class='btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3' data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>5 Key MySQL Operations which SQLite Commands can Emulate</p>"><span class='symbol mr-2'>📄</span>5 Key MySQL Operations which SQLite Commands can Emulate</a>
+				        	<!-- Dec 15, 2021 -->
+				        	<a href='https://medium.com/weekly-webtips/implement-sqlite-on-web-with-javascript-both-node-browser-with-sql-js-14448fd7a3cb' target='_blank' class='btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3' data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Implement SQLite on web with JavaScript — both Node & Browser with sql.js plugin</p>"><span class='symbol mr-2'>📄</span>Implement SQLite on web with JavaScript — both Node & Browser with sql.js plugin</a>
+				        	<!-- Mar 11, 2022 -->
+				        	<a href='https://medium.com/weekly-webtips/read-export-sqlite-data-in-a-javascript-enabled-browser-locally-b655deda879d' target='_blank' class='btn btn-sm btn-link border-left-0 border-right-0 border-top-0 border-bottom-0 border-custom-two rounded-0 datatable pt-2 pb-2 pr-3 pl-3' data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Read & Export SQLite Data in a JavaScript-enabled Browser Locally</p>"><span class='symbol mr-2'>📄</span>Read & Export SQLite Data in a JavaScript-enabled Browser Locally</a>
+				        </div>
+				    </details>
+				
+
+ 					 <!-- <details class="accordion-item rounded-0 border-bottom">
 				        <summary class="accordion-button border-bottom pt-2 pb-2 pr-3 pl-3">
 				            <div class="w-100 accordion-header user-select-none font-weight-600">Accordion Title</div>
 				        </summary>
@@ -125,18 +140,15 @@
 				        </div>
 				    </details>
  -->				
- 					<hr class="invisible-divider mb-1 mt-1">
- 					<hr class="border mb-0 mt-1">
-
- 					<a href='https://medium.com/weekly-webtips/read-export-sqlite-data-in-a-javascript-enabled-browser-locally-b655deda879d' target='_blank' class='btn btn-sm btn-link border-left-0 border-right-0 border-top border-bottom rounded-0 datatable pt-2 pb-2 pr-3 pl-3 font-weight-600' data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Read & Export SQLite Data in a JavaScript-enabled Browser Locally"><span class='mr-2 pr-1 pl-2 font-weight-bolder symbol d-inline-block'>✎</span>View Article</a>
+ 
 
  					<hr class="border mb-1 mt-0">
 				    <hr class="invisible-divider mb-1 mt-1">
 
-				    <p class='text-center nowrap mt-1 mb-1 pl-2'><span class='symbol'>© 𝖢𝗈𝗉𝗒𝗋𝗂𝗀𝗁𝗍</span> <span id='copyrightYearDisplay' class='copyrightNote'></span> <span class='symbol pl-0 pr-1 ml-1 mr-2 text-center'> ▪ <a href='https://github.com/incubated-geek-cc/' target='_blank'><span data-profile='github' class='attribution-icon'></span></a> ▪ <a href='https://medium.com/@geek-cc' target='_blank'><span data-profile='medium' class='attribution-icon'></span></a> ▪ <a href='https://www.linkedin.com/in/charmaine-chui-15133282/' target='_blank'><span data-profile='linkedin' class='attribution-icon'></span></a> ▪ <a href='https://twitter.com/IncubatedGeekCC' target='_blank'><span data-profile='twitter' class='attribution-icon'></span></a></span></p>
+				    <p class='text-center nowrap mt-1 mb-1 ml-1'><span class='symbol'>© 𝖢𝗈𝗉𝗒𝗋𝗂𝗀𝗁𝗍</span> <span id='copyrightYearDisplay' class='copyrightNote'></span> <span class='symbol pl-0 pr-1 ml-1 mr-1 text-center'> ▪ <a href='https://github.com/incubated-geek-cc/' target='_blank'><span data-profile='github' class='attribution-icon'></span></a> ▪ <a href='https://medium.com/@geek-cc' target='_blank'><span data-profile='medium' class='attribution-icon'></span></a> ▪ <a href='https://www.linkedin.com/in/charmaine-chui-15133282/' target='_blank'><span data-profile='linkedin' class='attribution-icon'></span></a> ▪ <a href='https://twitter.com/IncubatedGeekCC' target='_blank'><span data-profile='twitter' class='attribution-icon'></span></a></span></p>
 				    <hr class="invisible-divider mb-1 mt-1">
  					
-				    <p class='text-left nowrap mt-1 mb-1 pl-2'><a href='https://www.buymeacoffee.com/geekcc' target='_blank'><img src='img/buy_me_a_taco.png' height='30' /></a> <a href="https://medium.com/@geek-cc" target="_blank"><span class="symbol">~ ξ(</span><span class="emoji">🎀</span><span class="symbol">˶❛◡❛)</span></a></p>
+				    <p class='text-left nowrap mt-1 mb-1 ml-1'><a href='https://www.buymeacoffee.com/geekcc' target='_blank'><img src='img/buy_me_a_taco.png' height='26' /></a> <a href="https://medium.com/@geek-cc" target="_blank" class='small'><span class="symbol">~ξ(</span><span class="emoji">🎀</span><span class="symbol">˶❛◡❛) ᵀᴴᴱ ᴿᴵᴮᴮᴼᴺ ᴳᴵᴿᴸ</span></a></p>
 				    <hr class="invisible-divider mb-1 mt-1">
  					<hr class="border mb-0 mt-1">
 	        </div>
@@ -158,7 +170,7 @@
 		                </div>
 		            </div>'><small class='symbol'>‹/› SQL Editor</small></button> -->
 							<!-- <span class='symbol text-custom-one mr-1 ml-1'>❘</span> -->
-							<button id="runQueryBtn" type="button" class="site-header-btn btn btn-sm bg-custom-one text-white rounded-pill pl-2 pr-3 pt-1 pb-1 text-center border-0 symbol" data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Select to run query in the code editor</p>">⯈ Run</button>
+							<button id="runQueryBtn" type="button" class="site-header-btn btn btn-sm bg-custom-one text-white rounded-pill pl-2 pr-3 pt-1 pb-1 text-center border-0 symbol" data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Select to run query in the code editor</p>">▶ Run</button>
 							
 							<ul id='tableQueryPagination' class="pagination pagination-sm ml-1 mr-1 mb-0 mt-0"></ul>
 							<span class='nowrap mr-2'><small id='displayedRecordsRange'></small></span>

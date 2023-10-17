@@ -61,6 +61,7 @@ div#tableQueryRecords.table-responsive table {
 #infoPanel {
     overflow-y:auto;
 }
+
 .datatable.btn-link {
   width:100%;
   text-align: left;
@@ -82,6 +83,13 @@ div#tableQueryRecords.table-responsive table {
     box-shadow: 0 0 0 0.2rem rgba(8, 152, 138, .25);
     text-decoration: none;
 }
+
+a.datatable.btn-link {
+    text-wrap: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+}
+
 #currentQueryPageNo.form-control:focus {
     color: #495057;
     background-color: #fff;
@@ -552,9 +560,9 @@ details[open] > summary {
     border-width: 3px;
     border-style: dashed;
 }
-#dropFileZone > div.card-body.rounded-0.p-4.border-custom-one.text-center > h4:nth-child(1) {
-  margin-top:4.25rem;
-}
+/*#dropFileZone > div.card-body.rounded-0.p-4.border-custom-one.text-center > h4:nth-child(1) {
+  padding-top:4.25rem;
+}*/
 /*Lighter Green*/
 .text-custom-two {
   color:#1ccdbc !important; 
@@ -578,11 +586,13 @@ details[open] > summary {
 }
 
 #upload-btn, #hint-btn, #runQueryBtn {
-    display: inline-flex;
+  display: inline-flex;
 }
 #runQueryBtn {
-  font-size: .8rem;
+  font-size: calc(.8rem - 0.125rem);
+  margin-bottom: 0.125rem;
 }
+
 button.navbar-toggler,
 button.navbar-toggler:focus-visible,
 button.navbar-toggler:focus {

@@ -4,15 +4,26 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
     document.addEventListener('DOMContentLoaded', async() => {
         console.log('DOMContentLoaded');
 
+        const acceptedFileTypes = ['.sqlite', '.sqlite3', '.db', '.db3', '.s3db', '.sl3'];
+
+        const dbFormatErr = '⚠ 𝗨𝗽𝗹𝗼𝗮𝗱𝗲𝗱 𝗳𝗶𝗹𝗲 𝘁𝘆𝗽𝗲 𝗶𝘀 𝗻𝗼𝘁 𝘀𝘂𝗽𝗽𝗼𝗿𝘁𝗲𝗱. 𝗟𝗶𝘀𝘁 𝗼𝗳 𝘀𝘂𝗽𝗽𝗼𝗿𝘁𝗲𝗱 𝗳𝗶𝗹𝗲 𝗳𝗼𝗿𝗺𝗮𝘁𝘀 𝗮𝗿𝗲:' + '\n' +
+            '◾ .𝗌𝗊𝗅𝗂𝗍𝖾' + '\n' +
+            '◾ .𝗌𝗊𝗅𝗂𝗍𝖾𝟥' + '\n' +
+            '◾ .𝖽𝖻' + '\n' +
+            '◾ .𝖽𝖻𝟥' + '\n' +
+            '◾ .𝗌𝟥𝖽𝖻' + '\n' +
+            '◾ .𝗌𝗅𝟥' + '\n' +
+            '𝘗𝘭𝘦𝘢𝘴𝘦 𝘵𝘳𝘺 𝘢𝘨𝘢𝘪𝘯.';
+
         // Uint8Array to Base64
-        const convertBitArrtoB64 = (bitArr) => ( btoa( bitArr.reduce((data, byte) => data + String.fromCharCode(byte), '') ) );
+        const convertBitArrtoB64 = (bitArr) => (btoa(bitArr.reduce((data, byte) => data + String.fromCharCode(byte), '')));
         // Base64 to Uint8Array
-        const convertB64ToBitArr = (b64Str) => ( Uint8Array.from(atob( (b64Str.includes(';base64,') ? (b64Str.split(','))[1] : b64Str) ), (v) => v.charCodeAt(0)) );
+        const convertB64ToBitArr = (b64Str) => (Uint8Array.from(atob((b64Str.includes(';base64,') ? (b64Str.split(','))[1] : b64Str)), (v) => v.charCodeAt(0)));
 
-        const dropFileZone=document.querySelector('#dropFileZone');
-        const dropFileInnerZone=dropFileZone.querySelector('.card-body');
+        const dropFileZone = document.querySelector('#dropFileZone');
+        const dropFileInnerZone = dropFileZone.querySelector('.card-body');
 
-        const clearCache=document.querySelector('#clearCache');
+        const clearCache = document.querySelector('#clearCache');
         clearCache.addEventListener('click', () => {
             requestAnimationFrame(() => {
                 localStorage.clear();
@@ -36,11 +47,11 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 
         const elementsTooltip = document.querySelectorAll('[title]');
         Array.from(elementsTooltip).map(
-          tip => new BSN.Tooltip( tip, {
-            placement: 'top', //string
-            animation: 'slideNfade', // CSS class
-            delay: 150, // integer
-          })
+            tip => new BSN.Tooltip(tip, {
+                placement: 'top', //string
+                animation: 'slideNfade', // CSS class
+                delay: 150, // integer
+            })
         );
 
         if (!window.FileReader) {
@@ -55,13 +66,13 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
         // IE8
         // IE9+ and other modern browsers
         function triggerEvent(el, type) {
-            let e = ( ('createEvent' in document) ? document.createEvent('HTMLEvents') : document.createEventObject() );
-            if ('createEvent' in document) { 
-              e.initEvent(type, false, true);
-              el.dispatchEvent(e);
-            } else { 
-              e.eventType = type;
-              el.fireEvent('on' + e.eventType, e);
+            let e = (('createEvent' in document) ? document.createEvent('HTMLEvents') : document.createEventObject());
+            if ('createEvent' in document) {
+                e.initEvent(type, false, true);
+                el.dispatchEvent(e);
+            } else {
+                e.eventType = type;
+                el.fireEvent('on' + e.eventType, e);
             }
         }
 
@@ -113,12 +124,12 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                                     </div>
                                   </div>
                                   <div class="modal-footer text-right">
-                                    <small><span class='symbol pl-1 pr-1'><a href='https://www.buymeacoffee.com/geekcc' target='_blank'><img src='img/buy_me_a_taco.png' height='30' /></a> </span><a href="https://medium.com/@geek-cc" target="_blank"><span class="symbol">ξ(</span><span class="emoji">🎀</span><span class="symbol">˶❛◡❛) ᵀᴴᴱ ᴿᴵᴮᴮᴼᴺ ᴳᴵᴿᴸ</span></a> 
+                                    <small><span class='symbol pl-1 pr-1'><a href='https://www.buymeacoffee.com/geekcc' target='_blank'><img src='img/buy_me_a_taco.png' height='26' /></a> </span><a href="https://medium.com/@geek-cc" target="_blank" class="small"><span class="symbol">~ ξ(</span><span class="emoji">🎀</span><span class="symbol">˶❛◡❛) ᵀᴴᴱ ᴿᴵᴮᴮᴼᴺ ᴳᴵᴿᴸ</span></a> 
                                     </small> <span class='symbol text-custom-one'>❘</span> <span class='symbol pl-1 pr-1'><a href='https://github.com/incubated-geek-cc/' target='_blank'><span data-profile='github' class='attribution-icon'></span></a>▪<a href='https://medium.com/@geek-cc' target='_blank'><span data-profile='medium' class='attribution-icon'></span></a>▪<a href='https://www.linkedin.com/in/charmaine-chui-15133282/' target='_blank'><span data-profile='linkedin' class='attribution-icon'></span></a>▪<a href='https://twitter.com/IncubatedGeekCC' target='_blank'><span data-profile='twitter' class='attribution-icon'></span></a> </span>
                                   </div>`;
         // <p>Proceed to upload an SQLite file (<code>.sqlite, .sqlite3, .db, .db3, .s3db, .sl3</code>)</p>
         async function showLoadingSignal(modalTitle) {
-            let modalHeader='<div class="modal-header"><h5 class="modal-title">'+modalTitle+'</h5></div>';
+            let modalHeader = '<div class="modal-header"><h5 class="modal-title">' + modalTitle + '</h5></div>';
             const modalContent = `<div class="modal-body">
                                     <div class="row">
                                         <div class="col-sm-12 text-center">
@@ -136,18 +147,18 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 
 
         const siteModalInstance = new BSN.Modal(
-          '#siteModal', { 
-            content: '',
-            backdrop: false,
-            keyboard: false
-          }
+            '#siteModal', {
+                content: '',
+                backdrop: false,
+                keyboard: false
+            }
         );
-        infoModalBtn.addEventListener('click', async()=>{
+        infoModalBtn.addEventListener('click', async() => {
             siteModalInstance.setContent(infoModalContent);
             await new Promise((resolve, reject) => setTimeout(resolve, 100));
             siteModalInstance.toggle();
         });
-        triggerEvent(infoModalBtn,'click');
+        triggerEvent(infoModalBtn, 'click');
 
         const displayedRecordsRange = document.querySelector('#displayedRecordsRange');
         const noOfTablesDisplay = document.querySelector('#noOfTablesDisplay');
@@ -158,18 +169,18 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
         const codeEditor = document.querySelector('#codeEditor');
         const lineCounter = document.querySelector('#lineCounter');
         const filters = document.querySelector('#filters');
-        
+
         const runQueryBtn = document.querySelector('#runQueryBtn');
 
         const sql_wasm_typedarray = convertB64ToBitArr(sql_wasm_dataURL); // uInt8Array
-        const sql_wasm_blob = new Blob([sql_wasm_typedarray], { 
-            type: 'application/wasm' 
+        const sql_wasm_blob = new Blob([sql_wasm_typedarray], {
+            type: 'application/wasm'
         });
         const SQL = await initSqlJs({
             locateFile: filename => URL.createObjectURL(sql_wasm_blob)
         });
-        // console.log(SQL);
 
+        // console.log(SQL);
         // const SQL = await initSqlJs({
         //     locateFile: filename =>  './js/sql-wasm.wasm'
         // });
@@ -195,7 +206,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
 
         const exportQueryAsJSON = document.querySelector('#exportQueryAsJSON');
         const exportEditorQuery = document.querySelector('#exportEditorQuery');
-        const exportSampleDB=document.querySelector('#exportSampleDB');
+        const exportSampleDB = document.querySelector('#exportSampleDB');
 
         var firstQueryPageBtn, prevQueryPageBtn, currentQueryPageNo, nextQueryPageBtn, lastQueryPageBtn;
 
@@ -345,7 +356,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             } catch (err) {
                 errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
                 console.log(err);
-            } 
+            }
         }
 
         async function setQueryPaginationClass() {
@@ -387,10 +398,10 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 // console.log(['originalQueryStmt',originalQueryStmt]);
                 // console.log(['queryStmt',queryStmt]);
                 await renderDatatable(queryResultset, tableQueryRecords);
-                codeEditor.value=queryStmt;
+                codeEditor.value = queryStmt;
 
                 displayedRecordsRange.innerHTML = `<span class='small text-muted'>Showing <strong>${queryOffset} to ${queryOffset+recordsPerPage}</strong> of <strong>${totalNoOfQueryRecords}</strong> rows</span>`;
-                
+
                 setQueryRecordsHeight();
             } catch (err) {
                 errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
@@ -405,7 +416,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             const errorDisplay = document.querySelector('#errorDisplay');
 
             let cssHeight = sidebar.clientHeight - codeEditor.clientHeight - filters.clientHeight - errorDisplay.clientHeight - 8;
-            tableQueryRecords['style']['height']=`calc(${cssHeight}px - 2rem)`;
+            tableQueryRecords['style']['height'] = `calc(${cssHeight}px - 2rem)`;
         }
 
         function appendTableSelectable() {
@@ -415,17 +426,17 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             let noOfTables = resultset.length;
             noOfTablesDisplay.innerHTML = noOfTables;
 
-            let allDisplayedTables={};
-            for(let c of dbTableDetails.children) {
-                let tbl=c.textContent;
-                tbl=tbl.replace(tblIcon, '');
-                allDisplayedTables[tbl]=true;
+            let allDisplayedTables = {};
+            for (let c of dbTableDetails.children) {
+                let tbl = c.textContent;
+                tbl = tbl.replace(tblIcon, '');
+                allDisplayedTables[tbl] = true;
             }
 
-            let displayedTablesArr=Object.keys(allDisplayedTables);
+            let displayedTablesArr = Object.keys(allDisplayedTables);
             for (let rowObj of resultset) {
                 let tblName = rowObj['table_name']; // {table_name: 'icd9_mapping'}
-                if(!displayedTablesArr.includes(tblName)) {
+                if (!displayedTablesArr.includes(tblName)) {
                     loadTableSelectable(tblName);
                 }
             }
@@ -439,15 +450,15 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                     originalQueryStmt = originalQueryStmt.substr(0, originalQueryStmt.length - 1);
                 }
                 // ================================================
-                let toExec=true;
+                let toExec = true;
                 try {
                     errorDisplay.innerHTML = '';
                     queryStmt = 'SELECT COUNT(*) FROM (' + originalQueryStmt + ')';
                     queryResultset = db.exec(queryStmt);
                 } catch (err) {
-                    toExec=false;
+                    toExec = false;
                 }
-                if(!toExec) {
+                if (!toExec) {
                     db.run(originalQueryStmt);
                     appendTableSelectable();
                 } else {
@@ -480,7 +491,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                     // console.log(['originalQueryStmt',originalQueryStmt]);
                     // console.log(['queryStmt',queryStmt]);
                     await renderDatatable(queryResultset, tableQueryRecords);
-                    codeEditor.value=queryStmt;
+                    codeEditor.value = queryStmt;
 
                     currentQueryPageNo.addEventListener('change', (evt0) => {
                         evt0.stopPropagation();
@@ -515,7 +526,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             } catch (err) {
                 errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
                 console.log(err);
-            } 
+            }
         });
 
 
@@ -568,12 +579,12 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             }
         });
 
-        exportSampleDB.addEventListener('click', async()=> {
+        exportSampleDB.addEventListener('click', async() => {
             try {
                 let status = await showLoadingSignal('Downloading sample database');
                 console.log(status);
 
-                let dwnlnk=document.createElement('a');
+                let dwnlnk = document.createElement('a');
                 dwnlnk.download = 'healthcare_records.db';
                 dwnlnk.href = './database_files/healthcare_records.db';
                 dwnlnk.click();
@@ -633,7 +644,7 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                     // console.log(['originalQueryStmt',originalQueryStmt]);
                     // console.log(['queryStmt',queryStmt]);
                     await renderDatatable(queryResultset, tableQueryRecords);
-                    codeEditor.value=queryStmt;
+                    codeEditor.value = queryStmt;
 
                     currentQueryPageNo.addEventListener('change', (evt0) => {
                         evt0.stopPropagation();
@@ -681,26 +692,25 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
         }
         const fileNameDisplay = document.querySelector('#fileNameDisplay');
         const fileSizeDisplay = document.querySelector('#fileSizeDisplay');
-        
+
         const upload = document.querySelector('#upload');
         upload.addEventListener('click', (ev) => {
-            ev.currentTarget.value='';
+            ev.currentTarget.value = '';
         });
-
-        dropFileZone.addEventListener("dragenter", (e) => {
+        dropFileZone.addEventListener('dragenter', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            dropFileInnerZone.classList.add("bg-custom-two-05");
+            dropFileInnerZone.classList.add('bg-custom-two-05');
         });
-        dropFileZone.addEventListener("dragleave", (e) => {
+        dropFileZone.addEventListener('dragleave', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            dropFileInnerZone.classList.remove("bg-custom-two-05");
+            dropFileInnerZone.classList.remove('bg-custom-two-05');
         });
-        dropFileZone.addEventListener("dragover", (e) => {
+        dropFileZone.addEventListener('dragover', (e) => {
             e.preventDefault();
             e.stopPropagation();
-            dropFileInnerZone.classList.add("bg-custom-two-05");
+            dropFileInnerZone.classList.add('bg-custom-two-05');
         });
 
         async function importDBFile(file) {
@@ -725,18 +735,18 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
                 console.log(err);
             } finally {
-                upload.setAttribute('disabled','');
+                upload.setAttribute('disabled', '');
                 upload.classList.add('no-touch');
                 upload.classList.add('unselectable');
 
-                dropFileZone.setAttribute('hidden','');
+                dropFileZone.setAttribute('hidden', '');
                 mainWrapper.removeAttribute('hidden');
 
-                let tableTab=document.querySelector('details.accordion-item:not([open]):first-of-type .accordion-button');
-                if(tableTab != null) {
+                let tableTab = document.querySelector('details.accordion-item:not([open]):first-of-type .accordion-button');
+                if (tableTab != null) {
                     tableTab.click();
                 }
-                triggerEvent(window,'resize');
+                triggerEvent(window, 'resize');
             }
             return await Promise.resolve('success');
         }
@@ -747,15 +757,22 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             dropFileInnerZone.classList.remove("bg-custom-two-05");
 
             errorDisplay.innerHTML = '';
-            upload.value='';
-            
+            upload.value = '';
+
             let draggedData = e.dataTransfer;
             let file = draggedData.files[0];
             if (!file) return;
 
+            let fname = (file.name);
+            let ext = fname.substr(fname.lastIndexOf('.')); // '.db'
+            if (!acceptedFileTypes.includes(ext)) {
+                alert(dbFormatErr);
+                return;
+            }
+
             await importDBFile(file);
-            let initTable=document.querySelector('#dbTableDetails.accordion-body:first-of-type button.datatable');
-            if(initTable != null) {
+            let initTable = document.querySelector('#dbTableDetails.accordion-body:first-of-type button.datatable');
+            if (initTable != null) {
                 initTable.click();
             }
         }); // drop file change event
@@ -766,35 +783,41 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             let file = ev.currentTarget.files[0];
             if (!file) return;
 
+            let fname = (file.name);
+            let ext = fname.substr(fname.lastIndexOf('.')); // '.db'
+            if (!acceptedFileTypes.includes(ext)) {
+                alert(dbFormatErr);
+                return;
+            }
+
             await importDBFile(file);
-            let initTable=document.querySelector('#dbTableDetails.accordion-body:first-of-type button.datatable');
-            if(initTable != null) {
+            let initTable = document.querySelector('#dbTableDetails.accordion-body:first-of-type button.datatable');
+            if (initTable != null) {
                 initTable.click();
             }
         }); // upload file change event
-        
 
-        
-        
 
-        const exportDB=document.querySelector('#exportDB');
-        exportDB.addEventListener('click', async(evt)=> {
+
+
+        const exportDB = document.querySelector('#exportDB');
+        exportDB.addEventListener('click', async(evt) => {
             try {
                 let status = await showLoadingSignal('Exporting database');
                 console.log(status);
 
                 const arrayBuffer = db.export();
-                let uInt8Array=new Uint8Array(arrayBuffer);
-                let b64Str=convertBitArrtoB64(uInt8Array);
+                let uInt8Array = new Uint8Array(arrayBuffer);
+                let b64Str = convertBitArrtoB64(uInt8Array);
 
                 let dwnlnk = document.createElement('a');
                 dwnlnk.download = `exported_${fileNameDisplay.innerText}`;
-                dwnlnk.href=`data:application/x-sqlite3;base64,${b64Str}`;
+                dwnlnk.href = `data:application/x-sqlite3;base64,${b64Str}`;
                 dwnlnk.click();
             } catch (err) {
                 errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
                 console.log(err);
-           } finally {
+            } finally {
                 await new Promise((resolve, reject) => setTimeout(resolve, 100));
                 siteModalInstance.hide();
             }
@@ -817,17 +840,17 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
         // stmt.free();
         // ================================== Query Editor Tab ===========================
         const sampleQueryStmt = 'SELECT patient_id,diagnosis_code,icd9_description FROM' +
-             '\n  (SELECT patient_id,diagnosis_code FROM patient_diagnosis) A' + 
-             '\nLEFT JOIN ' +
-             '\n  (SELECT icd9_code, icd9_description FROM icd9_mapping) B' +
-             '\nON A.diagnosis_code = B.icd9_code;';
+            '\n  (SELECT patient_id,diagnosis_code FROM patient_diagnosis) A' +
+            '\nLEFT JOIN ' +
+            '\n  (SELECT icd9_code, icd9_description FROM icd9_mapping) B' +
+            '\nON A.diagnosis_code = B.icd9_code;';
 
         function line_counter(codeEditor, lineCounter) {
-            const codeEditorWidth=codeEditor.clientWidth;
-            const lineCounterWidth=lineCounter.clientWidth;
+            const codeEditorWidth = codeEditor.clientWidth;
+            const lineCounterWidth = lineCounter.clientWidth;
 
             const codeEditorLeftPadding = 5; // padding-left = 5 of #codeEditor
-            const codeEditorEditableWidth=codeEditorWidth-lineCounterWidth-codeEditorLeftPadding; 
+            const codeEditorEditableWidth = codeEditorWidth - lineCounterWidth - codeEditorLeftPadding;
 
             let lines = codeEditor.value.split('\n');
             let lineCount = lines.length;
@@ -845,8 +868,9 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             }
             lineCounter.value = outarr.join('\n');
         }
+
         function bindEventsToCodeEditor(codeEditor, lineCounter) {
-             codeEditor.addEventListener('scroll', () => {
+            codeEditor.addEventListener('scroll', () => {
                 lineCounter.scrollTop = codeEditor.scrollTop;
                 lineCounter.scrollLeft = codeEditor.scrollLeft;
             });
@@ -854,37 +878,42 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
                 line_counter(codeEditor, lineCounter);
             });
             codeEditor.addEventListener('keydown', (e) => {
-                let { keyCode } = e;
+                let {
+                    key
+                } = e;
                 let {
                     value,
                     selectionStart,
                     selectionEnd
                 } = codeEditor;
-                if (keyCode === 9) {
+                if (key === 'Tab') {
                     e.preventDefault();
                     codeEditor.value = value.slice(0, selectionStart) + '\t' + value.slice(selectionEnd);
                     codeEditor.setSelectionRange(selectionStart + 2, selectionStart + 1)
                 }
+                if (key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+                    e.preventDefault();
+                    triggerEvent(runQueryBtn, 'click');
+                }
             });
         }
 
-        window.addEventListener('resize', (evt)=> {
-            let w=window.innerWidth;
-            if(w<720) {
-                toggleSidebarBtn.value=false;
+        window.addEventListener('resize', (evt) => {
+            let w = window.innerWidth;
+            if (w < 720) {
+                toggleSidebarBtn.value = false;
             } else {
-                toggleSidebarBtn.value=true;
+                toggleSidebarBtn.value = true;
             }
-            triggerEvent(toggleSidebarBtn,'click');
+            triggerEvent(toggleSidebarBtn, 'click');
             setQueryRecordsHeight();
 
-            const codeEditor=document.querySelector('#codeEditor');
-            const lineCounter=document.querySelector('#lineCounter');
+            const codeEditor = document.querySelector('#codeEditor');
+            const lineCounter = document.querySelector('#lineCounter');
             line_counter(codeEditor, lineCounter);
             bindEventsToCodeEditor(codeEditor, lineCounter);
         });
-        triggerEvent(window,'resize');
+        triggerEvent(window, 'resize');
 
     }); // DOMContentLoaded
 }
-
