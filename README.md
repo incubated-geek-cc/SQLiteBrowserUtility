@@ -24,8 +24,11 @@
 
 ### ✍ Read related post here
 
+[**Article :: Link :: 5 Key MySQL Operations which SQLite Commands can Emulate**](https://medium.com/geekculture/5-key-mysql-operations-which-sqlite-commands-can-emulate-b7a1a202856d)
+<br>
+[**Article :: Link :: Implement SQLite on web with JavaScript — both Node & Browser with sql.js plugin**](https://medium.com/weekly-webtips/implement-sqlite-on-web-with-javascript-both-node-browser-with-sql-js-14448fd7a3cb)
+<br>
 [**Article :: Link :: Read & Export SQLite Data in a JavaScript-enabled Browser Locally**](https://medium.com/weekly-webtips/read-export-sqlite-data-in-a-javascript-enabled-browser-locally-b655deda879d)
-
 
 ### ⚠ Current Status: WIP
 
@@ -57,8 +60,6 @@
 	<strong>「✓」</strong> Code editor wrap lines toggle button<br>
 	<strong>「✓」</strong> Mobile-responsiveness<br>
 	<strong>「✓」</strong> Replace code editor area with latest query reflected i.e. when table is selected<br>
-	<strong>「⋯」</strong> Render SQLite query tips and tricks in popover above editor area<br>
-	<strong>「⋯」</strong> Pagination dropdown list for 'no. of rows per page'<br>
 	<strong>「✓」</strong> Export sample database<br>
 	<strong>「✓」</strong> Export updated database<br>
 	<strong>「✓」</strong> Include 'Reset' ⟲ button (clear cache & reload page)<br>
