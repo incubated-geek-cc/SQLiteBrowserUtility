@@ -29,6 +29,9 @@
 [**Article :: Link :: Implement SQLite on web with JavaScript — both Node & Browser with sql.js plugin**](https://medium.com/weekly-webtips/implement-sqlite-on-web-with-javascript-both-node-browser-with-sql-js-14448fd7a3cb)
 <br>
 [**Article :: Link :: Read & Export SQLite Data in a JavaScript-enabled Browser Locally**](https://medium.com/weekly-webtips/read-export-sqlite-data-in-a-javascript-enabled-browser-locally-b655deda879d)
+<br>
+[**Article :: Link :: How To Load & Run Local WASM Modules Without A Server Using Client-Side JavaScript**](https://geek-cc.medium.com/how-to-load-run-local-wasm-modules-without-a-server-using-client-side-javascript-692f7b89da7d)
+
 
 ### ⚠ Current Status: WIP
 
