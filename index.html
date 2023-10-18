@@ -70,12 +70,11 @@
 
 	<div id='dropFileZone' class="card rounded-0 p-4 ml-2 mr-2 mt-1 mb-1">
 		<div class='card-header rounded-0 pl-0 pr-0 pt-0 pb-2 border-0 font-weight-bold text-left'>Upload SQLite File:</div>
-    	<div class='card-body rounded-0 p-4 border-custom-one text-center'>
-    		<h4 class='text-custom-one'>Drag & Drop</h4>
+    	<div class='card-body rounded-0 p-2 border-custom-one text-center'>
+    		<strong class='text-custom-one'>Drag & Drop</strong>
     		<hr class="invisible-divider mb-1 mt-1">
-    		<h4 class='text-custom-one'>or</h4>
-    		<hr class="invisible-divider mb-1 mt-1">
-    		<label for="upload" class="site-header-btn btn btn-sm bg-custom-one text-white rounded-pill pl-3 pr-3 pt-2 pb-2 mb-0 text-center border-0" data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Select SQLite file (.sqlite, .sqlite3, .db, .db3, .s3db, .sl3) from local disk"><span class="text-white text-center font-weight-400 mr-2 pl-1 symbol">
+    		<span class='text-custom-one'>or</span>
+    		<label for="upload" class="site-header-btn btn btn-sm bg-custom-one text-white rounded-pill mb-1 mt-1 pl-2 pr-2 pt-1 pb-1 text-center border-0" data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Select SQLite file (.sqlite, .sqlite3, .db, .db3, .s3db, .sl3) from local disk"><span class="text-white text-center font-weight-400 mr-2 pl-1 symbol">
 	      		<input id="upload" type="file" accept=".sqlite, .sqlite3, .db, .db3, .s3db, .sl3">
 	      		<span class="text-white text-center font-weight-400 mr-1 symbol">📂</span>Choose File…
 	      	</label>
@@ -84,7 +83,7 @@
 
 	<div id="main-wrapper" class='w-100' hidden>
 		<aside class="left-sidebar">
-	        <button id="toggleSidebarBtn" type="button" class='btn btn-sm btn-outline-custom-two symbol text-center mr-1 mt-1 mb-1 ml-2 font-weight-bolder' value='false'>☰</button>
+	        <button id="toggleSidebarBtn" type="button" class='btn btn-sm btn-outline-custom-two symbol text-center font-weight-bold ml-2' value='false'>☰</button>
 	        <div id='databaseTables' class="scroll-sidebar ps-container ps-active-y pt-5 pb-1 custom-scrollbar border-bottom h-100">
 		      	<hr class="invisible-divider mb-1 mt-1">
 		      	<span class="icon icon-database p-2 mr-2 ml-3"></span><span class='text-custom-one font-weight-700'>SQLite Database</span>
@@ -170,10 +169,10 @@
 		                </div>
 		            </div>'><small class='symbol'>‹/› SQL Editor</small></button> -->
 							<!-- <span class='symbol text-custom-one mr-1 ml-1'>❘</span> -->
-							<button id="runQueryBtn" type="button" class="site-header-btn btn btn-sm bg-custom-one text-white rounded-pill pl-2 pr-3 pt-1 pb-1 text-center border-0 symbol" data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Select to run query in the code editor</p>">▶ Run</button>
 							
+							<span class='nowrap'><small id='displayedRecordsRange'></small></span>
 							<ul id='tableQueryPagination' class="pagination pagination-sm ml-1 mr-1 mb-0 mt-0"></ul>
-							<span class='nowrap mr-2'><small id='displayedRecordsRange'></small></span>
+							<button id="runQueryBtn" type="button" class="site-header-btn btn btn-sm bg-custom-one text-white rounded-pill pl-2 pr-3 pt-1 pb-1 text-center border-0 symbol" data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Select to run query in the code editor</p>">▶ Run</button>
 						</div>
 						
 						<p class="mb-0 mt-0 ml-1 mr-1"><textarea id='lineCounter' wrap='off' readonly rows='5' class='border-0'>1.</textarea><textarea id='codeEditor' class='custom-scrollbar' wrap='off' rows='5'></textarea></p>

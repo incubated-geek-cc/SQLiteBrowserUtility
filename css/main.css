@@ -117,7 +117,7 @@ a.dropdown-item {
 }
 #currentPageNo, #currentQueryPageNo {
     height: calc(31px - 0.5rem - 2px);
-    width: calc(58px - 1rem);
+    width: calc(50px - 1rem);
 }
 .dropdown-item:focus, 
 .dropdown-item:hover {
@@ -212,7 +212,7 @@ a.dropdown-item {
 }
 
 #site-logo {
-    height: calc(35px);
+  height: calc(35px);
 }
 li.nav-item {
     display: inline;
@@ -260,9 +260,10 @@ nav.fixed-top {
 #toggleSidebarBtn {
   position: fixed;
   box-shadow: rgba(17, 17, 26, 0.1) 0px 0px 16px;
-  height: 31px;
-  width: 31px;
+  height: 29px;
+  width: 29px;
   z-index: 20;
+  margin: 2px;
 }
 .showTblCol:hover {
   cursor:pointer;
