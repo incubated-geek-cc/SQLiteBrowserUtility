@@ -54,6 +54,13 @@ if (document.readyState === 'complete' || document.readyState !== 'loading' && !
             })
         );
 
+        const tabTargets = document.querySelectorAll('#initTabs .nav-link');
+        Array.from(tabTargets).map(
+            tab => new BSN.Tab(tab, {
+                height: true
+            })
+        );
+
         if (!window.FileReader) {
             errorDisplay.innerHTML = '<span class=\'emoji\'>⛔</span> WARNING: Your browser does not support HTML5 \'FileReader\' function required to open a file.';
             return;

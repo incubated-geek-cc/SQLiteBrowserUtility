@@ -68,18 +68,33 @@
     	<div class="modal-dialog"><div class="modal-content"></div></div>
 	</div>
 
+	
+	
 	<div id='dropFileZone' class="card rounded-0 p-4 ml-2 mr-2 mt-1 mb-1">
+	<!-- 	<ul id="initTabs" class="nav nav-tabs" role="tablist">
+		  <li class="nav-item">
+		    <a class="nav-link active" id="uploadDB-tab" href="#uploadDB" data-toggle="tab" data-height="true" aria-controls="uploadDB" aria-selected="true" role="tab"><span class="icon icon-database p-2 mr-1 ml-1"></span><span class='symbol'>ᴜᴘʟᴏᴀᴅ ᴅʙ</span></a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" id="importData-tab" href="#importData" data-toggle="tab" data-height="true" aria-controls="importData" aria-selected="false" role="tab"><span class='symbol'>ɪᴍᴘᴏʀᴛ ᴅᴀᴛᴀ</span></a>
+		  </li>
+		</ul> -->
+
 		<div class='rounded-0 pl-0 pr-0 pt-0 pb-2 border-0 font-weight-bold text-left'>Upload SQLite File:</div>
-    	<div class='card-body rounded-0 p-2 border-custom-one text-center'>
-    		<strong class='text-custom-one'>Drag & Drop</strong>
-    		<hr class="invisible-divider mb-1 mt-1">
-    		<span class='text-custom-one'>…or</span>
-    		<label for="upload" class="site-header-btn btn btn-sm bg-custom-one text-white rounded-pill mb-1 mt-1 pl-2 pr-2 pt-1 pb-1 text-center border-0" data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Select SQLite file (.sqlite, .sqlite3, .db, .db3, .s3db, .sl3) from local disk"><span class="text-white text-center font-weight-400 mr-2 pl-1 symbol">
-	      		<input id="upload" type="file" accept=".sqlite, .sqlite3, .db, .db3, .s3db, .sl3">
-	      		<span class="text-white text-center font-weight-400 mr-1 symbol">📂</span>Choose File
-	      	</label>
-    	</div>
+		<!-- <div id='uploadDB' class="tab-content h-100"> role='tabpanel' tab-pane fade active show  aria-labelledby='uploadDB-tab' -->
+	    	<div class='card-body rounded-0 p-2 border-custom-one text-center h-100' >
+	    		<strong class='text-custom-one'>Drag & Drop</strong>
+	    		<hr class="invisible-divider mb-1 mt-1">
+	    		<span class='text-custom-one'>…or</span>
+	    		<label for="upload" class="site-header-btn btn btn-sm bg-custom-one text-white rounded-pill mb-1 mt-1 pl-2 pr-2 pt-1 pb-1 text-center border-0" data-toggle="tooltip" data-original-title="<p class='mb-0 small text-left'>Select SQLite file (.sqlite, .sqlite3, .db, .db3, .s3db, .sl3) from local disk"><span class="text-white text-center font-weight-400 mr-2 pl-1 symbol">
+		      		<input id="upload" type="file" accept=".sqlite, .sqlite3, .db, .db3, .s3db, .sl3">
+		      		<span class="text-white text-center font-weight-400 mr-1 symbol">📂</span>Choose File
+		      	</label>
+	    	</div>
+	    	<!-- <div id="importData" role="tabpanel" class="tab-pane fade" aria-labelledby="importData-tab">...</div> -->
+	    <!-- </div> -->
     </div>
+	
 
 	<div id="main-wrapper" class='w-100' hidden>
 		<aside class="left-sidebar">
