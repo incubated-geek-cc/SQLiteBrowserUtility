@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', async() => {
     console.log('DOMContentLoaded');
 
-    const acceptedFileTypes = ['.sqlite', '.sqlite3', '.db', '.db3', '.s3db', '.sl3'];
+    const acceptedFileTypes = ['.sqlite', '.sqlite3', '.db', '.db3', '.s3db', '.mbtiles'];
 
     const dbFormatErr = '⚠ 𝗨𝗽𝗹𝗼𝗮𝗱𝗲𝗱 𝗳𝗶𝗹𝗲 𝘁𝘆𝗽𝗲 𝗶𝘀 𝗻𝗼𝘁 𝘀𝘂𝗽𝗽𝗼𝗿𝘁𝗲𝗱. 𝗟𝗶𝘀𝘁 𝗼𝗳 𝘀𝘂𝗽𝗽𝗼𝗿𝘁𝗲𝗱 𝗳𝗶𝗹𝗲 𝗳𝗼𝗿𝗺𝗮𝘁𝘀 𝗮𝗿𝗲:' + '\n' +
         '◾ .𝗌𝗊𝗅𝗂𝗍𝖾' + '\n' +
@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', async() => {
         '◾ .𝖽𝖻𝟥' + '\n' +
         '◾ .𝗌𝟥𝖽𝖻' + '\n' +
         '◾ .𝗌𝗅𝟥' + '\n' +
+        '◾ .𝗆𝖻𝗍𝗂𝗅𝖾𝗌' + '\n' +
         '𝘗𝘭𝘦𝘢𝘴𝘦 𝘵𝘳𝘺 𝘢𝘨𝘢𝘪𝘯.';
 
     // Uint8Array to Base64
