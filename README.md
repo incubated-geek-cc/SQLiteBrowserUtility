@@ -41,6 +41,11 @@
 
 <img src='https://raw.githubusercontent.com/incubated-geek-cc/SQLiteBrowserUtility/main/img/updated_layout(laptops_n_desktops).png' width="600px" />
 
+<p>As of July 2025, import CSV file has been imbued into SQLite Browser Tool:</p>
+
+<img src='https://raw.githubusercontent.com/incubated-geek-cc/SQLiteBrowserUtility/main/img/import_csv.gif' width="600px" />
+
+
 #### Preview (2) On mobile
 
 <table>
