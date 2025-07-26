@@ -722,16 +722,19 @@ document.addEventListener('DOMContentLoaded', async() => {
             const rows = parsedData.data;
 
             db = new SQL.Database();
-            sqlQuery = "CREATE TABLE IF NOT EXISTS `" + sanitizedTableName + "`( " + "`" + headers.join("` TEXT,`") + "`" + " TEXT );";
+
+            const uniqueSet=new Set(headers);
+            const uniqueHeaders=[...uniqueSet];
+            sqlQuery = "CREATE TABLE IF NOT EXISTS `" + sanitizedTableName + "`( " + "`" + uniqueHeaders.join("` TEXT,`") + "`" + " TEXT );";
             db.run(sqlQuery);
 
             rows.forEach(obj=> {
                 let insertStmt="INSERT INTO `" + sanitizedTableName + "`";
-                insertStmt+= "(" + "`" + headers.join("`,`") + "`" + ")";
+                insertStmt+= "(" + "`" + uniqueHeaders.join("`,`") + "`" + ")";
                 insertStmt += " VALUES(";
 
                 let insertValsStmt='';
-                for (let header of headers) {
+                for (let header of uniqueHeaders) {
                     let val = obj[header];
                     insertValsStmt += ",'" + val.replaceAll("'","''") + "'";
                 }
@@ -752,6 +755,14 @@ document.addEventListener('DOMContentLoaded', async() => {
                 let tblName = rowObj['table_name']; // {table_name: 'icd9_mapping'}
                 loadTableSelectable(tblName);
             }
+
+            const tableTab = document.querySelector('details.accordion-item:not([open]):first-of-type .accordion-button');
+            await selectTableTab(tableTab);
+            
+            const tableTabBtns = document.querySelectorAll('#dbTableDetails button');
+            if (tableTabBtns) {
+                await selectTableTab(tableTabBtns[0]);
+            }
         } catch (err) {
             errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
             console.log(err);
@@ -763,10 +774,6 @@ document.addEventListener('DOMContentLoaded', async() => {
             dropFileZone.setAttribute('hidden', '');
             mainWrapper.removeAttribute('hidden');
 
-            let tableTab = document.querySelector('details.accordion-item:not([open]):first-of-type .accordion-button');
-            if (tableTab != null) {
-                tableTab.click();
-            }
             triggerEvent(window, 'resize');
         }
         return await Promise.resolve('success');
@@ -806,6 +813,14 @@ document.addEventListener('DOMContentLoaded', async() => {
         dropFileInnerZone.classList.add('bg-custom-two-05');
     });
 
+    function selectTableTab(domEle) {
+        if (domEle != null && typeof domEle!=='undefined') {
+            domEle.click();
+        }
+        return new Promise((resolve, reject)=> {
+            resolve('clicked');
+        });
+    }
 
     async function importDBFile(file) {
         try {
@@ -825,6 +840,14 @@ document.addEventListener('DOMContentLoaded', async() => {
                 let tblName = rowObj['table_name']; // {table_name: 'icd9_mapping'}
                 loadTableSelectable(tblName);
             }
+
+            const tableTab = document.querySelector('details.accordion-item:not([open]):first-of-type .accordion-button');
+            await selectTableTab(tableTab);
+            
+            const tableTabBtns = document.querySelectorAll('#dbTableDetails button');
+            if (tableTabBtns) {
+                await selectTableTab(tableTabBtns[0]);
+            }
         } catch (err) {
             errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
             console.log(err);
@@ -836,17 +859,13 @@ document.addEventListener('DOMContentLoaded', async() => {
             dropFileZone.setAttribute('hidden', '');
             mainWrapper.removeAttribute('hidden');
 
-            let tableTab = document.querySelector('details.accordion-item:not([open]):first-of-type .accordion-button');
-            if (tableTab != null) {
-                tableTab.click();
-            }
             triggerEvent(window, 'resize');
         }
         return await Promise.resolve('success');
     }
 
 
- 
+    
 
     dropFileZone.addEventListener("drop", async(e) => {
         e.preventDefault();
