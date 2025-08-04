@@ -255,19 +255,24 @@ document.addEventListener('DOMContentLoaded', async() => {
 
     async function initPaginationBtn(paginationBtnType, tablePaginationEle) {
         try {
-            let paginationBtn = document.createElement('li');
-            paginationBtn.id = paginationBtnType;
-            paginationBtn.className = paginationBtnProps[paginationBtnType]['className'];
+            let toReturn;
+            if(tablePaginationEle.querySelectorAll(`#${paginationBtnType}`).length==0) {
+                let paginationBtn = document.createElement('li');
+                paginationBtn.id = paginationBtnType;
+                paginationBtn.className = paginationBtnProps[paginationBtnType]['className'];
 
-            let pageBtnLink = document.createElement('a');
-            pageBtnLink.className = paginationBtnProps[paginationBtnType]['linkClassName'];
-            pageBtnLink.setAttribute('title', paginationBtnProps[paginationBtnType]['linkTitle']);
-            pageBtnLink.innerText = paginationBtnProps[paginationBtnType]['linkInnerText'];
+                let pageBtnLink = document.createElement('a');
+                pageBtnLink.className = paginationBtnProps[paginationBtnType]['linkClassName'];
+                pageBtnLink.setAttribute('title', paginationBtnProps[paginationBtnType]['linkTitle']);
+                pageBtnLink.innerText = paginationBtnProps[paginationBtnType]['linkInnerText'];
 
-            tablePaginationEle.appendChild(paginationBtn);
-            paginationBtn.appendChild(pageBtnLink);
-
-            return await Promise.resolve(paginationBtn);
+                tablePaginationEle.appendChild(paginationBtn);
+                paginationBtn.appendChild(pageBtnLink);
+                toReturn=paginationBtn;
+            } else {
+                toReturn=tablePaginationEle.querySelectorAll(`#${paginationBtnType}`)[0];
+            }
+            return await Promise.resolve(toReturn);
         } catch (err) {
             errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
             console.log(err);
@@ -276,34 +281,40 @@ document.addEventListener('DOMContentLoaded', async() => {
 
     async function initInputPageNo(tablePaginationEle, currentPageNoID, currentPageVal, noOfPagesVal) {
         try {
-            let currentPageNoLi = document.createElement('li');
-            currentPageNoLi.className = 'page-item';
-            let currentPageNoLink = document.createElement('a');
-            currentPageNoLink.className = 'page-link border-right-0';
+            let toReturn;
+            if(tablePaginationEle.querySelectorAll(`#${currentPageNoID}`).length===0) {
+                let currentPageNoLi = document.createElement('li');
+                currentPageNoLi.className = 'page-item';
+                let currentPageNoLink = document.createElement('a');
+                currentPageNoLink.className = 'page-link border-right-0';
 
-            let currentPageNo = document.createElement('input');
-            currentPageNo.id = currentPageNoID;
-            currentPageNo.className = 'form-control form-control-sm rounded-0 pt-0 pb-0 pl-1 pr-0';
-            currentPageNo.setAttribute('type', 'number');
-            currentPageNo.value = currentPageVal;
-            currentPageNo.setAttribute('min', 1);
-            currentPageNo.setAttribute('max', noOfPagesVal);
+                let currentPageNo = document.createElement('input');
+                currentPageNo.id = currentPageNoID;
+                currentPageNo.className = 'form-control form-control-sm rounded-0 pt-0 pb-0 pl-1 pr-0';
+                currentPageNo.setAttribute('type', 'number');
+                currentPageNo.value = currentPageVal;
+                currentPageNo.setAttribute('min', 1);
+                currentPageNo.setAttribute('max', noOfPagesVal);
 
-            let boldTextPrefix = document.createElement('b');
-            boldTextPrefix.className = 'pl-1 pr-1';
-            boldTextPrefix.innerText = '/';
+                let boldTextPrefix = document.createElement('b');
+                boldTextPrefix.className = 'pl-1 pr-1';
+                boldTextPrefix.innerText = '/';
 
-            let boldTextSuffix = document.createElement('b');
-            boldTextSuffix.className = '';
-            boldTextSuffix.innerText = noOfPagesVal;
+                let boldTextSuffix = document.createElement('b');
+                boldTextSuffix.className = '';
+                boldTextSuffix.innerText = noOfPagesVal;
 
-            tablePaginationEle.appendChild(currentPageNoLi);
-            currentPageNoLi.appendChild(currentPageNoLink);
-            currentPageNoLink.appendChild(currentPageNo);
-            currentPageNoLink.appendChild(boldTextPrefix);
-            currentPageNoLink.appendChild(boldTextSuffix);
+                tablePaginationEle.appendChild(currentPageNoLi);
+                currentPageNoLi.appendChild(currentPageNoLink);
+                currentPageNoLink.appendChild(currentPageNo);
+                currentPageNoLink.appendChild(boldTextPrefix);
+                currentPageNoLink.appendChild(boldTextSuffix);
 
-            return await Promise.resolve(currentPageNo);
+                toReturn=currentPageNo;
+            } else {
+                toReturn=tablePaginationEle.querySelectorAll(`#${currentPageNoID}`)[0];
+            }
+            return await Promise.resolve(toReturn);
         } catch (err) {
             errorDisplay.innerHTML = `<span class='emoji'>⚠</span> ERROR: ${err.message}`;
             console.log(err);
