@@ -363,12 +363,20 @@ document.addEventListener('DOMContentLoaded', async() => {
             let tableHtmlStr = '';
             tableHtmlStr += '<table class="table table-striped table-condensed small table-bordered">';
             tableHtmlStr += '<thead>';
-            tableHtmlStr += '<tr><th></th><th>' + resultset[0]['columns'].join('</th><th>') + '</th></tr>';
+            if(resultset.length===0) {
+                tableHtmlStr += '<tr><th></th><th>(No records found)</th></tr>';
+            } else {
+                tableHtmlStr += '<tr><th></th><th>' + resultset[0]['columns'].join('</th><th>') + '</th></tr>';
+            }
             tableHtmlStr += '</thead>';
             tableHtmlStr += '<tbody>';
-            let tableValues = resultset[0]['values'];
-            for (let v in tableValues) {
-                tableHtmlStr += '<tr><th>' + (parseInt(v) + 1) + '</th><td>' + tableValues[v].join('</td><td>') + '</td></tr>';
+            if(resultset.length===0) {
+                tableHtmlStr += '<tr><th></th><th>(No records found)</th></tr>';
+            } else {
+                let tableValues = resultset[0]['values'];
+                for (let v in tableValues) {
+                    tableHtmlStr += '<tr><th>' + (parseInt(v) + 1) + '</th><td>' + tableValues[v].join('</td><td>') + '</td></tr>';
+                }
             }
             tableHtmlStr += '</tbody>';
             tableHtmlStr += '</table>';
