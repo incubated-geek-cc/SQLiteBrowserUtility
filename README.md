@@ -22,6 +22,8 @@
 ### 🌟 Try it yourself
 [**Live Demo :: Link**](https://incubated-geek-cc.github.io/SQLiteBrowserUtility/)
 
+[**Download :: Latest release**](https://github.com/incubated-geek-cc/SQLiteBrowserUtility/releases/latest) [![Downloads](https://img.shields.io/github/downloads/incubated-geek-cc/SQLiteBrowserUtility/total?label=downloads)](https://github.com/incubated-geek-cc/SQLiteBrowserUtility/releases/latest)
+
 ### ✍ Read related post here
 
 [**Article :: Link :: 5 Key MySQL Operations which SQLite Commands can Emulate**](https://medium.com/geekculture/5-key-mysql-operations-which-sqlite-commands-can-emulate-b7a1a202856d)
